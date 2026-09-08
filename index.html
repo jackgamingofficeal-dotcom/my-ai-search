@@ -88,10 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const responseContainer = document.getElementById('aiResult');
     const keyInput = document.getElementById('groqKeyInput');
 
-    // ইনপুট বক্সের প্লেসহোল্ডার পরিবর্তন
     keyInput.placeholder = "Enter your OpenRouter API Key here to activate...";
 
-    // আগে সেভ করা কী থাকলে তা নিজে থেকেই বক্সে বসে যাবে
     if(localStorage.getItem('saved_openrouter_key')) {
         keyInput.value = localStorage.getItem('saved_openrouter_key');
     }
@@ -118,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
         responseContainer.innerText = "Searching with OpenRouter AI Power... Please wait...";
 
         try {
-            // OpenRouter-এর ফ্রি মডেল কল করা হচ্ছে যা ব্রাউজারে সরাসরি চলে
             const response = await fetch("https://openrouter.ai", {
                 method: "POST",
                 headers: {
@@ -126,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "meta-llama/llama-3.2-3b-instruct:free", // একদম ফ্রি ও অত্যন্ত ফাস্ট মডেল
+                    model: "meta-llama/llama-3.2-3b-instruct:free",
                     messages: [
                         { 
                             role: "system", 
@@ -147,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const aiReply = data.choices[0].message.content;
+            const aiReply = data.choices.message.content;
             responseContainer.innerText = aiReply;
 
         } catch (error) {
@@ -164,8 +161,6 @@ if ('serviceWorker' in navigator) {
             .catch(err => err);
     });
 }
-   
 </script>
-
 </body>
 </html>
