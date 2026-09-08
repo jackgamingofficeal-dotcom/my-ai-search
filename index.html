@@ -1,68 +1,138 @@
-<!doctype html>
-<html lang="bn">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#111827"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>My AI Search v3.0</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#02051d;color:#fff;font-family:Arial,sans-serif;overflow-x:hidden}
-.wrap{width:100%;max-width:760px;margin:auto;padding:10px 12px 30px;overflow:hidden;background:radial-gradient(circle at 50% 22%,#123eaa 0,transparent 40%),radial-gradient(circle at 50% 70%,#3a006b 0,transparent 35%),#02051d}
-header{height:68px;border:1px solid #3155c8;border-radius:34px;display:flex;align-items:center;gap:9px;padding:7px 12px;background:#07102ddd;box-shadow:0 0 30px #245bff33}
-.menu{width:45px;height:45px;border-radius:50%;background:#101d4e;border:1px solid #5270e5;color:white;font-size:25px}.logo{flex:1;font-weight:800;font-size:23px}.logo span{color:#19d8ff;text-shadow:0 0 14px #19d8ff}.logo em{font-style:normal;color:#9b63ff}.free{padding:9px 13px;border-radius:20px;border:1px solid #a25aff;background:#34135d;font-weight:bold}
-.hero{text-align:center;padding-top:12px}
-.robot-stage{height:355px;position:relative;display:grid;place-items:center;overflow:hidden}
-.robot-stage:after{content:"";position:absolute;bottom:34px;width:250px;height:42px;border-radius:50%;border:2px solid #43d8ff;box-shadow:0 0 25px #267cff,inset 0 0 20px #7b38ff;transform:rotateX(65deg)}
-.robot{position:relative;width:170px;height:145px;animation:float 2.6s ease-in-out infinite;filter:drop-shadow(0 0 25px #198cff)}
-@keyframes float{0%,100%{transform:translateY(8px)}50%{transform:translateY(-32px)}}
-.body{position:absolute;left:12px;top:8px;width:146px;height:116px;border-radius:35px;background:linear-gradient(145deg,#ffffff,#aab6ca 55%,#68758e);box-shadow:inset 0 -8px 18px #59657e,0 10px 35px #1c72ff}
-.screen{position:absolute;left:27px;top:27px;width:116px;height:67px;border-radius:25px;background:#020817;box-shadow:inset 0 0 20px #0a3c99}
-.eye{position:absolute;top:51px;width:17px;height:17px;border-radius:50%;background:#32d8ff;box-shadow:0 0 16px #27d5ff}.eye.l{left:57px}.eye.r{right:57px}
-.antenna{position:absolute;left:82px;top:-23px;width:6px;height:28px;background:#d6deea}.antenna:after{content:"";position:absolute;top:-10px;left:-7px;width:20px;height:20px;border-radius:50%;background:#ff464f;box-shadow:0 0 15px #ff464f}
-.ear{position:absolute;top:43px;width:27px;height:53px;border-radius:14px;background:#e63d49}.ear.l{left:-15px}.ear.r{right:-15px}
-.speech{position:absolute;left:calc(50% - 245px);top:82px;width:145px;text-align:left;padding:12px;border:1px solid #667cff;border-radius:18px;background:#08154ddd;box-shadow:0 0 20px #4c4cff44;font-size:13px;z-index:3}.speech b{color:white}
-.tags{position:absolute;left:calc(50% + 125px);right:auto;top:35px;display:grid;gap:7px;text-align:left;z-index:3}.tag{padding:8px 12px;border:1px solid #3e64d7;border-radius:18px;background:#07194edd;font-size:12px;box-shadow:0 0 12px #225cff22}
-h1{font-size:37px;line-height:1.08;margin:4px 0 8px}.grad{background:linear-gradient(90deg,#00d9ff,#735cff,#ef42e7);-webkit-background-clip:text;color:transparent}.sub{color:#b3bad5;font-size:14px}
-.search{margin:18px 0 10px;padding:7px;display:flex;border:1px solid #5c6fff;border-radius:25px;background:#080e35;box-shadow:0 0 25px #334dff30}.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:white;padding:13px;font-size:15px}.search button{border:0;border-radius:19px;padding:0 20px;background:linear-gradient(90deg,#09b9ff,#c125ff);color:white;font-weight:bold;font-size:15px}
-.modes{display:flex;border:1px solid #1b3078;border-radius:20px;overflow:hidden;background:#070c2d}.mode{flex:1;padding:11px 4px;color:#b1bbdf;font-size:12px}.active{background:#17245f;color:white}
-.section{margin-top:27px}.title{display:flex;justify-content:space-between;align-items:center}.title h2{font-size:19px}.see{color:#61aaff;font-size:12px}.engines,.services{display:grid;gap:8px}.engines{grid-template-columns:repeat(4,1fr)}.engine,.service{border:1px solid #263f91;border-radius:17px;background:linear-gradient(145deg,#0c1949,#080b2b);text-align:center}.engine{padding:12px 4px;font-size:12px}.services{grid-template-columns:repeat(2,1fr)}.service{text-align:left;padding:14px;min-height:80px}.service b{display:block;margin:4px 0}.service span{color:#8e99c0;font-size:11px}.result{display:none;margin-top:12px;padding:14px;border:1px solid #556aff;border-radius:18px;background:#080e35;line-height:1.6}
-.banner{margin-top:22px;text-align:center;padding:17px;border:1px solid #a34dff;border-radius:20px;background:linear-gradient(90deg,#07205f,#42086b)}footer{text-align:center;color:#68749e;font-size:11px;padding:20px}
-@media(max-width:520px){.logo{font-size:20px}.free{padding:8px 10px}.robot-stage{height:335px}.speech{left:calc(50% - 220px);transform:scale(.82);transform-origin:right center}.tags{left:calc(50% + 112px);transform:scale(.82);transform-origin:left center}h1{font-size:34px}.robot{transform:scale(.9)}}
-@media(max-width:390px){.free{display:none}.robot-stage{height:315px}.robot{transform:scale(.82)}.speech{left:calc(50% - 190px);transform:scale(.68);transform-origin:right center}.tags{left:calc(50% + 98px);transform:scale(.68);transform-origin:left center}}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A My AI Search v3.0</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #02051d; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; }
+        .wrap { width: 100%; min-height: 100vh; padding: 10px 12px; background: radial-gradient(circle at 50% 22%, #123aaa 0, transparent 70%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+        header { width: 100%; height: 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0 10px; }
+        .logo { font-size: 20px; font-weight: 800; color: #00a2ff; }
+        .robot-stage { position: relative; width: 100%; max-width: 350px; height: 250px; display: flex; justify-content: center; align-items: center; margin: 20px 0; }
+        .robot { width: 140px; height: 110px; background: #fff; border-radius: 35px; border: 4px solid #138dff; box-shadow: 0 0 25px #2086ff; position: relative; animation: float 2.5s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        .screen { position: absolute; top: 25px; left: 15px; width: 102px; height: 52px; background: #02081f; border-radius: 15px; box-shadow: inset 0 0 20px #0a3c99; display: flex; justify-content: center; align-items: center; }
+        .eyes { width: 45px; height: 18px; background: #00ffcc; border-radius: 50%; filter: drop-shadow(0 0 8px #00ffcc); position: relative; clip-path: ellipse(50% 40% at 50% 50%); }
+        .speech { position: absolute; left: -10px; top: -35px; background: #2bd8ff; color: #02081f; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .speech::after { content: ''; position: absolute; bottom: -8px; left: 30px; border-width: 8px 8px 0; border-style: solid; border-color: #2bd8ff transparent; }
+        .search-section { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 15px; padding: 0 10px; margin-bottom: 30px; }
+        h1 { font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 5px; background: linear-gradient(90deg, #fff, #df42ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub-text { text-align: center; color: #8a92b2; font-size: 13px; margin-bottom: 10px; }
+        .search-bar { display: flex; background: rgba(255,255,255,0.07); border: 1px solid #1d3370; border-radius: 25px; padding: 5px; align-items: center; box-shadow: 0 0 20px rgba(16,40,111,0.2); }
+        .search-box { flex: 1; background: transparent; border: none; outline: none; color: #fff; padding: 12px 15px; font-size: 15px; }
+        .button-search { background: linear-gradient(90deg, #00d2ff, #9b35ff); color: #fff; border: none; padding: 12px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; }
+        .button-search:hover { filter: brightness(1.2); }
+        #aiResult { display: none; background: rgba(13, 20, 56, 0.7); border: 1px solid #1e3373; border-radius: 15px; padding: 15px; margin-top: 15px; font-size: 14px; line-height: 1.6; color: #e2e8f0; max-height: 250px; overflow-y: auto; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .modes { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        .mode { font-size: 12px; color: #6a739d; cursor: pointer; padding: 5px 10px; border-radius: 12px; transition: 0.3s; }
+        .mode.active, .mode:hover { color: #00d2ff; background: rgba(0,210,255,0.1); }
+        footer { font-size: 11px; color: #434c73; text-align: center; padding: 15px 0; width: 100%; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
 </head>
 <body>
+
 <div class="wrap">
-<header><button class="menu">☰</button><div class="logo"><span>A</span> My <em>AI</em> Search</div><div class="free">👑 Free</div></header>
-<section class="hero">
-<div class="robot-stage">
-<div class="speech">“Ask Anything... ✨<br><b>Get Smart Answers!</b></div>
-<div class="tags"><div class="tag">📖 Study</div><div class="tag">⌘ Coding</div><div class="tag">🛡 Security</div><div class="tag">⚛ Science</div><div class="tag">❤️ Health</div><div class="tag">🎮 Games</div></div>
-<div class="robot"><i class="antenna"></i><i class="ear l"></i><i class="ear r"></i><div class="body"><div class="screen"></div><i class="eye l"></i><i class="eye r"></i></div></div>
+    <header>
+        <div class="logo">A My AI Search</div>
+        <div style="color: #00ffcc; font-size: 12px; font-weight: bold;">Free Tier</div>
+    </header>
+
+    <div class="robot-stage">
+        <div class="speech">"Ask Anything... ✨ Get Smart Answers!"</div>
+        <div class="robot">
+            <div class="screen">
+                <div class="eyes"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <h1>Search Smarter with AI Power</h1>
+        <div class="sub-text">One Search • Smart Answers • All in One Place</div>
+        
+        <div class="search-bar">
+            <input type="text" class="search-box" placeholder="Ask me anything...">
+            <button class="button-search">🚀 Search</button>
+        </div>
+
+        <div class="modes">
+            <div class="mode active">✨ Smart Search</div>
+            <div class="mode">💬 AI Chat</div>
+            <div class="mode">🌐 Web Search</div>
+        </div>
+
+        <div id="aiResult"></div>
+    </div>
+
+    <footer>
+        <p>Powered by ChatGPT API • Developed by JackGamingOfficial</p>
+    </footer>
 </div>
-<h1>Search Smarter<br>with <span class="grad">AI Power</span></h1>
-<div class="sub">One Search • Smart Answers • All in One Place</div>
-<div class="search"><input id="q" placeholder="Ask me anything... (বা এখানে লিখুন)"><button onclick="go()">🚀 Search</button></div>
-<div class="modes"><div class="mode active">✨ Smart Search</div><div class="mode">💬 AI Chat</div><div class="mode">🌐 Web Search</div></div>
-<div id="result" class="result"></div>
-</section>
-<section class="section"><div class="title"><h2>🚀 Powered by Multiple AI Engines</h2><span class="see">See All →</span></div><div class="engines"><div class="engine">🌈<br>Gemini</div><div class="engine">☀️<br>Claude</div><div class="engine">◎<br>ChatGPT</div><div class="engine">◈<br>Perplexity</div></div></section>
-<section class="section"><div class="services"><div class="service">📚 <b>Study Helper</b><span>Doubt Solve & Notes</span></div><div class="service">💻 <b>Code Assistant</b><span>HTML, Python, Termux</span></div><div class="service">🛡️ <b>Cyber Tools</b><span>Security & OSINT Guide</span></div><div class="service">🧠 <b>Science & Tech</b><span>Smart Explanations</span></div><div class="service">❤️ <b>Health Guide</b><span>Safe Health Tips</span></div><div class="service">🎮 <b>Fun Zone</b><span>Games, Facts & More</span></div></div></section>
-<div class="banner"><b>100% Free • Fast • Smart • Private ✨</b><br><small>Your Personal AI Search Engine</small></div>
-<footer>♡ Made with ❤️ for Learners, Developers & Creators</footer>
-</div>
+
 <script>
-function go(){let q=document.getElementById('q').value.trim(),r=document.getElementById('result');if(!q)return;r.style.display='block';r.textContent='⏳ Searching...';setTimeout(()=>r.innerHTML='🤖 <b>Demo Search</b><br><br>তোমার প্রশ্ন: '+safe(q)+'<br><br>API ছাড়া demo mode চলছে।',600)}
-function safe(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')go()})
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js")
-      .then(() => console.log("Service Worker registered"))
-      .catch(err => console.error("Service Worker error:", err));
-  });
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.querySelector('.search-box');
+    const searchButton = document.querySelector('.button-search');
+    const responseContainer = document.getElementById('aiResult');
+
+    // ⚠️ Insert your OpenAI API Key here
+    const OPENAI_API_KEY = "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";
+
+    searchButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const userQuery = searchInput.value.trim();
+        
+        if (!userQuery) {
+            alert("Please write something!");
+            return;
+        }
+
+        responseContainer.style.display = "block";
+        responseContainer.innerText = "Searching with AI Power... Please wait...";
+
+        try {
+            const response = await fetch("https://openai.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${OPENAI_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-4o-mini",
+                    messages: [
+                        { role: "system", content: "You are a smart search engine assistant. Give concise answers in the language the user asks." },
+                        { role: "user", content: userQuery }
+                    ],
+                    max_tokens: 600
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                responseContainer.innerText = "Error: " + data.error.message;
+                return;
+            }
+
+            responseContainer.innerText = data.choices.message.content;
+
+        } catch (error) {
+            console.error("Error:", error);
+            responseContainer.innerText = "Sorry, something went wrong. Please try again.";
+        }
+    });
+});
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log("Service Worker Registered"))
+            .catch(err => console.error("Service Worker Error", err));
+    });
 }
 </script>
+
 </body>
 </html>
