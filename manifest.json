@@ -1,0 +1,10 @@
+{
+  "name": "My AI Search",
+  "short_name": "AI Search",
+  "start_url": "/my-ai-search/",
+  "display": "standalone",
+  "background_color": "#080b14",
+  "theme_color": "#111827",
+  "description": "Smart AI-powered search assistant",
+  "orientation": "portrait"
+}

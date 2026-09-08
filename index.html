@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="bn">
-<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111827"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>My AI Search v3.0</title>
@@ -54,6 +55,14 @@ h1{font-size:37px;line-height:1.08;margin:4px 0 8px}.grad{background:linear-grad
 function go(){let q=document.getElementById('q').value.trim(),r=document.getElementById('result');if(!q)return;r.style.display='block';r.textContent='⏳ Searching...';setTimeout(()=>r.innerHTML='🤖 <b>Demo Search</b><br><br>তোমার প্রশ্ন: '+safe(q)+'<br><br>API ছাড়া demo mode চলছে।',600)}
 function safe(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')go()})
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("Service Worker registered"))
+      .catch(err => console.error("Service Worker error:", err));
+  });
+}
 </script>
 </body>
 </html>
