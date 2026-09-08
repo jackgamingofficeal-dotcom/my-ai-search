@@ -17,6 +17,11 @@
         .eyes { width: 45px; height: 18px; background: #00ffcc; border-radius: 50%; filter: drop-shadow(0 0 8px #00ffcc); position: relative; clip-path: ellipse(50% 40% at 50% 50%); }
         .speech { position: absolute; left: -10px; top: -35px; background: #2bd8ff; color: #02081f; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .speech::after { content: ''; position: absolute; bottom: -8px; left: 30px; border-width: 8px 8px 0; border-style: solid; border-color: #2bd8ff transparent; }
+        
+        /* নতুন সিকিউরিটি কী বক্সের স্টাইল */
+        .key-section { width: 100%; max-width: 500px; padding: 0 10px; margin-bottom: 10px; }
+        .key-box { width: 100%; background: rgba(255,255,255,0.05); border: 1px dashed #1d3370; border-radius: 12px; padding: 10px 15px; color: #fff; font-size: 13px; outline: none; text-align: center; }
+        
         .search-section { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 15px; padding: 0 10px; margin-bottom: 30px; }
         h1 { font-size: 28px; font-weight: bold; text-align: center; margin-bottom: 5px; background: linear-gradient(90deg, #fff, #df42ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .sub-text { text-align: center; color: #8a92b2; font-size: 13px; margin-bottom: 10px; }
@@ -36,7 +41,7 @@
 <div class="wrap">
     <header>
         <div class="logo">A My AI Search</div>
-        <div style="color: #00ffcc; font-size: 12px; font-weight: bold;">Free Tier</div>
+        <div style="color: #00ffcc; font-size: 12px; font-weight: bold;">Secure Tier</div>
     </header>
 
     <div class="robot-stage">
@@ -46,6 +51,11 @@
                 <div class="eyes"></div>
             </div>
         </div>
+    </div>
+
+    <!-- নতুন ইনপুট বক্স যেখানে চাবি বসানো যাবে -->
+    <div class="key-section">
+        <input type="password" id="groqKeyInput" class="key-box" placeholder="Enter your Groq API Key here to activate...">
     </div>
 
     <div class="search-section">
@@ -76,24 +86,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.querySelector('.search-box');
     const searchButton = document.querySelector('.button-search');
     const responseContainer = document.getElementById('aiResult');
+    const keyInput = document.getElementById('groqKeyInput');
 
-    // ⚠️ নিচে থাকা ডাবল কোটেশন (" ") এর ভেতরে আপনার আসল Groq API Key টি পেস্ট করে বসিয়ে দিন
-    const GROQ_API_KEY = "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";
+    // আগে কখনো চাবি ইনপুট দেওয়া থাকলে তা নিজে থেকেই ব্রাউজারে সেভ থাকবে
+    if(localStorage.getItem('saved_groq_key')) {
+        keyInput.value = localStorage.getItem('saved_groq_key');
+    }
 
     searchButton.addEventListener('click', async (e) => {
         e.preventDefault();
+        
+        // বক্স থেকে চাবিটি নেওয়া হচ্ছে (কোডে সরাসরি কোনো চাবি নেই!)
+        const GROQ_API_KEY = keyInput.value.trim();
         const userQuery = searchInput.value.trim();
         
-        if (!userQuery) {
-            alert("Please write something!");
+        if (!GROQ_API_KEY) {
+            alert("Please enter a valid Groq API Key first!");
             return;
         }
+        
+        if (!userQuery) {
+            alert("Please write something to search!");
+            return;
+        }
+
+        // ভবিষ্যতের জন্য চাবিটি ব্রাউজারের লোকাল মেমোরিতে সেভ করে রাখা হচ্ছে
+        localStorage.setItem('saved_groq_key', GROQ_API_KEY);
 
         responseContainer.style.display = "block";
         responseContainer.innerText = "Searching with Groq AI Power... Please wait...";
 
         try {
-            // Groq API এর মাধ্যমে Llama 3 মডেল কল করা হচ্ছে (যা অত্যন্ত ফাস্ট ও ফ্রি)
             const response = await fetch("https://groq.com", {
                 method: "POST",
                 headers: {
@@ -122,8 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // রেসপন্স থেকে টেক্সট আউটপুট দেখানো
-            const aiReply = data.choices[0].message.content;
+            const aiReply = data.choices.message.content;
             responseContainer.innerText = aiReply;
 
         } catch (error) {
