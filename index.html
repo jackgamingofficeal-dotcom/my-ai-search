@@ -1345,6 +1345,26 @@ footer{
  }
 }
 
+
+/* PROFESSIONAL LOGIN */
+.auth-brand{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.auth-logo{font-size:15px;font-weight:900}
+.auth-logo span{background:linear-gradient(90deg,#00e5ff,#8c7cff,#ed70ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.auth-status{font-size:8px;color:#7180aa;font-weight:900;letter-spacing:1px}
+.auth-status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#46ffd0;box-shadow:0 0 10px #46ffd0;margin-right:5px}
+.auth-subtitle{margin-top:5px;color:#7784ad;font-size:11px}
+.auth-label{display:block;margin:12px 2px 6px;color:#7d8bb5;font-size:8px;font-weight:900;letter-spacing:1.3px}
+.auth-input-wrap{display:flex;align-items:center;gap:8px;padding:0 11px;border:1px solid rgba(100,130,255,.19);border-radius:13px;background:rgba(0,0,0,.22)}
+.auth-input-wrap:focus-within{border-color:rgba(0,220,255,.55);box-shadow:0 0 18px rgba(0,200,255,.08)}
+.auth-input-wrap>span{font-size:13px;opacity:.7}
+.auth-input-wrap .auth-field{margin:0;padding:12px 0;border:0;background:transparent;flex:1}
+.pass-toggle{border:0;background:transparent;color:#7784ad;cursor:pointer}
+.auth-submit{display:flex;align-items:center;justify-content:center;gap:8px}
+.auth-submit b{font-size:17px}
+.auth-security{display:flex;align-items:center;gap:10px;margin-top:15px;padding:11px;border:1px solid rgba(70,220,190,.12);border-radius:13px;background:rgba(40,180,150,.055)}
+.auth-security strong{display:block;color:#a9b8df;font-size:10px}
+.auth-security small{display:block;margin-top:3px;color:#637097;font-size:9px}
+
 </style>
 </head>
 
@@ -1576,23 +1596,26 @@ footer{
   </div>
 
   <label class="auth-label" id="nameLabel" style="display:none">NAME</label>
+
   <div class="auth-input-wrap" id="nameWrap" style="display:none">
    <span>👤</span>
    <input class="auth-field" id="authName" placeholder="Enter your name">
   </div>
 
   <label class="auth-label">EMAIL</label>
+
   <div class="auth-input-wrap">
    <span>✉️</span>
-   <input class="auth-field" id="authEmail" type="email"
-    placeholder="Enter your email" autocomplete="email">
+   <input class="auth-field" id="authEmail"
+    type="email" placeholder="Enter your email">
   </div>
 
   <label class="auth-label">PASSWORD</label>
+
   <div class="auth-input-wrap">
    <span>🔒</span>
-   <input class="auth-field" id="authPassword" type="password"
-    placeholder="Enter your password" autocomplete="current-password">
+   <input class="auth-field" id="authPassword"
+    type="password" placeholder="Enter your password">
    <button type="button" class="pass-toggle" id="passToggle">👁️</button>
   </div>
 
@@ -1613,6 +1636,7 @@ footer{
   </div>
 
  </div>
+
 </div>
 
 <!-- ===== PREMIUM ===== -->
@@ -2371,6 +2395,8 @@ renderHistory();
   signupTab.classList.toggle("active",mode==="signup");
 
   authName.style.display=mode==="signup"?"block":"none";
+  document.getElementById("nameWrap").style.display=mode==="signup"?"flex":"none";
+  document.getElementById("nameLabel").style.display=mode==="signup"?"block":"none";
   const nameWrap=document.getElementById("nameWrap");
   const nameLabel=document.getElementById("nameLabel");
   nameWrap.style.display=mode==="signup"?"flex":"none";
