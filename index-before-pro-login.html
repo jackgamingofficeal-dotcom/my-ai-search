@@ -1072,6 +1072,279 @@ footer{
  .chat-msg{max-width:94%}
 }
 
+
+/* ===== PREMIUM AUTH DESIGN ===== */
+.auth-overlay{
+ background:
+  radial-gradient(circle at 50% 20%,rgba(60,100,255,.18),transparent 38%),
+  rgba(1,3,15,.88);
+}
+
+.auth-box{
+ position:relative;
+ overflow:hidden;
+ width:min(430px,100%);
+ padding:26px;
+ border:1px solid rgba(110,145,255,.32);
+ border-radius:26px;
+ background:
+  linear-gradient(145deg,rgba(13,21,62,.97),rgba(3,7,25,.98));
+ box-shadow:
+  0 30px 100px rgba(0,0,0,.65),
+  0 0 70px rgba(70,80,255,.14);
+}
+
+.auth-box:before{
+ content:"";
+ position:absolute;
+ top:-100px;
+ left:50%;
+ width:220px;
+ height:220px;
+ transform:translateX(-50%);
+ border-radius:50%;
+ background:rgba(0,210,255,.10);
+ filter:blur(45px);
+ pointer-events:none;
+}
+
+.auth-brand{
+ position:relative;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ margin-bottom:22px;
+}
+
+.auth-logo{
+ font-size:15px;
+ font-weight:900;
+ letter-spacing:-.4px;
+}
+
+.auth-logo span{
+ background:linear-gradient(90deg,#00e5ff,#8c7cff,#ed70ff);
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+}
+
+.auth-status{
+ display:flex;
+ align-items:center;
+ gap:5px;
+ color:#7180aa;
+ font-size:8px;
+ font-weight:900;
+ letter-spacing:1px;
+}
+
+.auth-status i{
+ width:6px;
+ height:6px;
+ border-radius:50%;
+ background:#46ffd0;
+ box-shadow:0 0 10px #46ffd0;
+}
+
+.auth-head{
+ position:relative;
+ margin-bottom:18px;
+}
+
+.auth-title{
+ font-size:25px;
+ font-weight:900;
+ letter-spacing:-.8px;
+}
+
+.auth-subtitle{
+ margin-top:5px;
+ color:#7784ad;
+ font-size:11px;
+}
+
+.auth-close{
+ position:absolute;
+ right:0;
+ top:0;
+ width:32px;
+ height:32px;
+ border:1px solid rgba(100,130,255,.18);
+ border-radius:10px;
+ background:rgba(50,65,140,.18);
+ color:#aab6df;
+ cursor:pointer;
+}
+
+.auth-close:hover{
+ color:#fff;
+ border-color:rgba(0,229,255,.5);
+}
+
+.auth-tabs{
+ position:relative;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:5px;
+ padding:5px;
+ margin-bottom:18px;
+ border:1px solid rgba(100,125,255,.13);
+ border-radius:14px;
+ background:rgba(0,0,0,.22);
+}
+
+.auth-tab{
+ border:0;
+ padding:10px;
+ border-radius:10px;
+ background:transparent;
+ color:#68759c;
+ cursor:pointer;
+ font-size:11px;
+ font-weight:900;
+}
+
+.auth-tab.active{
+ color:#fff;
+ background:linear-gradient(
+ 100deg,
+ rgba(0,210,255,.16),
+ rgba(105,90,255,.22)
+ );
+ box-shadow:0 0 18px rgba(70,100,255,.10);
+}
+
+.auth-label{
+ display:block;
+ margin:12px 2px 6px;
+ color:#7d8bb5;
+ font-size:8px;
+ font-weight:900;
+ letter-spacing:1.3px;
+}
+
+.auth-input-wrap{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ padding:0 11px;
+ border:1px solid rgba(100,130,255,.19);
+ border-radius:13px;
+ background:rgba(0,0,0,.22);
+ transition:.2s;
+}
+
+.auth-input-wrap:focus-within{
+ border-color:rgba(0,220,255,.55);
+ box-shadow:0 0 18px rgba(0,200,255,.08);
+}
+
+.auth-input-wrap>span{
+ font-size:13px;
+ opacity:.7;
+}
+
+.auth-field{
+ flex:1;
+ width:100%;
+ margin:0;
+ padding:12px 0;
+ border:0;
+ outline:0;
+ background:transparent;
+ color:#fff;
+ font-size:12px;
+}
+
+.auth-field::placeholder{
+ color:#596684;
+}
+
+.pass-toggle{
+ border:0;
+ background:transparent;
+ color:#7784ad;
+ cursor:pointer;
+ font-size:12px;
+ padding:5px;
+}
+
+.auth-submit{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:8px;
+ width:100%;
+ margin-top:18px;
+ padding:13px;
+ border:0;
+ border-radius:14px;
+ color:#fff;
+ font-size:12px;
+ font-weight:900;
+ cursor:pointer;
+ background:linear-gradient(100deg,#08cfff,#6867ff 55%,#cf43ff);
+ box-shadow:0 0 28px rgba(90,90,255,.25);
+ transition:.2s;
+}
+
+.auth-submit:hover{
+ transform:translateY(-1px);
+ filter:brightness(1.08);
+}
+
+.auth-submit b{
+ font-size:17px;
+ line-height:10px;
+}
+
+.auth-security{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ margin-top:15px;
+ padding:11px;
+ border:1px solid rgba(70,220,190,.12);
+ border-radius:13px;
+ background:rgba(40,180,150,.055);
+}
+
+.auth-security>span{
+ font-size:17px;
+}
+
+.auth-security strong{
+ display:block;
+ color:#a9b8df;
+ font-size:10px;
+}
+
+.auth-security small{
+ display:block;
+ margin-top:3px;
+ color:#637097;
+ font-size:9px;
+}
+
+.auth-note{
+ margin-top:12px;
+ color:#566282;
+ font-size:9px;
+ line-height:1.5;
+ text-align:center;
+}
+
+@media(max-width:600px){
+ .auth-box{
+  padding:21px;
+  border-radius:23px;
+ }
+ .auth-title{
+  font-size:22px;
+ }
+}
+
 </style>
 </head>
 
@@ -1284,29 +1557,59 @@ footer{
 <div class="auth-overlay" id="authOverlay">
  <div class="auth-box">
 
+  <div class="auth-brand">
+   <div class="auth-logo">A My <span>AI Search</span></div>
+   <div class="auth-status"><i></i> NEURAL ACCESS</div>
+  </div>
+
   <div class="auth-head">
-   <div class="auth-title" id="authTitle">Welcome Back 👋</div>
+   <div>
+    <div class="auth-title" id="authTitle">Welcome Back 👋</div>
+    <div class="auth-subtitle">Continue to your AI workspace</div>
+   </div>
    <button class="auth-close" id="authClose">✕</button>
   </div>
 
   <div class="auth-tabs">
-   <button class="auth-tab active" id="loginTab">Login</button>
-   <button class="auth-tab" id="signupTab">Sign Up</button>
+   <button class="auth-tab active" id="loginTab">🔐 Login</button>
+   <button class="auth-tab" id="signupTab">✨ Sign Up</button>
   </div>
 
-  <input class="auth-field" id="authName"
-   placeholder="Your name" style="display:none">
+  <label class="auth-label" id="nameLabel" style="display:none">NAME</label>
+  <div class="auth-input-wrap" id="nameWrap" style="display:none">
+   <span>👤</span>
+   <input class="auth-field" id="authName" placeholder="Enter your name">
+  </div>
 
-  <input class="auth-field" id="authEmail"
-   type="email" placeholder="Email">
+  <label class="auth-label">EMAIL</label>
+  <div class="auth-input-wrap">
+   <span>✉️</span>
+   <input class="auth-field" id="authEmail" type="email"
+    placeholder="Enter your email" autocomplete="email">
+  </div>
 
-  <input class="auth-field" id="authPassword"
-   type="password" placeholder="Password">
+  <label class="auth-label">PASSWORD</label>
+  <div class="auth-input-wrap">
+   <span>🔒</span>
+   <input class="auth-field" id="authPassword" type="password"
+    placeholder="Enter your password" autocomplete="current-password">
+   <button type="button" class="pass-toggle" id="passToggle">👁️</button>
+  </div>
 
-  <button class="auth-submit" id="authSubmit">Login</button>
+  <button class="auth-submit" id="authSubmit">
+   <span>Login</span> <b>→</b>
+  </button>
+
+  <div class="auth-security">
+   <span>🛡️</span>
+   <div>
+    <strong>Local Demo Account</strong>
+    <small>Your demo profile stays on this device.</small>
+   </div>
+  </div>
 
   <div class="auth-note">
-   Demo/local account UI only. No real account or payment is created.
+   No real account, payment, or server password is created.
   </div>
 
  </div>
@@ -2004,6 +2307,15 @@ renderHistory();
  const chatUser=document.getElementById("chatUser");
  const clearChat=document.getElementById("clearChat");
 
+ const passToggle=document.getElementById("passToggle");
+ if(passToggle){
+  passToggle.addEventListener("click",()=>{
+   const isPass=authPassword.type==="password";
+   authPassword.type=isPass?"text":"password";
+   passToggle.textContent=isPass?"🙈":"👁️";
+  });
+ }
+
  let authMode="login";
 
  function getUser(){
@@ -2059,6 +2371,10 @@ renderHistory();
   signupTab.classList.toggle("active",mode==="signup");
 
   authName.style.display=mode==="signup"?"block":"none";
+  const nameWrap=document.getElementById("nameWrap");
+  const nameLabel=document.getElementById("nameLabel");
+  nameWrap.style.display=mode==="signup"?"flex":"none";
+  nameLabel.style.display=mode==="signup"?"block":"none";
   authTitle.textContent=mode==="login"?"Welcome Back 👋":"Create Your Account 🚀";
   authSubmit.textContent=mode==="login"?"Login":"Create Account";
  }
