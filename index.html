@@ -715,6 +715,180 @@ footer{
 .clear-history{border:0;background:transparent;color:#7784ad;font-size:10px;cursor:pointer}
 .history-item{padding:10px;margin-top:7px;border-radius:12px;background:rgba(40,55,120,.16);border:1px solid rgba(100,120,255,.12);color:#cbd5f5;font-size:11px;cursor:pointer}
 @media(max-width:600px){.result-actions{display:grid;grid-template-columns:1fr 1fr}.action-btn{width:100%}}
+
+/* ===== PRO DASHBOARD ===== */
+
+.pro-tools{
+ display:flex;
+ gap:8px;
+ justify-content:center;
+ margin:14px auto 0;
+ flex-wrap:wrap;
+}
+
+.pro-tool{
+ border:1px solid rgba(100,130,255,.25);
+ background:rgba(35,50,120,.22);
+ color:#b9c8ff;
+ border-radius:12px;
+ padding:9px 14px;
+ font-size:11px;
+ font-weight:800;
+ cursor:pointer;
+}
+
+.pro-tool:hover{
+ border-color:rgba(0,229,255,.55);
+ color:#fff;
+ transform:translateY(-1px);
+}
+
+.profile-panel,
+.settings-panel{
+ display:none;
+ width:min(760px,100%);
+ margin:12px auto 0;
+ padding:18px;
+ border:1px solid rgba(100,125,255,.25);
+ border-radius:20px;
+ background:rgba(5,10,32,.82);
+ box-shadow:0 18px 55px rgba(0,0,0,.25);
+ text-align:left;
+}
+
+.profile-panel.show,
+.settings-panel.show{
+ display:block;
+}
+
+.panel-title{
+ color:#8eeeff;
+ font-size:13px;
+ font-weight:900;
+ margin-bottom:14px;
+}
+
+.profile-name{
+ font-size:22px;
+ font-weight:900;
+ margin-bottom:5px;
+}
+
+.profile-plan{
+ color:#8994b8;
+ font-size:11px;
+}
+
+.setting-row{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ padding:12px 0;
+ border-bottom:1px solid rgba(255,255,255,.06);
+ color:#cbd5f5;
+ font-size:12px;
+}
+
+.setting-row:last-child{
+ border-bottom:0;
+}
+
+.setting-btn{
+ border:1px solid rgba(100,130,255,.25);
+ background:rgba(50,65,145,.18);
+ color:#b9c8ff;
+ border-radius:9px;
+ padding:7px 10px;
+ cursor:pointer;
+ font-size:10px;
+}
+
+.history{
+ width:min(760px,100%);
+ margin:14px auto 0;
+ display:none;
+ text-align:left;
+ padding:15px;
+ border:1px solid rgba(100,125,255,.22);
+ border-radius:18px;
+ background:rgba(5,10,32,.75);
+}
+
+.history.show{
+ display:block;
+}
+
+.history-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:10px;
+}
+
+.history-title{
+ font-size:12px;
+ font-weight:900;
+ color:#9eefff;
+}
+
+.clear-history{
+ border:0;
+ background:transparent;
+ color:#7784ad;
+ font-size:10px;
+ cursor:pointer;
+}
+
+.history-item{
+ padding:10px;
+ margin-top:7px;
+ border-radius:12px;
+ background:rgba(40,55,120,.16);
+ border:1px solid rgba(100,120,255,.12);
+ color:#cbd5f5;
+ font-size:11px;
+ cursor:pointer;
+}
+
+.result-actions{
+ display:flex;
+ gap:8px;
+ margin-top:12px;
+ flex-wrap:wrap;
+}
+
+.action-btn{
+ border:1px solid rgba(100,130,255,.25);
+ background:rgba(50,65,145,.18);
+ color:#b9c8ff;
+ border-radius:11px;
+ padding:8px 12px;
+ font-size:11px;
+ font-weight:700;
+ cursor:pointer;
+}
+
+.action-btn:hover{
+ border-color:rgba(0,229,255,.55);
+ color:#fff;
+}
+
+@media(max-width:600px){
+ .setting-row{
+  align-items:flex-start;
+ }
+
+ .result-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+ }
+
+ .action-btn{
+  width:100%;
+ }
+}
+
 </style>
 </head>
 
@@ -841,6 +1015,13 @@ footer{
 
  </div>
 
+ 
+<div class="pro-tools">
+ <button class="pro-tool" id="profileBtn">👤 Profile</button>
+ <button class="pro-tool" id="historyBtn">🕘 History</button>
+ <button class="pro-tool" id="settingsBtn">⚙️ Settings</button>
+</div>
+
  <div class="status" id="status">
   Ready • Choose a mode and ask a question
  </div>
@@ -869,6 +1050,33 @@ footer{
 </div>
 <div id="historyList"></div>
 </section>
+
+<section class="profile-panel" id="profilePanel">
+ <div class="panel-title">👤 MY PROFILE</div>
+ <div class="profile-name" id="profileName">A My User</div>
+ <div class="profile-plan">FREE PLAN • Local profile</div>
+</section>
+
+
+<section class="settings-panel" id="settingsPanel">
+ <div class="panel-title">⚙️ SETTINGS</div>
+
+ <div class="setting-row">
+  <span>Save search history</span>
+  <button class="setting-btn" id="historyToggle">ON</button>
+ </div>
+
+ <div class="setting-row">
+  <span>AI mode</span>
+  <button class="setting-btn" id="modeInfo">AI Search</button>
+ </div>
+
+ <div class="setting-row">
+  <span>Local API key storage</span>
+  <button class="setting-btn" id="keyInfo">Enabled</button>
+ </div>
+</section>
+
 <!-- ===== PREMIUM ===== -->
 
 <section class="premium-section">
@@ -1352,6 +1560,192 @@ clearHistory.onclick=()=>{
 };
 
 renderHistory();
+
+/* ===== PROFESSIONAL FEATURES ===== */
+
+const profileBtn = document.getElementById("profileBtn");
+const historyBtn = document.getElementById("historyBtn");
+const settingsBtn = document.getElementById("settingsBtn");
+
+const profilePanel = document.getElementById("profilePanel");
+const historyBox = document.getElementById("historyBox");
+const settingsPanel = document.getElementById("settingsPanel");
+
+const historyList = document.getElementById("historyList");
+const clearHistory = document.getElementById("clearHistory");
+
+const copyBtn = document.getElementById("copyBtn");
+const shareBtn = document.getElementById("shareBtn");
+
+let searchHistory =
+ JSON.parse(localStorage.getItem("aMySearchHistory") || "[]");
+
+let saveHistoryEnabled =
+ localStorage.getItem("aMySaveHistory") !== "off";
+
+function hidePanels(){
+ profilePanel.classList.remove("show");
+ historyBox.classList.remove("show");
+ settingsPanel.classList.remove("show");
+}
+
+profileBtn.onclick = () => {
+ const open = !profilePanel.classList.contains("show");
+ hidePanels();
+ if(open) profilePanel.classList.add("show");
+};
+
+historyBtn.onclick = () => {
+ const open = !historyBox.classList.contains("show");
+ hidePanels();
+ if(open){
+  renderHistory();
+  historyBox.classList.add("show");
+ }
+};
+
+settingsBtn.onclick = () => {
+ const open = !settingsPanel.classList.contains("show");
+ hidePanels();
+ if(open) settingsPanel.classList.add("show");
+};
+
+function renderHistory(){
+
+ historyList.innerHTML = "";
+
+ if(!searchHistory.length){
+  historyList.innerHTML =
+   '<div style="color:#66739b;font-size:11px">No searches yet.</div>';
+  return;
+ }
+
+ searchHistory.slice(0,10).forEach(item => {
+
+  const div = document.createElement("div");
+
+  div.className = "history-item";
+  div.textContent = item.question;
+
+  div.onclick = () => {
+   question.value = item.question;
+   result.classList.add("show");
+   answer.textContent = item.answer;
+   status.textContent = "Loaded from search history.";
+  };
+
+  historyList.appendChild(div);
+ });
+}
+
+function saveHistory(q,text){
+
+ if(!saveHistoryEnabled) return;
+
+ searchHistory.unshift({
+  question:q,
+  answer:text,
+  time:Date.now()
+ });
+
+ searchHistory = searchHistory.slice(0,10);
+
+ localStorage.setItem(
+  "aMySearchHistory",
+  JSON.stringify(searchHistory)
+ );
+
+ renderHistory();
+}
+
+copyBtn.onclick = async () => {
+
+ const text = answer.textContent.trim();
+
+ if(!text) return;
+
+ try{
+  await navigator.clipboard.writeText(text);
+  status.textContent = "Answer copied to clipboard.";
+ }catch{
+  status.textContent = "Copy failed.";
+ }
+};
+
+shareBtn.onclick = async () => {
+
+ const text = answer.textContent.trim();
+
+ if(!text) return;
+
+ if(navigator.share){
+
+  try{
+   await navigator.share({
+    title:"A My AI Search",
+    text:text
+   });
+  }catch{}
+
+ }else{
+
+  try{
+   await navigator.clipboard.writeText(text);
+   status.textContent =
+    "Sharing isn't supported. Answer copied instead.";
+  }catch{
+   status.textContent =
+    "Sharing isn't supported.";
+  }
+ }
+};
+
+clearHistory.onclick = () => {
+
+ searchHistory = [];
+
+ localStorage.removeItem("aMySearchHistory");
+
+ renderHistory();
+
+ status.textContent = "Search history cleared.";
+};
+
+const historyToggle =
+ document.getElementById("historyToggle");
+
+historyToggle.textContent =
+ saveHistoryEnabled ? "ON" : "OFF";
+
+historyToggle.onclick = () => {
+
+ saveHistoryEnabled = !saveHistoryEnabled;
+
+ localStorage.setItem(
+  "aMySaveHistory",
+  saveHistoryEnabled ? "on" : "off"
+ );
+
+ historyToggle.textContent =
+  saveHistoryEnabled ? "ON" : "OFF";
+
+ status.textContent =
+  saveHistoryEnabled
+   ? "Search history enabled."
+   : "Search history disabled.";
+};
+
+document.getElementById("modeInfo").onclick = () => {
+ status.textContent = "Current mode: " + mode;
+};
+
+document.getElementById("keyInfo").onclick = () => {
+ status.textContent =
+  "API key is stored locally on this device.";
+};
+
+renderHistory();
+
 </script>
 
 </body>
