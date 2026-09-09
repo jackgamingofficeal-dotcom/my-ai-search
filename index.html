@@ -704,6 +704,17 @@ footer{
  }
 
 }
+/* PROFESSIONAL ACTIONS */
+.result-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.action-btn{border:1px solid rgba(100,130,255,.25);background:rgba(50,65,145,.18);color:#b9c8ff;border-radius:11px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.action-btn:hover{transform:translateY(-1px);border-color:rgba(0,229,255,.55);color:#fff}
+.history{width:min(760px,100%);margin:14px auto 0;display:none;text-align:left;padding:15px;border:1px solid rgba(100,125,255,.22);border-radius:18px;background:rgba(5,10,32,.75)}
+.history.show{display:block}
+.history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.history-title{font-size:12px;font-weight:900;color:#9eefff}
+.clear-history{border:0;background:transparent;color:#7784ad;font-size:10px;cursor:pointer}
+.history-item{padding:10px;margin-top:7px;border-radius:12px;background:rgba(40,55,120,.16);border:1px solid rgba(100,120,255,.12);color:#cbd5f5;font-size:11px;cursor:pointer}
+@media(max-width:600px){.result-actions{display:grid;grid-template-columns:1fr 1fr}.action-btn{width:100%}}
 </style>
 </head>
 
@@ -841,11 +852,23 @@ footer{
   </div>
 
   <div id="answer"></div>
+<div class="result-actions">
+<button class="action-btn" id="copyBtn">📋 Copy</button>
+<button class="action-btn" id="shareBtn">🔗 Share</button>
+</div>
 
  </div>
 
 </section>
 
+<!-- SEARCH HISTORY -->
+<section class="history" id="historyBox">
+<div class="history-head">
+<div class="history-title">🕘 SEARCH HISTORY</div>
+<button class="clear-history" id="clearHistory">Clear</button>
+</div>
+<div id="historyList"></div>
+</section>
 <!-- ===== PREMIUM ===== -->
 
 <section class="premium-section">
@@ -1140,6 +1163,8 @@ async function askAI(){
   answer.textContent =
    text;
 
+  saveHistory(q,text);
+
   status.textContent =
    "Answer generated • " +
    mode +
@@ -1253,6 +1278,80 @@ window.addEventListener(
  }
 );
 
+
+
+/* PROFESSIONAL FEATURES */
+const copyBtn=document.getElementById("copyBtn");
+const shareBtn=document.getElementById("shareBtn");
+const historyBox=document.getElementById("historyBox");
+const historyList=document.getElementById("historyList");
+const clearHistory=document.getElementById("clearHistory");
+
+let searchHistory=JSON.parse(localStorage.getItem("aMySearchHistory")||"[]");
+
+function renderHistory(){
+ historyList.innerHTML="";
+ if(!searchHistory.length){
+  historyList.innerHTML='<div style="color:#66739b;font-size:11px">No searches yet.</div>';
+  return;
+ }
+ searchHistory.slice(0,8).forEach(item=>{
+  const div=document.createElement("div");
+  div.className="history-item";
+  div.textContent=item.question;
+  div.onclick=()=>{
+   question.value=item.question;
+   result.classList.add("show");
+   answer.textContent=item.answer;
+   status.textContent="Loaded from search history.";
+  };
+  historyList.appendChild(div);
+ });
+}
+
+function saveHistory(q,text){
+ searchHistory.unshift({question:q,answer:text});
+ searchHistory=searchHistory.slice(0,8);
+ localStorage.setItem("aMySearchHistory",JSON.stringify(searchHistory));
+ renderHistory();
+ historyBox.classList.add("show");
+}
+
+copyBtn.onclick=async()=>{
+ const text=answer.textContent.trim();
+ if(!text)return;
+ try{
+  await navigator.clipboard.writeText(text);
+  status.textContent="Answer copied to clipboard.";
+ }catch{
+  status.textContent="Copy failed.";
+ }
+};
+
+shareBtn.onclick=async()=>{
+ const text=answer.textContent.trim();
+ if(!text)return;
+ if(navigator.share){
+  try{
+   await navigator.share({title:"A My AI Search",text:text});
+  }catch{}
+ }else{
+  try{
+   await navigator.clipboard.writeText(text);
+   status.textContent="Answer copied to clipboard.";
+  }catch{}
+ }
+};
+
+clearHistory.onclick=()=>{
+ searchHistory=[];
+ localStorage.removeItem("aMySearchHistory");
+ renderHistory();
+ historyBox.classList.remove("show");
+ status.textContent="Search history cleared.";
+};
+
+renderHistory();
 </script>
 
 </body>
