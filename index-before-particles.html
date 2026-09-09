@@ -1357,36 +1357,6 @@ footer{
   opacity:.55;
 }
 
-
-/* ===== AMBIENT PARTICLES + MOUSE GLOW ===== */
-#ambientParticles{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:9998;
-  opacity:.32;
-}
-
-body{
-  --mx:50%;
-  --my:50%;
-}
-
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:9997;
-  background:radial-gradient(
-    420px circle at var(--mx) var(--my),
-    rgba(80,130,255,.07),
-    transparent 70%
-  );
-}
-
 </style>
 </head>
 
@@ -2545,65 +2515,6 @@ renderHistory();
   resize();
   window.addEventListener("resize", resize);
   draw();
-})();
-</script>
-
-
-<!-- ===== AMBIENT PARTICLES + MOUSE GLOW ===== -->
-<canvas id="ambientParticles"></canvas>
-<script>
-(() => {
-  const c = document.getElementById("ambientParticles");
-  if (!c) return;
-
-  const ctx = c.getContext("2d");
-  let w, h, particles = [];
-
-  function resize(){
-    w = c.width = innerWidth;
-    h = c.height = innerHeight;
-
-    const count = w < 600 ? 18 : 32;
-
-    particles = Array.from({length:count}, () => ({
-      x:Math.random()*w,
-      y:Math.random()*h,
-      r:Math.random()*1.4+.4,
-      vx:(Math.random()-.5)*.18,
-      vy:(Math.random()-.5)*.12,
-      a:Math.random()*.35+.12
-    }));
-  }
-
-  function animate(){
-    ctx.clearRect(0,0,w,h);
-
-    for(const p of particles){
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if(p.x < -5) p.x=w+5;
-      if(p.x > w+5) p.x=-5;
-      if(p.y < -5) p.y=h+5;
-      if(p.y > h+5) p.y=-5;
-
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(170,205,255,${p.a})`;
-      ctx.fill();
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  resize();
-  addEventListener("resize",resize);
-  animate();
-
-  addEventListener("pointermove",e=>{
-    document.body.style.setProperty("--mx",e.clientX+"px");
-    document.body.style.setProperty("--my",e.clientY+"px");
-  });
 })();
 </script>
 
