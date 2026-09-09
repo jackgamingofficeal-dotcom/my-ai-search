@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#020515">
-<title>A My AI Search</title>
+<title>A My AI Search — Neural Core</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -26,12 +26,12 @@ html{scroll-behavior:smooth}
 body{
  min-height:100vh;
  color:var(--text);
- font-family:Inter,system-ui,Arial,sans-serif;
  background:
  radial-gradient(circle at 50% 12%,rgba(70,80,255,.22),transparent 32%),
  radial-gradient(circle at 10% 75%,rgba(0,229,255,.08),transparent 28%),
  radial-gradient(circle at 90% 75%,rgba(190,60,255,.10),transparent 28%),
  var(--bg);
+ font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
  overflow-x:hidden;
 }
 
@@ -40,6 +40,7 @@ body:before{
  position:fixed;
  inset:0;
  pointer-events:none;
+ z-index:-1;
  background-image:
  linear-gradient(rgba(100,120,255,.035) 1px,transparent 1px),
  linear-gradient(90deg,rgba(100,120,255,.035) 1px,transparent 1px);
@@ -134,7 +135,7 @@ h1{
  margin:auto;
 }
 
-/* NEURAL CORE */
+/* ===== 3D NEURAL CORE ===== */
 
 .core-stage{
  height:370px;
@@ -196,7 +197,7 @@ h1{
 
 .brain:after{
  inset:28px;
- border-color:rgba(212,111,255,.3);
+ border-color:rgba(212,111,255,.30);
 }
 
 .neural-lines{
@@ -311,7 +312,7 @@ h1{
  transform:perspective(400px) rotateX(65deg);
 }
 
-/* SEARCH */
+/* ===== SEARCH ===== */
 
 .search-card{
  width:min(760px,100%);
@@ -459,14 +460,145 @@ h1{
  margin-bottom:8px;
 }
 
+/* ===== PREMIUM ===== */
+
+.premium-section{
+ width:min(900px,100%);
+ margin:48px auto 0;
+ text-align:center;
+}
+
+.premium-badge{
+ display:inline-block;
+ padding:7px 14px;
+ border:1px solid rgba(220,100,255,.4);
+ border-radius:999px;
+ color:#e9b7ff;
+ background:rgba(150,50,255,.10);
+ font-size:11px;
+ font-weight:900;
+ box-shadow:0 0 18px rgba(170,70,255,.12);
+}
+
+.premium-section h2{
+ margin:14px 0 7px;
+ font-size:30px;
+ letter-spacing:-1px;
+}
+
+.premium-section h2 span{
+ background:linear-gradient(90deg,#6eeaff,#a978ff,#f080ff);
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+}
+
+.premium-sub{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.6;
+ margin-bottom:23px;
+}
+
+.plans{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+ text-align:left;
+}
+
+.plan{
+ position:relative;
+ padding:22px;
+ border-radius:22px;
+ background:
+ linear-gradient(
+ 145deg,
+ rgba(13,20,58,.76),
+ rgba(4,8,26,.78)
+ );
+ border:1px solid rgba(100,125,255,.22);
+ box-shadow:0 18px 55px rgba(0,0,0,.25);
+}
+
+.premium-plan{
+ border-color:rgba(190,90,255,.5);
+ box-shadow:
+ 0 0 35px rgba(150,60,255,.13),
+ 0 18px 55px rgba(0,0,0,.30);
+}
+
+.plan-name{
+ font-size:12px;
+ font-weight:900;
+ letter-spacing:1.5px;
+ color:#9ca8d0;
+}
+
+.premium-plan .plan-name{
+ color:#e7b2ff;
+}
+
+.price{
+ margin:10px 0 18px;
+ font-size:25px;
+ font-weight:900;
+}
+
+.price small{
+ font-size:11px;
+ color:#68759c;
+ font-weight:500;
+}
+
+.plan ul{
+ list-style:none;
+ color:#cbd5f5;
+ font-size:13px;
+ line-height:2;
+ margin-bottom:18px;
+}
+
+.plan-btn{
+ width:100%;
+ padding:11px;
+ border-radius:13px;
+ font-weight:800;
+ border:1px solid rgba(100,125,255,.25);
+ background:rgba(60,70,140,.18);
+ color:#aab6df;
+}
+
+.premium-btn{
+ cursor:pointer;
+ color:#fff;
+ border:0;
+ background:linear-gradient(
+ 100deg,#08cfff,#7165ff,#cf43ff
+ );
+ box-shadow:0 0 25px rgba(130,70,255,.25);
+}
+
+.popular{
+ position:absolute;
+ right:15px;
+ top:15px;
+ padding:5px 8px;
+ border-radius:999px;
+ font-size:9px;
+ font-weight:900;
+ color:#fff;
+ background:linear-gradient(90deg,#765cff,#d34cff);
+}
+
 footer{
  text-align:center;
  color:#4f5b82;
  font-size:11px;
- padding:24px 0 4px;
+ padding:28px 0 4px;
 }
 
-/* ANIMATION */
+/* ===== ANIMATION ===== */
 
 @keyframes pulse{
  0%,100%{opacity:.55;transform:scale(.8)}
@@ -491,7 +623,7 @@ footer{
  to{transform:rotateX(68deg) rotateZ(-360deg)}
 }
 
-/* MOBILE */
+/* ===== MOBILE ===== */
 
 @media(max-width:600px){
 
@@ -539,9 +671,20 @@ footer{
   padding:0 11px;
  }
 
- .ring{
-  width:310px;
-  margin-left:-155px;
+ .plans{
+  grid-template-columns:1fr;
+ }
+
+ .premium-section{
+  margin-top:35px;
+ }
+
+ .premium-section h2{
+  font-size:25px;
+ }
+
+ .plan{
+  padding:20px;
  }
 }
 
@@ -588,120 +731,194 @@ footer{
   Ask anything and explore intelligent answers through a futuristic neural interface.
  </p>
 
- <!-- NEURAL CORE -->
+<!-- ===== 3D NEURAL CORE ===== -->
 
- <section class="core-stage">
+<section class="core-stage">
 
-  <div class="core" id="core">
+ <div class="core" id="core">
 
-   <div class="core-glow"></div>
+  <div class="core-glow"></div>
 
-   <div class="brain">
-    <div class="scan"></div>
-   </div>
+  <div class="brain">
+   <div class="scan"></div>
+  </div>
 
-   <div class="neural-lines">
+  <div class="neural-lines">
 
-    <i class="node n1"></i>
-    <i class="node n2"></i>
-    <i class="node n3"></i>
-    <i class="node n4"></i>
-    <i class="node n5"></i>
-    <i class="node n6"></i>
-    <i class="node n7"></i>
-    <i class="node n8"></i>
-    <i class="node n9"></i>
+   <i class="node n1"></i>
+   <i class="node n2"></i>
+   <i class="node n3"></i>
+   <i class="node n4"></i>
+   <i class="node n5"></i>
+   <i class="node n6"></i>
+   <i class="node n7"></i>
+   <i class="node n8"></i>
+   <i class="node n9"></i>
 
-    <i class="connection c1"></i>
-    <i class="connection c2"></i>
-    <i class="connection c3"></i>
-    <i class="connection c4"></i>
-    <i class="connection c5"></i>
-
-   </div>
-
-   <div class="ring r1">
-    <i class="orbital-dot od1"></i>
-   </div>
-
-   <div class="ring r2">
-    <i class="orbital-dot od2"></i>
-   </div>
-
-   <div class="ring r3"></div>
+   <i class="connection c1"></i>
+   <i class="connection c2"></i>
+   <i class="connection c3"></i>
+   <i class="connection c4"></i>
+   <i class="connection c5"></i>
 
   </div>
 
-  <div class="platform"></div>
+  <div class="ring r1">
+   <i class="orbital-dot od1"></i>
+  </div>
 
- </section>
+  <div class="ring r2">
+   <i class="orbital-dot od2"></i>
+  </div>
 
- <!-- SEARCH -->
+  <div class="ring r3"></div>
 
- <section class="search-card">
+ </div>
 
-  <div class="key-row">
+ <div class="platform"></div>
 
-   <input
-    id="apiKey"
-    class="input"
-    type="password"
-    placeholder="Optional Gemini API key"
-   >
+</section>
 
-   <button class="key-btn" id="saveKey">
-    Save
+<!-- ===== SEARCH ===== -->
+
+<section class="search-card">
+
+ <div class="key-row">
+
+  <input
+   id="apiKey"
+   class="input"
+   type="password"
+   placeholder="Optional Gemini API key"
+  >
+
+  <button class="key-btn" id="saveKey">
+   Save
+  </button>
+
+ </div>
+
+ <div class="searchbar">
+
+  <input
+   id="question"
+   class="search-input"
+   autocomplete="off"
+   placeholder="Ask anything..."
+   aria-label="Ask anything"
+  >
+
+  <button class="search-btn" id="askBtn">
+   Search
+  </button>
+
+ </div>
+
+ <div class="modes">
+
+  <button class="mode active" data-mode="AI Search">
+   AI Search
+  </button>
+
+  <button class="mode" data-mode="Fast">
+   Fast
+  </button>
+
+  <button class="mode" data-mode="Smart">
+   Smart
+  </button>
+
+ </div>
+
+ <div class="status" id="status">
+  Ready • Choose a mode and ask a question
+ </div>
+
+ <div class="result" id="result">
+
+  <div class="result-title">
+   AI Response
+  </div>
+
+  <div id="answer"></div>
+
+ </div>
+
+</section>
+
+<!-- ===== PREMIUM ===== -->
+
+<section class="premium-section">
+
+ <div class="premium-badge">
+  ✦ PREMIUM
+ </div>
+
+ <h2>
+  Unlock <span>Premium AI</span>
+ </h2>
+
+ <p class="premium-sub">
+  Get more powerful AI features with the future Premium plan.
+ </p>
+
+ <div class="plans">
+
+  <div class="plan">
+
+   <div class="plan-name">
+    FREE
+   </div>
+
+   <div class="price">
+    ₹0 <small>/ forever</small>
+   </div>
+
+   <ul>
+    <li>✓ Basic AI Search</li>
+    <li>✓ Basic modes</li>
+    <li>✓ Mobile & Web</li>
+    <li>✓ Neural Core UI</li>
+   </ul>
+
+   <button class="plan-btn">
+    Current Plan
    </button>
 
   </div>
 
-  <div class="searchbar">
+  <div class="plan premium-plan">
 
-   <input
-    id="question"
-    class="search-input"
-    autocomplete="off"
-    placeholder="Ask anything..."
-    aria-label="Ask anything"
-   >
-
-   <button class="search-btn" id="askBtn">
-    Search
-   </button>
-
-  </div>
-
-  <div class="modes">
-
-   <button class="mode active" data-mode="AI Search">
-    AI Search
-   </button>
-
-   <button class="mode" data-mode="Fast">
-    Fast
-   </button>
-
-   <button class="mode" data-mode="Smart">
-    Smart
-   </button>
-
-  </div>
-
-  <div class="status" id="status">
-   Ready • Choose a mode and ask a question
-  </div>
-
-  <div class="result" id="result">
-
-   <div class="result-title">
-    AI Response
+   <div class="popular">
+    POPULAR
    </div>
 
-   <div id="answer"></div>
+   <div class="plan-name">
+    PREMIUM
+   </div>
+
+   <div class="price">
+    Coming Soon
+   </div>
+
+   <ul>
+    <li>✓ Higher usage limits</li>
+    <li>✓ Advanced AI features</li>
+    <li>✓ Premium modes</li>
+    <li>✓ Priority features</li>
+   </ul>
+
+   <button
+    class="plan-btn premium-btn"
+    onclick="premiumComingSoon()">
+    ✦ Coming Soon
+   </button>
 
   </div>
 
- </section>
+ </div>
+
+</section>
 
 </main>
 
@@ -712,6 +929,8 @@ footer{
 </div>
 
 <script>
+
+/* ===== ELEMENTS ===== */
 
 const core = document.getElementById("core");
 const apiKeyInput = document.getElementById("apiKey");
@@ -724,9 +943,10 @@ const saveKey = document.getElementById("saveKey");
 
 let mode = "AI Search";
 
-/* SAVE KEY LOCALLY */
+/* ===== API KEY STORAGE ===== */
 
-const savedKey = localStorage.getItem("aMyGeminiKey");
+const savedKey =
+ localStorage.getItem("aMyGeminiKey");
 
 if(savedKey){
  apiKeyInput.value = savedKey;
@@ -734,68 +954,85 @@ if(savedKey){
 
 saveKey.onclick = () => {
 
- const key = apiKeyInput.value.trim();
+ const key =
+  apiKeyInput.value.trim();
 
  if(key){
 
-  localStorage.setItem("aMyGeminiKey",key);
-  status.textContent = "API key saved on this device.";
+  localStorage.setItem(
+   "aMyGeminiKey",
+   key
+  );
+
+  status.textContent =
+   "API key saved on this device.";
 
  }else{
 
-  localStorage.removeItem("aMyGeminiKey");
-  status.textContent = "Saved API key removed.";
+  localStorage.removeItem(
+   "aMyGeminiKey"
+  );
+
+  status.textContent =
+   "Saved API key removed.";
 
  }
 
 };
 
-/* MODE */
+/* ===== MODES ===== */
 
-document.querySelectorAll(".mode").forEach(btn => {
+document.querySelectorAll(".mode")
+.forEach(btn => {
 
  btn.onclick = () => {
 
   document.querySelectorAll(".mode")
-   .forEach(x => x.classList.remove("active"));
+   .forEach(x =>
+    x.classList.remove("active")
+   );
 
   btn.classList.add("active");
 
   mode = btn.dataset.mode;
 
-  status.textContent = mode + " mode selected.";
+  status.textContent =
+   mode + " mode selected.";
 
  };
 
 });
 
-/* ENTER */
+/* ===== ENTER SEARCH ===== */
 
-question.addEventListener("keydown",e => {
+question.addEventListener(
+ "keydown",
+ e => {
 
- if(e.key === "Enter"){
-  askAI();
+  if(e.key === "Enter"){
+   askAI();
+  }
+
  }
+);
 
-});
-
-/* LOADING */
+/* ===== LOADING ===== */
 
 function setLoading(on){
 
  askBtn.disabled = on;
 
- askBtn.textContent = on
-  ? "Thinking…"
-  : "Search";
+ askBtn.textContent =
+  on ? "Thinking…" : "Search";
 
 }
 
-/* AI */
+/* ===== AI SEARCH ===== */
 
 async function askAI(){
 
- const q = question.value.trim();
+ const q =
+  question.value.trim();
 
  const key =
   apiKeyInput.value.trim() ||
@@ -847,36 +1084,40 @@ async function askAI(){
    "v1beta/models/gemini-2.5-flash:generateContent?key=" +
    encodeURIComponent(key);
 
-  const res = await fetch(url,{
+  const res =
+   await fetch(
+    url,
+    {
+     method:"POST",
 
-   method:"POST",
+     headers:{
+      "Content-Type":
+       "application/json"
+     },
 
-   headers:{
-    "Content-Type":"application/json"
-   },
+     body:JSON.stringify({
 
-   body:JSON.stringify({
-
-    contents:[
-     {
-      parts:[
+      contents:[
        {
-        text:prompt
+        parts:[
+         {
+          text:prompt
+         }
+        ]
        }
-      ]
-     }
-    ],
+      ],
 
-    generationConfig:{
-     temperature:.7,
-     maxOutputTokens:1200
+      generationConfig:{
+       temperature:.7,
+       maxOutputTokens:1200
+      }
+
+     })
     }
+   );
 
-   })
-
-  });
-
-  const data = await res.json();
+  const data =
+   await res.json();
 
   if(!res.ok){
 
@@ -888,15 +1129,21 @@ async function askAI(){
   }
 
   const text =
-   data?.candidates?.[0]?.content?.parts
-    ?.map(p => p.text || "")
+   data?.candidates?.[0]
+    ?.content?.parts
+    ?.map(
+     p => p.text || ""
+    )
     .join("") ||
    "No answer was returned.";
 
-  answer.textContent = text;
+  answer.textContent =
+   text;
 
   status.textContent =
-   "Answer generated • " + mode + " mode";
+   "Answer generated • " +
+   mode +
+   " mode";
 
  }catch(err){
 
@@ -915,17 +1162,32 @@ async function askAI(){
 
 }
 
-/* SMOOTH 3D MOUSE / TOUCH */
+/* ===== PREMIUM ===== */
+
+function premiumComingSoon(){
+
+ alert(
+  "Premium is coming soon!\n\n" +
+  "Payment and subscription features are not active yet."
+ );
+
+}
+
+/* ===== 3D MOUSE / TOUCH ===== */
 
 let targetX = 0;
 let targetY = 0;
+
 let currentX = 0;
 let currentY = 0;
 
 function animate(){
 
- currentX += (targetX-currentX)*.08;
- currentY += (targetY-currentY)*.08;
+ currentX +=
+  (targetX-currentX)*.08;
+
+ currentY +=
+  (targetY-currentY)*.08;
 
  if(core){
 
@@ -940,41 +1202,56 @@ function animate(){
 
 animate();
 
-window.addEventListener("pointermove",e => {
+window.addEventListener(
+ "pointermove",
+ e => {
 
- targetX =
-  (e.clientX/window.innerWidth-.5)*14;
+  targetX =
+   (e.clientX/window.innerWidth-.5)*14;
 
- targetY =
-  (e.clientY/window.innerHeight-.5)*-14;
+  targetY =
+   (e.clientY/window.innerHeight-.5)*-14;
 
-},{passive:true});
+ },
+ {passive:true}
+);
 
-window.addEventListener("pointerleave",() => {
+window.addEventListener(
+ "pointerleave",
+ () => {
 
- targetX = 0;
- targetY = 0;
+  targetX = 0;
+  targetY = 0;
 
-});
+ }
+);
 
-window.addEventListener("touchmove",e => {
+window.addEventListener(
+ "touchmove",
+ e => {
 
- const t = e.touches[0];
+  const t =
+   e.touches[0];
 
- targetX =
-  (t.clientX/window.innerWidth-.5)*10;
+  targetX =
+   (t.clientX/window.innerWidth-.5)*10;
 
- targetY =
-  (t.clientY/window.innerHeight-.5)*-10;
+  targetY =
+   (t.clientY/window.innerHeight-.5)*-10;
 
-},{passive:true});
+ },
+ {passive:true}
+);
 
-window.addEventListener("touchend",() => {
+window.addEventListener(
+ "touchend",
+ () => {
 
- targetX = 0;
- targetY = 0;
+  targetX = 0;
+  targetY = 0;
 
-});
+ }
+);
 
 </script>
 
