@@ -2,282 +2,718 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#030617">
-<title>A My AI Search — Neural Core</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#020515">
+<title>A My AI Search</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#020515;
-  --panel:rgba(7,12,38,.68);
-  --line:rgba(89,124,255,.28);
-  --blue:#38bdf8;
-  --cyan:#00e5ff;
-  --purple:#9b5cff;
-  --pink:#e45cff;
-  --text:#f5f7ff;
-  --muted:#8994b8;
-}
-html{scroll-behavior:smooth}
-body{
-  min-height:100vh;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 50% 15%,rgba(58,75,255,.20),transparent 30%),
-    radial-gradient(circle at 15% 75%,rgba(0,229,255,.08),transparent 28%),
-    radial-gradient(circle at 85% 70%,rgba(180,60,255,.10),transparent 28%),
-    var(--bg);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  overflow-x:hidden;
-}
-body:before{
-  content:"";
-  position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background-image:
-    linear-gradient(rgba(100,120,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(100,120,255,.035) 1px,transparent 1px);
-  background-size:42px 42px;
-  mask-image:linear-gradient(to bottom,black,transparent 88%);
-}
-.wrap{width:min(1120px,100%);margin:auto;padding:0 18px 24px}
-header{
-  height:72px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.logo{font-size:20px;font-weight:850;letter-spacing:-.5px}
-.logo span{
-  background:linear-gradient(90deg,var(--cyan),#8c7cff,var(--pink));
-  -webkit-background-clip:text;background-clip:text;color:transparent
-}
-.version{
-  font-size:11px;padding:6px 10px;border:1px solid rgba(93,128,255,.35);
-  border-radius:20px;color:#b7c4ff;background:rgba(30,40,100,.25)
-}
-.hero{text-align:center;padding-top:8px}
-.badge{
-  display:inline-flex;align-items:center;gap:7px;margin-top:20px;padding:7px 12px;
-  border:1px solid rgba(100,150,255,.25);border-radius:999px;
-  background:rgba(30,40,100,.22);color:#b6c7ff;font-size:11px
-}
-.dot{width:7px;height:7px;border-radius:50%;background:#46ffd0;box-shadow:0 0 14px #46ffd0}
-h1{
-  margin:14px 0 7px;font-size:clamp(32px,6vw,58px);line-height:1.02;
-  letter-spacing:-2.5px;
-}
-.gradient{
-  background:linear-gradient(90deg,#fff 10%,#8eeeff 42%,#a98aff 70%,#ef83ff);
-  -webkit-background-clip:text;background-clip:text;color:transparent
-}
-.sub{color:var(--muted);font-size:14px;line-height:1.6;max-width:620px;margin:auto}
 
-/* ===== 3D NEURAL CORE ===== */
+:root{
+ --bg:#020515;
+ --panel:rgba(7,12,38,.72);
+ --line:rgba(89,124,255,.28);
+ --cyan:#00e5ff;
+ --blue:#38bdf8;
+ --purple:#9b5cff;
+ --pink:#e45cff;
+ --text:#f5f7ff;
+ --muted:#8994b8;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+ min-height:100vh;
+ color:var(--text);
+ font-family:Inter,system-ui,Arial,sans-serif;
+ background:
+ radial-gradient(circle at 50% 12%,rgba(70,80,255,.22),transparent 32%),
+ radial-gradient(circle at 10% 75%,rgba(0,229,255,.08),transparent 28%),
+ radial-gradient(circle at 90% 75%,rgba(190,60,255,.10),transparent 28%),
+ var(--bg);
+ overflow-x:hidden;
+}
+
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ background-image:
+ linear-gradient(rgba(100,120,255,.035) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(100,120,255,.035) 1px,transparent 1px);
+ background-size:42px 42px;
+ mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+
+.wrap{
+ width:min(1120px,100%);
+ margin:auto;
+ padding:0 16px 25px;
+}
+
+header{
+ height:70px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.logo{
+ font-size:20px;
+ font-weight:900;
+ letter-spacing:-.5px;
+}
+
+.logo span{
+ background:linear-gradient(90deg,var(--cyan),#8c7cff,var(--pink));
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+}
+
+.version{
+ font-size:10px;
+ padding:6px 10px;
+ border:1px solid rgba(100,130,255,.35);
+ border-radius:20px;
+ color:#b9c5ff;
+ background:rgba(30,40,100,.25);
+}
+
+.hero{
+ text-align:center;
+ padding-top:8px;
+}
+
+.badge{
+ display:inline-flex;
+ align-items:center;
+ gap:7px;
+ margin-top:18px;
+ padding:7px 12px;
+ border:1px solid rgba(100,150,255,.25);
+ border-radius:999px;
+ background:rgba(30,40,100,.22);
+ color:#b6c7ff;
+ font-size:11px;
+}
+
+.dot{
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:#46ffd0;
+ box-shadow:0 0 14px #46ffd0;
+ animation:pulse 1.8s infinite;
+}
+
+h1{
+ margin:15px 0 7px;
+ font-size:clamp(34px,7vw,60px);
+ line-height:1;
+ letter-spacing:-2.5px;
+}
+
+.gradient{
+ background:linear-gradient(
+ 90deg,#fff 10%,#8eeeff 42%,#a98aff 70%,#ef83ff
+ );
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+}
+
+.sub{
+ color:var(--muted);
+ font-size:14px;
+ line-height:1.6;
+ max-width:620px;
+ margin:auto;
+}
+
+/* NEURAL CORE */
+
 .core-stage{
-  height:390px;position:relative;display:grid;place-items:center;
-  margin:4px auto 0;max-width:650px;
-  perspective:900px;
+ height:370px;
+ position:relative;
+ display:grid;
+ place-items:center;
+ margin:0 auto;
+ max-width:650px;
+ perspective:900px;
 }
+
 .core{
-  width:235px;height:235px;position:relative;transform-style:preserve-3d;
-  animation:coreFloat 5s ease-in-out infinite;
+ width:235px;
+ height:235px;
+ position:relative;
+ transform-style:preserve-3d;
+ transition:transform .15s ease-out;
 }
+
 .core-glow{
-  position:absolute;inset:-75px;border-radius:50%;
-  background:radial-gradient(circle,rgba(73,128,255,.30),rgba(151,66,255,.13) 38%,transparent 70%);
-  filter:blur(20px);animation:pulse 3s ease-in-out infinite;
+ position:absolute;
+ inset:-80px;
+ border-radius:50%;
+ background:
+ radial-gradient(
+ circle,
+ rgba(70,130,255,.32),
+ rgba(150,60,255,.14) 38%,
+ transparent 70%
+ );
+ filter:blur(22px);
+ animation:glow 3s ease-in-out infinite;
 }
+
 .brain{
-  position:absolute;inset:30px;border-radius:48% 52% 50% 50%;
-  background:
-    radial-gradient(circle at 35% 30%,rgba(255,255,255,.75),transparent 5%),
-    radial-gradient(circle at 45% 42%,#9d7bff 0,#405cff 30%,#09206d 64%,#02051a 100%);
-  border:1px solid rgba(126,205,255,.8);
-  box-shadow:
-    inset 0 0 35px rgba(0,226,255,.45),
-    inset -25px -18px 55px rgba(181,58,255,.45),
-    0 0 35px rgba(40,133,255,.75),
-    0 0 100px rgba(139,65,255,.35);
-  transform:translateZ(20px);
+ position:absolute;
+ inset:30px;
+ border-radius:48% 52% 50% 50%;
+ background:
+ radial-gradient(circle at 35% 30%,rgba(255,255,255,.8),transparent 5%),
+ radial-gradient(circle at 45% 42%,#9d7bff 0,#405cff 30%,#09206d 64%,#02051a 100%);
+ border:1px solid rgba(126,205,255,.8);
+ box-shadow:
+ inset 0 0 35px rgba(0,226,255,.45),
+ inset -25px -18px 55px rgba(181,58,255,.45),
+ 0 0 35px rgba(40,133,255,.75),
+ 0 0 100px rgba(139,65,255,.35);
+ transform:translateZ(20px);
 }
-.brain:before,.brain:after{
-  content:"";position:absolute;inset:14px;border-radius:50%;
-  border:2px solid rgba(86,225,255,.34);filter:blur(.2px);
+
+.brain:before,
+.brain:after{
+ content:"";
+ position:absolute;
+ inset:14px;
+ border-radius:50%;
+ border:2px solid rgba(86,225,255,.34);
 }
-.brain:after{inset:28px;border-color:rgba(212,111,255,.30)}
-.neural-lines{position:absolute;inset:0;transform-style:preserve-3d}
+
+.brain:after{
+ inset:28px;
+ border-color:rgba(212,111,255,.3);
+}
+
+.neural-lines{
+ position:absolute;
+ inset:0;
+ transform-style:preserve-3d;
+}
+
 .node{
-  position:absolute;width:7px;height:7px;border-radius:50%;
-  background:#b9f8ff;box-shadow:0 0 8px #2cecff,0 0 18px #7d54ff;
-  animation:nodePulse 1.8s ease-in-out infinite;
+ position:absolute;
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:#b9f8ff;
+ box-shadow:
+ 0 0 8px #2cecff,
+ 0 0 18px #7d54ff;
+ animation:nodePulse 2s infinite;
 }
-.n1{left:20px;top:85px}.n2{left:43px;top:35px}.n3{right:25px;top:70px}
-.n4{right:10px;top:130px}.n5{left:28px;bottom:55px}.n6{right:44px;bottom:28px}
-.n7{left:105px;top:7px}.n8{right:78px;top:38px}.n9{left:100px;bottom:8px}
+
+.n1{left:20px;top:85px}
+.n2{left:43px;top:35px}
+.n3{right:25px;top:70px}
+.n4{right:10px;top:130px}
+.n5{left:28px;bottom:55px}
+.n6{right:44px;bottom:28px}
+.n7{left:105px;top:7px}
+.n8{right:78px;top:38px}
+.n9{left:100px;bottom:8px}
+
 .connection{
-  position:absolute;height:1px;transform-origin:left center;
-  background:linear-gradient(90deg,rgba(0,229,255,.05),rgba(0,229,255,.9),rgba(181,80,255,.2));
-  box-shadow:0 0 8px rgba(0,229,255,.5);
+ position:absolute;
+ height:1px;
+ transform-origin:left center;
+ background:linear-gradient(
+ 90deg,
+ rgba(0,229,255,.05),
+ rgba(0,229,255,.9),
+ rgba(181,80,255,.2)
+ );
+ box-shadow:0 0 8px rgba(0,229,255,.5);
 }
+
 .c1{width:105px;left:23px;top:89px;transform:rotate(-28deg)}
 .c2{width:105px;right:22px;top:76px;transform:rotate(35deg)}
 .c3{width:115px;left:30px;bottom:57px;transform:rotate(28deg)}
 .c4{width:100px;right:37px;bottom:47px;transform:rotate(-30deg)}
 .c5{width:100px;left:105px;top:10px;transform:rotate(82deg)}
+
 .ring{
-  position:absolute;left:50%;top:50%;width:330px;height:105px;
-  margin:-52px 0 0 -165px;border:1px solid rgba(73,196,255,.62);
-  border-radius:50%;transform-style:preserve-3d;
-  box-shadow:0 0 18px rgba(0,200,255,.24);
-}
-.ring.r1{transform:rotateX(68deg);animation:spin 8s linear infinite}
-.ring.r2{transform:rotateX(68deg) rotateZ(60deg);border-color:rgba(183,83,255,.48);animation:spinReverse 11s linear infinite}
-.ring.r3{width:270px;height:78px;margin:-39px 0 0 -135px;transform:rotateY(70deg);border-color:rgba(89,126,255,.35);animation:spin 14s linear infinite}
-.orbital-dot{
-  position:absolute;width:10px;height:10px;border-radius:50%;background:#71f3ff;
-  box-shadow:0 0 12px #71f3ff,0 0 25px #8e58ff
-}
-.od1{top:2px;left:62px}.od2{right:55px;bottom:8px}
-.platform{
-  position:absolute;bottom:13px;width:300px;height:34px;border-radius:50%;
-  border:1px solid rgba(68,205,255,.65);
-  background:radial-gradient(ellipse,rgba(48,165,255,.22),transparent 67%);
-  box-shadow:0 0 35px rgba(46,156,255,.35),inset 0 0 25px rgba(126,76,255,.22);
-  transform:perspective(400px) rotateX(65deg);
-}
-.scan{
-  position:absolute;inset:0;border-radius:50%;
-  border-top:1px solid rgba(155,105,255,.8);
-  animation:scan 2.5s linear infinite;
+ position:absolute;
+ left:50%;
+ top:50%;
+ width:330px;
+ height:105px;
+ margin:-52px 0 0 -165px;
+ border:1px solid rgba(73,196,255,.62);
+ border-radius:50%;
+ transform-style:preserve-3d;
+ box-shadow:0 0 18px rgba(0,200,255,.24);
 }
 
-/* ===== SEARCH ===== */
+.r1{
+ transform:rotateX(68deg);
+ animation:spin 10s linear infinite;
+}
+
+.r2{
+ transform:rotateX(68deg) rotateZ(60deg);
+ border-color:rgba(183,83,255,.48);
+ animation:spinReverse 14s linear infinite;
+}
+
+.r3{
+ width:270px;
+ height:78px;
+ margin:-39px 0 0 -135px;
+ transform:rotateY(70deg);
+ border-color:rgba(89,126,255,.35);
+ animation:spin 18s linear infinite;
+}
+
+.orbital-dot{
+ position:absolute;
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#71f3ff;
+ box-shadow:
+ 0 0 12px #71f3ff,
+ 0 0 25px #8e58ff;
+}
+
+.od1{top:2px;left:62px}
+.od2{right:55px;bottom:8px}
+
+.platform{
+ position:absolute;
+ bottom:10px;
+ width:300px;
+ height:34px;
+ border-radius:50%;
+ border:1px solid rgba(68,205,255,.65);
+ background:radial-gradient(
+ ellipse,
+ rgba(48,165,255,.22),
+ transparent 67%
+ );
+ box-shadow:
+ 0 0 35px rgba(46,156,255,.35),
+ inset 0 0 25px rgba(126,76,255,.22);
+ transform:perspective(400px) rotateX(65deg);
+}
+
+/* SEARCH */
+
 .search-card{
-  width:min(760px,100%);margin:-4px auto 0;padding:10px;
-  border:1px solid var(--line);border-radius:24px;
-  background:linear-gradient(145deg,rgba(13,21,60,.75),rgba(4,8,26,.72));
-  box-shadow:0 22px 70px rgba(0,0,0,.35),0 0 45px rgba(66,76,255,.09);
-  backdrop-filter:blur(18px);
+ width:min(760px,100%);
+ margin:-4px auto 0;
+ padding:10px;
+ border:1px solid var(--line);
+ border-radius:24px;
+ background:
+ linear-gradient(
+ 145deg,
+ rgba(13,21,60,.78),
+ rgba(4,8,26,.75)
+ );
+ box-shadow:
+ 0 22px 70px rgba(0,0,0,.35),
+ 0 0 45px rgba(66,76,255,.09);
+ backdrop-filter:blur(18px);
 }
-.key-row{display:flex;gap:8px;margin-bottom:9px}
-.input,.search-input{
-  width:100%;border:1px solid rgba(110,135,255,.2);outline:none;color:#fff;
-  background:rgba(0,0,0,.22);border-radius:14px;padding:12px 14px;font-size:13px;
+
+.key-row{
+ display:flex;
+ gap:8px;
+ margin-bottom:9px;
 }
-.input::placeholder,.search-input::placeholder{color:#66739b}
-.key-row .input{flex:1}
+
+.input,
+.search-input{
+ width:100%;
+ border:1px solid rgba(110,135,255,.2);
+ outline:none;
+ color:#fff;
+ background:rgba(0,0,0,.22);
+ border-radius:14px;
+ padding:12px 14px;
+ font-size:13px;
+}
+
+.input::placeholder,
+.search-input::placeholder{
+ color:#66739b;
+}
+
 .key-btn{
-  border:1px solid rgba(104,125,255,.25);background:rgba(70,80,160,.18);
-  color:#b9c5ff;border-radius:14px;padding:0 13px;cursor:pointer
+ border:1px solid rgba(104,125,255,.25);
+ background:rgba(70,80,160,.18);
+ color:#b9c5ff;
+ border-radius:14px;
+ padding:0 14px;
+ cursor:pointer;
 }
+
 .searchbar{
-  display:flex;align-items:center;gap:8px;padding:5px;border-radius:18px;
-  border:1px solid rgba(76,171,255,.4);
-  background:rgba(0,8,28,.72);box-shadow:inset 0 0 25px rgba(20,80,180,.08)
+ display:flex;
+ align-items:center;
+ gap:7px;
+ padding:5px;
+ border-radius:18px;
+ border:1px solid rgba(76,171,255,.4);
+ background:rgba(0,8,28,.72);
+ box-shadow:inset 0 0 25px rgba(20,80,180,.08);
 }
-.search-input{border:0;background:transparent;padding:12px}
+
+.search-input{
+ border:0;
+ background:transparent;
+ padding:12px;
+}
+
 .search-btn{
-  flex:0 0 auto;border:0;border-radius:14px;padding:12px 20px;color:#fff;
-  font-weight:800;cursor:pointer;
-  background:linear-gradient(100deg,#08cfff,#6467ff 55%,#c83dff);
-  box-shadow:0 0 25px rgba(91,99,255,.32);transition:.2s
+ flex:0 0 auto;
+ border:0;
+ border-radius:14px;
+ padding:12px 21px;
+ color:#fff;
+ font-weight:800;
+ cursor:pointer;
+ background:linear-gradient(
+ 100deg,#08cfff,#6467ff 55%,#c83dff
+ );
+ box-shadow:0 0 25px rgba(91,99,255,.32);
+ transition:.2s;
 }
-.search-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
-.search-btn:disabled{opacity:.6;cursor:wait}
-.modes{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+.search-btn:hover{
+ transform:translateY(-1px);
+ filter:brightness(1.1);
+}
+
+.search-btn:disabled{
+ opacity:.6;
+ cursor:wait;
+}
+
+.modes{
+ display:flex;
+ justify-content:center;
+ gap:8px;
+ margin-top:10px;
+ flex-wrap:wrap;
+}
+
 .mode{
-  border:1px solid rgba(105,124,255,.18);background:rgba(45,55,120,.16);
-  color:#7e8bb4;border-radius:999px;padding:7px 13px;font-size:11px;cursor:pointer
+ border:1px solid rgba(105,124,255,.18);
+ background:rgba(45,55,120,.16);
+ color:#7e8bb4;
+ border-radius:999px;
+ padding:7px 13px;
+ font-size:11px;
+ cursor:pointer;
 }
-.mode.active{color:#dffbff;border-color:rgba(41,222,255,.6);box-shadow:0 0 14px rgba(41,222,255,.12)}
+
+.mode.active{
+ color:#dffbff;
+ border-color:rgba(41,222,255,.6);
+ box-shadow:0 0 14px rgba(41,222,255,.12);
+}
+
+.status{
+ font-size:11px;
+ color:#69779f;
+ margin:9px 3px 0;
+ min-height:15px;
+}
+
 .result{
-  display:none;margin-top:10px;padding:16px;border-radius:17px;
-  border:1px solid rgba(90,115,255,.24);background:rgba(4,9,30,.8);
-  line-height:1.7;color:#dce5ff;font-size:14px;white-space:pre-wrap
+ display:none;
+ margin-top:10px;
+ padding:16px;
+ border-radius:17px;
+ border:1px solid rgba(90,115,255,.24);
+ background:rgba(4,9,30,.8);
+ line-height:1.7;
+ color:#dce5ff;
+ font-size:14px;
+ white-space:pre-wrap;
 }
-.result.show{display:block}
-.result-title{font-weight:800;color:#7eeaff;margin-bottom:8px}
-.status{font-size:11px;color:#69779f;margin:9px 3px 0;min-height:15px}
-footer{text-align:center;color:#4f5b82;font-size:11px;padding:24px 0 4px}
-@keyframes coreFloat{0%,100%{transform:translateY(0) rotateX(0deg)}50%{transform:translateY(-10px) rotateX(2deg)}}
-@keyframes pulse{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}}
-@keyframes nodePulse{0%,100%{opacity:.55;transform:scale(.8)}50%{opacity:1;transform:scale(1.5)}}
-@keyframes spin{to{transform:rotateX(68deg) rotateZ(360deg)}}
-@keyframes spinReverse{to{transform:rotateX(68deg) rotateZ(-360deg)}}
-@keyframes scan{to{transform:rotate(360deg)}}
+
+.result.show{
+ display:block;
+}
+
+.result-title{
+ font-weight:800;
+ color:#7eeaff;
+ margin-bottom:8px;
+}
+
+footer{
+ text-align:center;
+ color:#4f5b82;
+ font-size:11px;
+ padding:24px 0 4px;
+}
+
+/* ANIMATION */
+
+@keyframes pulse{
+ 0%,100%{opacity:.55;transform:scale(.8)}
+ 50%{opacity:1;transform:scale(1.3)}
+}
+
+@keyframes nodePulse{
+ 0%,100%{opacity:.5;transform:scale(.8)}
+ 50%{opacity:1;transform:scale(1.5)}
+}
+
+@keyframes glow{
+ 0%,100%{opacity:.65;transform:scale(.94)}
+ 50%{opacity:1;transform:scale(1.06)}
+}
+
+@keyframes spin{
+ to{transform:rotateX(68deg) rotateZ(360deg)}
+}
+
+@keyframes spinReverse{
+ to{transform:rotateX(68deg) rotateZ(-360deg)}
+}
+
+/* MOBILE */
+
 @media(max-width:600px){
-  .wrap{padding:0 12px 18px}
-  header{height:62px}
-  h1{letter-spacing:-1.6px}
-  .core-stage{height:325px;transform:scale(.88)}
-  .searchbar{gap:4px}
-  .search-btn{padding:12px 15px}
-  .key-row .key-btn{font-size:11px;padding:0 10px}
+
+ .wrap{
+  padding:0 11px 18px;
+ }
+
+ header{
+  height:62px;
+ }
+
+ .logo{
+  font-size:18px;
+ }
+
+ h1{
+  font-size:38px;
+  letter-spacing:-1.8px;
+ }
+
+ .sub{
+  font-size:13px;
+ }
+
+ .core-stage{
+  height:315px;
+  transform:scale(.86);
+  margin-top:-5px;
+ }
+
+ .search-card{
+  border-radius:20px;
+ }
+
+ .searchbar{
+  gap:4px;
+ }
+
+ .search-btn{
+  padding:12px 15px;
+ }
+
+ .key-row .key-btn{
+  font-size:11px;
+  padding:0 11px;
+ }
+
+ .ring{
+  width:310px;
+  margin-left:-155px;
+ }
+}
+
+@media(max-width:370px){
+
+ .core-stage{
+  transform:scale(.76);
+  margin-top:-20px;
+ }
+
+ h1{
+  font-size:33px;
+ }
+
+ .search-btn{
+  padding:11px 12px;
+ }
+
 }
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
+
 <header>
-  <div class="logo">A My <span>AI Search</span></div>
-  <div class="version">v3.0 • NEURAL</div>
+ <div class="logo">A My <span>AI Search</span></div>
+ <div class="version">v4.0 • NEURAL</div>
 </header>
 
 <main class="hero">
-  <div class="badge"><i class="dot"></i> AI NEURAL CORE ONLINE</div>
-  <h1><span class="gradient">Search with AI</span></h1>
-  <p class="sub">Ask anything and get intelligent answers through a futuristic neural interface.</p>
 
-  <section class="core-stage" aria-label="3D neural core">
-    <div class="core">
-      <div class="core-glow"></div>
-      <div class="brain">
-        <div class="scan"></div>
-      </div>
-      <div class="neural-lines">
-        <i class="node n1"></i><i class="node n2"></i><i class="node n3"></i>
-        <i class="node n4"></i><i class="node n5"></i><i class="node n6"></i>
-        <i class="node n7"></i><i class="node n8"></i><i class="node n9"></i>
-        <i class="connection c1"></i><i class="connection c2"></i>
-        <i class="connection c3"></i><i class="connection c4"></i><i class="connection c5"></i>
-      </div>
-      <div class="ring r1"><i class="orbital-dot od1"></i></div>
-      <div class="ring r2"><i class="orbital-dot od2"></i></div>
-      <div class="ring r3"></div>
-    </div>
-    <div class="platform"></div>
-  </section>
+ <div class="badge">
+  <i class="dot"></i>
+  AI NEURAL CORE ONLINE
+ </div>
 
-  <section class="search-card">
-    <div class="key-row">
-      <input id="apiKey" class="input" type="password" placeholder="Optional Gemini API key">
-      <button class="key-btn" id="saveKey">Save</button>
-    </div>
+ <h1>
+  <span class="gradient">Search with AI</span>
+ </h1>
 
-    <div class="searchbar">
-      <input id="question" class="search-input" autocomplete="off"
-             placeholder="Ask anything..." aria-label="Ask anything">
-      <button class="search-btn" id="askBtn">Search</button>
-    </div>
+ <p class="sub">
+  Ask anything and explore intelligent answers through a futuristic neural interface.
+ </p>
 
-    <div class="modes">
-      <button class="mode active" data-mode="AI Search">AI Search</button>
-      <button class="mode" data-mode="Fast">Fast</button>
-      <button class="mode" data-mode="Smart">Smart</button>
-    </div>
+ <!-- NEURAL CORE -->
 
-    <div class="status" id="status">Ready • Choose a mode and ask a question</div>
-    <div class="result" id="result">
-      <div class="result-title">AI Response</div>
-      <div id="answer"></div>
-    </div>
-  </section>
+ <section class="core-stage">
+
+  <div class="core" id="core">
+
+   <div class="core-glow"></div>
+
+   <div class="brain">
+    <div class="scan"></div>
+   </div>
+
+   <div class="neural-lines">
+
+    <i class="node n1"></i>
+    <i class="node n2"></i>
+    <i class="node n3"></i>
+    <i class="node n4"></i>
+    <i class="node n5"></i>
+    <i class="node n6"></i>
+    <i class="node n7"></i>
+    <i class="node n8"></i>
+    <i class="node n9"></i>
+
+    <i class="connection c1"></i>
+    <i class="connection c2"></i>
+    <i class="connection c3"></i>
+    <i class="connection c4"></i>
+    <i class="connection c5"></i>
+
+   </div>
+
+   <div class="ring r1">
+    <i class="orbital-dot od1"></i>
+   </div>
+
+   <div class="ring r2">
+    <i class="orbital-dot od2"></i>
+   </div>
+
+   <div class="ring r3"></div>
+
+  </div>
+
+  <div class="platform"></div>
+
+ </section>
+
+ <!-- SEARCH -->
+
+ <section class="search-card">
+
+  <div class="key-row">
+
+   <input
+    id="apiKey"
+    class="input"
+    type="password"
+    placeholder="Optional Gemini API key"
+   >
+
+   <button class="key-btn" id="saveKey">
+    Save
+   </button>
+
+  </div>
+
+  <div class="searchbar">
+
+   <input
+    id="question"
+    class="search-input"
+    autocomplete="off"
+    placeholder="Ask anything..."
+    aria-label="Ask anything"
+   >
+
+   <button class="search-btn" id="askBtn">
+    Search
+   </button>
+
+  </div>
+
+  <div class="modes">
+
+   <button class="mode active" data-mode="AI Search">
+    AI Search
+   </button>
+
+   <button class="mode" data-mode="Fast">
+    Fast
+   </button>
+
+   <button class="mode" data-mode="Smart">
+    Smart
+   </button>
+
+  </div>
+
+  <div class="status" id="status">
+   Ready • Choose a mode and ask a question
+  </div>
+
+  <div class="result" id="result">
+
+   <div class="result-title">
+    AI Response
+   </div>
+
+   <div id="answer"></div>
+
+  </div>
+
+ </section>
+
 </main>
 
-<footer>A My AI Search • Built for mobile & web • Neural Core UI</footer>
+<footer>
+ A My AI Search • Built for mobile & web • Neural Core UI
+</footer>
+
 </div>
 
 <script>
+
+const core = document.getElementById("core");
 const apiKeyInput = document.getElementById("apiKey");
 const question = document.getElementById("question");
 const askBtn = document.getElementById("askBtn");
@@ -288,98 +724,259 @@ const saveKey = document.getElementById("saveKey");
 
 let mode = "AI Search";
 
-const saved = localStorage.getItem("aMyGeminiKey");
-if(saved) apiKeyInput.value = saved;
+/* SAVE KEY LOCALLY */
+
+const savedKey = localStorage.getItem("aMyGeminiKey");
+
+if(savedKey){
+ apiKeyInput.value = savedKey;
+}
 
 saveKey.onclick = () => {
-  const key = apiKeyInput.value.trim();
-  if(key){
-    localStorage.setItem("aMyGeminiKey", key);
-    status.textContent = "API key saved on this device.";
-  }else{
-    localStorage.removeItem("aMyGeminiKey");
-    status.textContent = "Saved API key removed.";
-  }
+
+ const key = apiKeyInput.value.trim();
+
+ if(key){
+
+  localStorage.setItem("aMyGeminiKey",key);
+  status.textContent = "API key saved on this device.";
+
+ }else{
+
+  localStorage.removeItem("aMyGeminiKey");
+  status.textContent = "Saved API key removed.";
+
+ }
+
 };
 
+/* MODE */
+
 document.querySelectorAll(".mode").forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll(".mode").forEach(x => x.classList.remove("active"));
-    btn.classList.add("active");
-    mode = btn.dataset.mode;
-    status.textContent = mode + " mode selected.";
-  };
+
+ btn.onclick = () => {
+
+  document.querySelectorAll(".mode")
+   .forEach(x => x.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  mode = btn.dataset.mode;
+
+  status.textContent = mode + " mode selected.";
+
+ };
+
 });
 
-question.addEventListener("keydown", e => {
-  if(e.key === "Enter") askAI();
+/* ENTER */
+
+question.addEventListener("keydown",e => {
+
+ if(e.key === "Enter"){
+  askAI();
+ }
+
 });
+
+/* LOADING */
 
 function setLoading(on){
-  askBtn.disabled = on;
-  askBtn.textContent = on ? "Thinking…" : "Search";
+
+ askBtn.disabled = on;
+
+ askBtn.textContent = on
+  ? "Thinking…"
+  : "Search";
+
 }
+
+/* AI */
 
 async function askAI(){
-  const q = question.value.trim();
-  const key = apiKeyInput.value.trim() || localStorage.getItem("aMyGeminiKey");
 
-  if(!q){
-    status.textContent = "Please type a question first.";
-    question.focus();
-    return;
-  }
+ const q = question.value.trim();
 
-  if(!key){
-    result.classList.add("show");
-    answer.textContent =
-      "Your interface is ready. Add your Gemini API key above to enable live AI answers.";
-    status.textContent = "API key required for live AI.";
-    return;
-  }
+ const key =
+  apiKeyInput.value.trim() ||
+  localStorage.getItem("aMyGeminiKey");
 
-  setLoading(true);
+ if(!q){
+
+  status.textContent =
+   "Please type a question first.";
+
+  question.focus();
+
+  return;
+ }
+
+ if(!key){
+
   result.classList.add("show");
-  answer.textContent = "";
-  status.textContent = "Neural Core is processing your question…";
 
-  try{
-    const prompt =
-      "You are the AI assistant inside A My AI Search. " +
-      "Answer clearly and helpfully. Mode: " + mode + ".\n\nUser: " + q;
+  answer.textContent =
+   "Your AI interface is ready.\n\n" +
+   "Live AI answers require an API key.";
 
-    const url =
-      "https://generativelanguage.googleapis.com/v1beta/models/" +
-      "gemini-2.5-flash:generateContent?key=" + encodeURIComponent(key);
+  status.textContent =
+   "API key required for live AI.";
 
-    const res = await fetch(url,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        contents:[{parts:[{text:prompt}]}],
-        generationConfig:{temperature:.7,maxOutputTokens:1200}
-      })
-    });
+  return;
+ }
 
-    const data = await res.json();
+ setLoading(true);
 
-    if(!res.ok){
-      throw new Error(data?.error?.message || "API request failed.");
+ result.classList.add("show");
+
+ answer.textContent = "";
+
+ status.textContent =
+  "Neural Core is processing your question…";
+
+ try{
+
+  const prompt =
+   "You are the AI assistant inside A My AI Search. " +
+   "Answer clearly, accurately and helpfully. " +
+   "Mode: " + mode + ".\n\n" +
+   "User: " + q;
+
+  const url =
+   "https://generativelanguage.googleapis.com/" +
+   "v1beta/models/gemini-2.5-flash:generateContent?key=" +
+   encodeURIComponent(key);
+
+  const res = await fetch(url,{
+
+   method:"POST",
+
+   headers:{
+    "Content-Type":"application/json"
+   },
+
+   body:JSON.stringify({
+
+    contents:[
+     {
+      parts:[
+       {
+        text:prompt
+       }
+      ]
+     }
+    ],
+
+    generationConfig:{
+     temperature:.7,
+     maxOutputTokens:1200
     }
 
-    const text =
-      data?.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("") ||
-      "No answer was returned.";
+   })
 
-    answer.textContent = text;
-    status.textContent = "Answer generated • " + mode + " mode";
-  }catch(err){
-    answer.textContent = "Unable to get an AI response.\n\n" + err.message;
-    status.textContent = "Request failed. Check your API key and internet connection.";
-  }finally{
-    setLoading(false);
+  });
+
+  const data = await res.json();
+
+  if(!res.ok){
+
+   throw new Error(
+    data?.error?.message ||
+    "API request failed."
+   );
+
   }
+
+  const text =
+   data?.candidates?.[0]?.content?.parts
+    ?.map(p => p.text || "")
+    .join("") ||
+   "No answer was returned.";
+
+  answer.textContent = text;
+
+  status.textContent =
+   "Answer generated • " + mode + " mode";
+
+ }catch(err){
+
+  answer.textContent =
+   "Unable to get an AI response.\n\n" +
+   err.message;
+
+  status.textContent =
+   "Request failed. Check your API key and internet connection.";
+
+ }finally{
+
+  setLoading(false);
+
+ }
+
 }
+
+/* SMOOTH 3D MOUSE / TOUCH */
+
+let targetX = 0;
+let targetY = 0;
+let currentX = 0;
+let currentY = 0;
+
+function animate(){
+
+ currentX += (targetX-currentX)*.08;
+ currentY += (targetY-currentY)*.08;
+
+ if(core){
+
+  core.style.transform =
+   `rotateX(${currentY}deg) rotateY(${currentX}deg)`;
+
+ }
+
+ requestAnimationFrame(animate);
+
+}
+
+animate();
+
+window.addEventListener("pointermove",e => {
+
+ targetX =
+  (e.clientX/window.innerWidth-.5)*14;
+
+ targetY =
+  (e.clientY/window.innerHeight-.5)*-14;
+
+},{passive:true});
+
+window.addEventListener("pointerleave",() => {
+
+ targetX = 0;
+ targetY = 0;
+
+});
+
+window.addEventListener("touchmove",e => {
+
+ const t = e.touches[0];
+
+ targetX =
+  (t.clientX/window.innerWidth-.5)*10;
+
+ targetY =
+  (t.clientY/window.innerHeight-.5)*-10;
+
+},{passive:true});
+
+window.addEventListener("touchend",() => {
+
+ targetX = 0;
+ targetY = 0;
+
+});
+
 </script>
+
 </body>
 </html>
