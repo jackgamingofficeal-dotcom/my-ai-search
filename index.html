@@ -2511,7 +2511,7 @@ function streamAnswer(text, speed = 12){
 
   <div class="top-menu-box" id="topMenuBox">
    <button class="top-menu-item" data-target="profileBtn">👤 <span>Profile</span></button>
-   <button class="top-menu-item" id="historyBtn" data-target="historyBtn">🕘 <span>History</span></button>
+   <button class="top-menu-item" id="historyMenuBtn">🕘 <span>History</span></button>
    <button class="top-menu-item" data-target="settingsBtn">⚙️ <span>Settings</span></button>
   </div>
  </div>
@@ -3240,6 +3240,26 @@ window.addEventListener(
 
 
 /* ===== PROFESSIONAL FEATURES ===== */
+
+const historyMenuBtn = document.getElementById("historyMenuBtn");
+
+if(historyMenuBtn){
+ historyMenuBtn.onclick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  hidePanels();
+  renderHistory();
+  historyBox.classList.add("show");
+
+  setTimeout(() => {
+   historyBox.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+   });
+  },100);
+ };
+}
 
 const profileBtn = document.getElementById("profileBtn");
 const historyBtn = document.getElementById("historyBtn");
