@@ -2511,7 +2511,7 @@ function streamAnswer(text, speed = 12){
 
   <div class="top-menu-box" id="topMenuBox">
    <button class="top-menu-item" data-target="profileBtn">👤 <span>Profile</span></button>
-   <button class="top-menu-item" data-target="historyBtn">🕘 <span>History</span></button>
+   <button class="top-menu-item" id="historyBtn">🕘 <span>History</span></button>
    <button class="top-menu-item" data-target="settingsBtn">⚙️ <span>Settings</span></button>
   </div>
  </div>
@@ -3017,11 +3017,13 @@ async function askAI(){
 
   setTimeout(() => {
 
-   streamAnswer(
+   const demoText =
     "Hello! 👋\n\n" +
     "Welcome to A My AI Search.\n\n" +
-    "This is a Demo AI response. Your neural interface and loading system are working correctly."
-   );
+    "This is a Demo AI response. Your neural interface and loading system are working correctly.";
+
+   streamAnswer(demoText);
+   saveHistory(q, demoText);
 
    status.textContent =
     "Demo response generated • " +
