@@ -3054,9 +3054,8 @@ async function askAI(){
    data?.answer ||
    "No answer was returned.";
 
-  streamAnswer(text);
-
   saveHistory(q,text);
+  streamAnswer(text);
 
   status.textContent =
    "Answer generated • " +
