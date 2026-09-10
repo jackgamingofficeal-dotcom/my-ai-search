@@ -2296,6 +2296,207 @@ body::after{
   }
 }
 
+
+
+/* ===== AI ANSWER STREAMING EFFECT ===== */
+
+function streamAnswer(text, speed = 12){
+  answer.textContent = "";
+  let i = 0;
+
+  const timer = setInterval(() => {
+    answer.textContent += text.slice(i, i + 2);
+    i += 2;
+
+    answer.scrollTop = answer.scrollHeight;
+
+    if(i >= text.length){
+      clearInterval(timer);
+      answer.textContent = text;
+    }
+  }, speed);
+}
+
+/* ===== PREMIUM AI RESPONSE UI ===== */
+
+.result{
+  position:relative;
+  overflow:hidden;
+  margin-top:14px;
+  padding:18px;
+  border-radius:20px;
+  border:1px solid rgba(105,175,255,.28);
+  background:
+    radial-gradient(circle at 8% 0%,rgba(70,180,255,.13),transparent 34%),
+    radial-gradient(circle at 100% 100%,rgba(125,75,255,.10),transparent 38%),
+    linear-gradient(145deg,rgba(10,21,48,.96),rgba(4,10,25,.985));
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.30),
+    0 0 30px rgba(45,125,255,.08),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter:blur(18px) saturate(135%);
+}
+
+.result::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:12%;
+  right:12%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#64d9ff,#8d6cff,transparent);
+  opacity:.85;
+}
+
+.result::after{
+  content:"";
+  position:absolute;
+  width:110px;
+  height:110px;
+  top:-65px;
+  right:-35px;
+  border-radius:50%;
+  background:rgba(70,160,255,.10);
+  filter:blur(28px);
+  pointer-events:none;
+}
+
+.result-title{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.7px;
+  color:#dce9ff;
+}
+
+.result-title::before{
+  content:"✦";
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:23px;
+  height:23px;
+  border-radius:8px;
+  color:#73ddff;
+  background:rgba(70,160,255,.12);
+  border:1px solid rgba(100,190,255,.22);
+  box-shadow:0 0 15px rgba(70,170,255,.12);
+}
+
+#answer{
+  position:relative;
+  z-index:1;
+  min-height:30px;
+  padding:13px 14px;
+  border-radius:14px;
+  background:rgba(7,14,32,.55);
+  border:1px solid rgba(100,140,220,.13);
+  color:#dbe6ff;
+  font-size:11px;
+  line-height:1.7;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.result-actions{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.result-actions .action-btn{
+  border:1px solid rgba(105,160,240,.20);
+  border-radius:10px;
+  background:rgba(20,32,65,.72);
+  color:#bfcfff;
+  padding:8px 11px;
+  font-size:9px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s ease;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.result-actions .action-btn:hover{
+  transform:translateY(-1px);
+  color:#fff;
+  border-color:rgba(100,190,255,.48);
+  background:linear-gradient(135deg,rgba(55,105,210,.30),rgba(85,70,180,.18));
+  box-shadow:0 6px 18px rgba(35,100,220,.15);
+}
+
+.result-actions .action-btn:active{
+  transform:scale(.96);
+}
+
+@media(max-width:600px){
+  .result{
+    padding:14px;
+    border-radius:17px;
+  }
+
+  #answer{
+    padding:11px 12px;
+    font-size:10px;
+    line-height:1.65;
+  }
+
+  .result-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .result-actions .action-btn{
+    width:100%;
+  }
+}
+
+
+/* ===== PREMIUM CHAT MICRO UX ===== */
+
+#chatPanel .chat-typing{
+  align-self:flex-start;
+  width:max-content;
+  padding:10px 13px;
+  border-radius:15px 15px 15px 5px;
+  background:rgba(22,31,58,.88);
+  border:1px solid rgba(110,145,220,.17);
+}
+
+#chatPanel .typing-dots{
+  display:flex;
+  gap:4px;
+  align-items:center;
+}
+
+#chatPanel .typing-dots span{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#8fbfff;
+  animation:chatTyping 1s infinite ease-in-out;
+}
+
+#chatPanel .typing-dots span:nth-child(2){
+  animation-delay:.15s;
+}
+
+#chatPanel .typing-dots span:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes chatTyping{
+  0%,60%,100%{transform:translateY(0);opacity:.35}
+  30%{transform:translateY(-4px);opacity:1}
+}
+
 </style>
 </head>
 
@@ -2816,10 +3017,11 @@ async function askAI(){
 
   setTimeout(() => {
 
-   answer.textContent =
+   streamAnswer(
     "Hello! 👋\n\n" +
     "Welcome to A My AI Search.\n\n" +
-    "This is a Demo AI response. Your neural interface and loading system are working correctly.";
+    "This is a Demo AI response. Your neural interface and loading system are working correctly."
+   );
 
    status.textContent =
     "Demo response generated • " +
@@ -2912,8 +3114,7 @@ async function askAI(){
     .join("") ||
    "No answer was returned.";
 
-  answer.textContent =
-   text;
+  streamAnswer(text);
 
   saveHistory(q,text);
 
@@ -3035,79 +3236,6 @@ window.addEventListener(
 );
 
 
-
-/* PROFESSIONAL FEATURES */
-const copyBtn=document.getElementById("copyBtn");
-const shareBtn=document.getElementById("shareBtn");
-const historyBox=document.getElementById("historyBox");
-const historyList=document.getElementById("historyList");
-const clearHistory=document.getElementById("clearHistory");
-
-let searchHistory=JSON.parse(localStorage.getItem("aMySearchHistory")||"[]");
-
-function renderHistory(){
- historyList.innerHTML="";
- if(!searchHistory.length){
-  historyList.innerHTML='<div style="color:#66739b;font-size:11px">No searches yet.</div>';
-  return;
- }
- searchHistory.slice(0,8).forEach(item=>{
-  const div=document.createElement("div");
-  div.className="history-item";
-  div.textContent=item.question;
-  div.onclick=()=>{
-   question.value=item.question;
-   result.classList.add("show");
-   answer.textContent=item.answer;
-   status.textContent="Loaded from search history.";
-  };
-  historyList.appendChild(div);
- });
-}
-
-function saveHistory(q,text){
- searchHistory.unshift({question:q,answer:text});
- searchHistory=searchHistory.slice(0,8);
- localStorage.setItem("aMySearchHistory",JSON.stringify(searchHistory));
- renderHistory();
- historyBox.classList.add("show");
-}
-
-copyBtn.onclick=async()=>{
- const text=answer.textContent.trim();
- if(!text)return;
- try{
-  await navigator.clipboard.writeText(text);
-  status.textContent="Answer copied to clipboard.";
- }catch{
-  status.textContent="Copy failed.";
- }
-};
-
-shareBtn.onclick=async()=>{
- const text=answer.textContent.trim();
- if(!text)return;
- if(navigator.share){
-  try{
-   await navigator.share({title:"A My AI Search",text:text});
-  }catch{}
- }else{
-  try{
-   await navigator.clipboard.writeText(text);
-   status.textContent="Answer copied to clipboard.";
-  }catch{}
- }
-};
-
-clearHistory.onclick=()=>{
- searchHistory=[];
- localStorage.removeItem("aMySearchHistory");
- renderHistory();
- historyBox.classList.remove("show");
- status.textContent="Search history cleared.";
-};
-
-renderHistory();
 
 /* ===== PROFESSIONAL FEATURES ===== */
 
@@ -3494,20 +3622,12 @@ renderHistory();
  const question=document.getElementById("question");
 
  if(askBtn && question){
-  askBtn.addEventListener("click",()=>{
-   const q=question.value.trim();
-   if(!q) return;
-
-   addChat("user",q);
-
-   setTimeout(()=>{
-    addChat(
-     "ai",
-     "✦ Demo AI\n\nI received your question: " + q +
-     "\n\nNeural interface is working correctly."
-    );
-   },1200);
-  },true);
+  question.addEventListener("keydown",(e)=>{
+   if(e.key==="Enter" && !e.shiftKey){
+    e.preventDefault();
+    askBtn.click();
+   }
+  });
  }
 
  updateUserUI();
