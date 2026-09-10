@@ -451,6 +451,111 @@ h1{
 }
 
 .result.show{
+/* ===== PROFESSIONAL RESULT UI ===== */
+
+.result{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(12,20,42,.96),rgba(8,14,32,.98));
+  border:1px solid rgba(90,150,255,.25);
+  box-shadow:0 0 35px rgba(70,120,255,.12);
+}
+
+.result::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 10% 0%,rgba(80,140,255,.10),transparent 35%);
+  pointer-events:none;
+}
+
+.result-head{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.result-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:700;
+}
+
+.result-orb{
+  width:27px;
+  height:27px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:linear-gradient(135deg,#5d8cff,#9b5cff);
+  box-shadow:0 0 18px rgba(100,130,255,.45);
+}
+
+.result-live{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:9px;
+  letter-spacing:1.5px;
+  color:#8faeff;
+}
+
+.result-live span{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#65e6ff;
+  box-shadow:0 0 10px #65e6ff;
+  animation:resultPulse 1.5s ease-in-out infinite;
+}
+
+.result-line{
+  height:1px;
+  margin:12px 0 14px;
+  background:linear-gradient(90deg,rgba(100,150,255,.45),transparent);
+}
+
+.result-content{
+  position:relative;
+}
+
+.result-label{
+  margin-bottom:8px;
+  font-size:9px;
+  letter-spacing:2px;
+  color:#6f8fca;
+}
+
+.result #answer{
+  font-size:14px;
+  line-height:1.7;
+  color:#e8efff;
+}
+
+@keyframes resultPulse{
+  0%,100%{opacity:.45;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.15)}
+}
+
+@media(max-width:600px){
+  .result-head{
+    align-items:flex-start;
+  }
+
+  .result-live{
+    font-size:8px;
+    letter-spacing:1px;
+  }
+
+  .result #answer{
+    font-size:13px;
+  }
+}
+
+
  display:block;
 }
 
@@ -706,6 +811,128 @@ footer{
 }
 /* PROFESSIONAL ACTIONS */
 .result-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
+/* ===== 3D CLASSICAL NEURAL LOADER ===== */
+.neural-loader{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:12px 0 4px;
+  min-height:54px;
+  perspective:700px;
+}
+
+.neural-loader.show{
+  display:flex;
+}
+
+.neural-orb{
+  position:relative;
+  width:42px;
+  height:42px;
+  transform-style:preserve-3d;
+  animation:neuralFloat 2.8s ease-in-out infinite;
+}
+
+.neural-orb::before,
+.neural-orb::after{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border:1.5px solid rgba(126,234,255,.72);
+  border-radius:50%;
+  box-shadow:0 0 12px rgba(126,234,255,.35);
+}
+
+.neural-orb::before{
+  transform:rotateX(68deg);
+  animation:neuralSpin 1.7s linear infinite;
+}
+
+.neural-orb::after{
+  transform:rotateY(68deg);
+  animation:neuralSpinReverse 2.1s linear infinite;
+}
+
+.neural-core{
+  position:absolute;
+  width:12px;
+  height:12px;
+  left:15px;
+  top:15px;
+  border-radius:50%;
+  background:rgba(126,234,255,.95);
+  box-shadow:
+    0 0 8px rgba(126,234,255,.9),
+    0 0 20px rgba(120,100,255,.75),
+    0 0 32px rgba(120,100,255,.35);
+  animation:corePulse 1.2s ease-in-out infinite;
+}
+
+.neural-loading-text{
+  font-size:11px;
+  letter-spacing:2.4px;
+  font-weight:800;
+  color:#b9dfff;
+  text-shadow:0 0 10px rgba(126,234,255,.35);
+}
+
+.neural-dots{
+  display:inline-block;
+  width:18px;
+  overflow:hidden;
+  vertical-align:bottom;
+  animation:dotPulse 1.2s steps(4,end) infinite;
+}
+
+@keyframes neuralSpin{
+  from{transform:rotateX(68deg) rotateZ(0deg)}
+  to{transform:rotateX(68deg) rotateZ(360deg)}
+}
+
+@keyframes neuralSpinReverse{
+  from{transform:rotateY(68deg) rotateZ(360deg)}
+  to{transform:rotateY(68deg) rotateZ(0deg)}
+}
+
+@keyframes corePulse{
+  0%,100%{transform:scale(.72);opacity:.7}
+  50%{transform:scale(1.15);opacity:1}
+}
+
+@keyframes neuralFloat{
+  0%,100%{transform:translateY(0) rotateX(0deg)}
+  50%{transform:translateY(-3px) rotateX(8deg)}
+}
+
+@keyframes dotPulse{
+  0%{width:0}
+  25%{width:6px}
+  50%{width:12px}
+  75%,100%{width:18px}
+}
+
+@media(max-width:600px){
+  .neural-loader{
+    min-height:50px;
+  }
+}
+
+.retry-btn{
+  border-color:rgba(255,110,150,.35);
+  color:#ffb4ca;
+}
+.retry-btn:hover{
+  border-color:rgba(255,110,150,.65);
+  transform:translateY(-1px);
+}
+.retry-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+
 .action-btn{border:1px solid rgba(100,130,255,.25);background:rgba(50,65,145,.18);color:#b9c8ff;border-radius:11px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer}
 .action-btn:hover{transform:translateY(-1px);border-color:rgba(0,229,255,.55);color:#fff}
 .history{width:min(760px,100%);margin:14px auto 0;display:none;text-align:left;padding:15px;border:1px solid rgba(100,125,255,.22);border-radius:18px;background:rgba(5,10,32,.75)}
@@ -1527,6 +1754,16 @@ body::after{
   Ready • Choose a mode and ask a question
  </div>
 
+<div class="neural-loader" id="neuralLoader" aria-live="polite">
+  <div class="neural-orb">
+    <div class="neural-core"></div>
+  </div>
+  <div class="neural-loading-text">
+    PROCESSING<span class="neural-dots">...</span>
+  </div>
+</div>
+
+
  <div class="result" id="result">
 
   <div class="result-title">
@@ -1537,6 +1774,7 @@ body::after{
 <div class="result-actions">
 <button class="action-btn" id="copyBtn">📋 Copy</button>
 <button class="action-btn" id="shareBtn">🔗 Share</button>
+      <button class="action-btn retry-btn" id="retryBtn" hidden>↻ Retry</button>
 </div>
 
  </div>
@@ -1747,6 +1985,8 @@ const core = document.getElementById("core");
 const apiKeyInput = document.getElementById("apiKey");
 const question = document.getElementById("question");
 const askBtn = document.getElementById("askBtn");
+const retryBtn = document.getElementById("retryBtn");
+const neuralLoader = document.getElementById("neuralLoader");
 const result = document.getElementById("result");
 const answer = document.getElementById("answer");
 const status = document.getElementById("status");
@@ -1834,8 +2074,24 @@ function setLoading(on){
  askBtn.disabled = on;
 
  askBtn.textContent =
-  on ? "Thinking…" : "Search";
+  on ? "⏳ Thinking…" : "Search";
 
+ if(retryBtn){
+  retryBtn.hidden = on;
+ }
+
+ if(neuralLoader){
+  neuralLoader.classList.toggle("show", on);
+ }
+
+}
+
+/* ===== RETRY ===== */
+
+if(retryBtn){
+ retryBtn.addEventListener("click", () => {
+  askAI();
+ });
 }
 
 /* ===== AI SEARCH ===== */
@@ -1862,18 +2118,37 @@ async function askAI(){
  if(!key){
 
   result.classList.add("show");
-
-  answer.textContent =
-   "Your AI interface is ready.\n\n" +
-   "Live AI answers require an API key.";
+  answer.textContent = "";
 
   status.textContent =
-   "API key required for live AI.";
+   "Neural Core is initializing…";
+
+  setLoading(true);
+
+  setTimeout(() => {
+
+   answer.textContent =
+    "Hello! 👋\n\n" +
+    "Welcome to A My AI Search.\n\n" +
+    "This is a Demo AI response. Your neural interface and loading system are working correctly.";
+
+   status.textContent =
+    "Demo response generated • " +
+    mode +
+    " mode";
+
+   setLoading(false);
+
+  }, 1800);
 
   return;
  }
 
  setLoading(true);
+
+ if(retryBtn){
+  retryBtn.hidden = true;
+ }
 
  result.classList.add("show");
 
@@ -1966,6 +2241,10 @@ async function askAI(){
 
   status.textContent =
    "Request failed. Check your API key and internet connection.";
+
+  if(retryBtn){
+   retryBtn.hidden = false;
+  }
 
  }finally{
 
