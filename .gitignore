@@ -1,0 +1,11 @@
+
+.env
+backend/.env
+index-before-*.html
+index-backup*.html
+index-old.html
+index-v3-backup.html
+index-smooth.html
+python1
+
+backend/node_modules/

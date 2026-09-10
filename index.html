@@ -2300,23 +2300,6 @@ body::after{
 
 /* ===== AI ANSWER STREAMING EFFECT ===== */
 
-function streamAnswer(text, speed = 12){
-  answer.textContent = "";
-  let i = 0;
-
-  const timer = setInterval(() => {
-    answer.textContent += text.slice(i, i + 2);
-    i += 2;
-
-    answer.scrollTop = answer.scrollHeight;
-
-    if(i >= text.length){
-      clearInterval(timer);
-      answer.textContent = text;
-    }
-  }, speed);
-}
-
 /* ===== PREMIUM AI RESPONSE UI ===== */
 
 .result{
@@ -2594,18 +2577,7 @@ function streamAnswer(text, speed = 12){
 
  <div class="key-row">
 
-  <input
-   id="apiKey"
-   class="input"
-   type="password"
-   placeholder="Optional Gemini API key"
-  >
-
-  <button class="key-btn" id="saveKey">
-   Save
-  </button>
-
- </div>
+  
 
  <div class="searchbar">
 
@@ -2869,6 +2841,26 @@ function streamAnswer(text, speed = 12){
 
 <script>
 
+window.streamAnswer = function(text, speed = 12){
+  answer.textContent = "";
+  let i = 0;
+
+  const timer = setInterval(() => {
+    answer.textContent += text.slice(i, i + 2);
+    i += 2;
+
+    answer.scrollTop = answer.scrollHeight;
+
+    if(i >= text.length){
+      clearInterval(timer);
+      answer.textContent = text;
+    }
+  }, speed);
+};
+
+
+
+
 /* ===== ELEMENTS ===== */
 
 const core = document.getElementById("core");
@@ -2944,6 +2936,13 @@ document.querySelectorAll(".mode")
 
 });
 
+/* ===== SEARCH BUTTON ===== */
+
+askBtn.addEventListener("click", () => {
+ console.log("SEARCH BUTTON CLICKED");
+ askAI();
+});
+
 /* ===== ENTER SEARCH ===== */
 
 question.addEventListener(
@@ -2991,48 +2990,12 @@ async function askAI(){
  const q =
   question.value.trim();
 
- const key =
-  apiKeyInput.value.trim() ||
-  localStorage.getItem("aMyGeminiKey");
-
  if(!q){
 
   status.textContent =
    "Please type a question first.";
 
   question.focus();
-
-  return;
- }
-
- if(!key){
-
-  result.classList.add("show");
-  answer.textContent = "";
-
-  status.textContent =
-   "Neural Core is initializing…";
-
-  setLoading(true);
-
-  setTimeout(() => {
-
-   const demoText =
-    "Hello! 👋\n\n" +
-    "Welcome to A My AI Search.\n\n" +
-    "This is a Demo AI response. Your neural interface and loading system are working correctly.";
-
-   streamAnswer(demoText);
-   saveHistory(q, demoText);
-
-   status.textContent =
-    "Demo response generated • " +
-    mode +
-    " mode";
-
-   setLoading(false);
-
-  }, 1800);
 
   return;
  }
@@ -3055,17 +3018,12 @@ async function askAI(){
   const prompt =
    "You are the AI assistant inside A My AI Search. " +
    "Answer clearly, accurately and helpfully. " +
-   "Mode: " + mode + ".\n\n" +
+   "Mode: " + mode + ".\\n" +
    "User: " + q;
-
-  const url =
-   "https://generativelanguage.googleapis.com/" +
-   "v1beta/models/gemini-2.5-flash:generateContent?key=" +
-   encodeURIComponent(key);
 
   const res =
    await fetch(
-    url,
+    "http://127.0.0.1:3000/api/openai",
     {
      method:"POST",
 
@@ -3075,22 +3033,7 @@ async function askAI(){
      },
 
      body:JSON.stringify({
-
-      contents:[
-       {
-        parts:[
-         {
-          text:prompt
-         }
-        ]
-       }
-      ],
-
-      generationConfig:{
-       temperature:.7,
-       maxOutputTokens:1200
-      }
-
+      question:prompt
      })
     }
    );
@@ -3101,19 +3044,14 @@ async function askAI(){
   if(!res.ok){
 
    throw new Error(
-    data?.error?.message ||
-    "API request failed."
+    data?.error ||
+    "OpenAI request failed."
    );
 
   }
 
   const text =
-   data?.candidates?.[0]
-    ?.content?.parts
-    ?.map(
-     p => p.text || ""
-    )
-    .join("") ||
+   data?.answer ||
    "No answer was returned.";
 
   streamAnswer(text);
@@ -3640,8 +3578,6 @@ renderHistory();
  });
 
  /* Connect existing search to chat UI */
- const askBtn=document.getElementById("askBtn");
- const question=document.getElementById("question");
 
  if(askBtn && question){
   question.addEventListener("keydown",(e)=>{
