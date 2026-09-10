@@ -1,6 +1,6 @@
 {
-  "name": "My AI Search",
-  "short_name": "AI Search",
+  "name": "TOR AI",
+  "short_name": "TOR AI",
   "start_url": "/my-ai-search/",
   "display": "standalone",
   "background_color": "#080b14",
