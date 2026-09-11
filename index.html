@@ -2864,7 +2864,6 @@ window.streamAnswer = function(text, speed = 12){
 /* ===== ELEMENTS ===== */
 
 const core = document.getElementById("core");
-const apiKeyInput = document.getElementById("apiKey");
 const question = document.getElementById("question");
 const askBtn = document.getElementById("askBtn");
 const retryBtn = document.getElementById("retryBtn");
@@ -2872,46 +2871,8 @@ const neuralLoader = document.getElementById("neuralLoader");
 const result = document.getElementById("result");
 const answer = document.getElementById("answer");
 const status = document.getElementById("status");
-const saveKey = document.getElementById("saveKey");
 
 let mode = "AI Search";
-
-/* ===== API KEY STORAGE ===== */
-
-const savedKey =
- localStorage.getItem("aMyGeminiKey");
-
-if(savedKey){
- apiKeyInput.value = savedKey;
-}
-
-saveKey.onclick = () => {
-
- const key =
-  apiKeyInput.value.trim();
-
- if(key){
-
-  localStorage.setItem(
-   "aMyGeminiKey",
-   key
-  );
-
-  status.textContent =
-   "API key saved on this device.";
-
- }else{
-
-  localStorage.removeItem(
-   "aMyGeminiKey"
-  );
-
-  status.textContent =
-   "Saved API key removed.";
-
- }
-
-};
 
 /* ===== MODES ===== */
 
