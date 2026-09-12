@@ -2559,6 +2559,130 @@ body::after{
   }
 }
 
+
+/* ===== FINAL MOBILE LAYOUT FIX ===== */
+@media (max-width: 700px){
+
+  .search-card{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:0 !important;
+    box-sizing:border-box !important;
+    overflow:visible !important;
+    gap:0 !important;
+  }
+
+  .search-card > *{
+    position:static !important;
+    grid-column:auto !important;
+    grid-row:auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:0 !important;
+    transform:none !important;
+    box-sizing:border-box !important;
+  }
+
+  .key-row{
+    display:none !important;
+  }
+
+  .searchbar{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    width:100% !important;
+    height:auto !important;
+    gap:10px !important;
+  }
+
+  .search-input{
+    flex:1 1 auto !important;
+    width:auto !important;
+    min-width:0 !important;
+    height:58px !important;
+    box-sizing:border-box !important;
+  }
+
+  .search-btn{
+    flex:0 0 auto !important;
+    width:auto !important;
+    min-width:110px !important;
+    height:58px !important;
+  }
+
+  .modes{
+    display:flex !important;
+    flex-direction:row !important;
+    justify-content:center !important;
+    align-items:center !important;
+    flex-wrap:wrap !important;
+    width:100% !important;
+    height:auto !important;
+    gap:10px !important;
+    margin-top:18px !important;
+  }
+
+  .mode{
+    flex:0 1 auto !important;
+    width:auto !important;
+    min-width:100px !important;
+    height:52px !important;
+  }
+
+  .status{
+    width:100% !important;
+    height:auto !important;
+    min-height:40px !important;
+    text-align:center !important;
+    margin-top:14px !important;
+    box-sizing:border-box !important;
+  }
+
+  .neural-loader{
+    width:100% !important;
+    height:auto !important;
+  }
+
+  .result{
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin-top:20px !important;
+    box-sizing:border-box !important;
+  }
+
+  #answer{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    max-height:none !important;
+    white-space:pre-wrap !important;
+    overflow-wrap:anywhere !important;
+    word-break:normal !important;
+    box-sizing:border-box !important;
+  }
+
+  .result-actions{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    width:100% !important;
+    gap:10px !important;
+  }
+
+  .action-btn{
+    flex:1 1 110px !important;
+  }
+}
+
 </style>
 </head>
 
