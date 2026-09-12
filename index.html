@@ -2683,6 +2683,44 @@ body::after{
   }
 }
 
+
+/* ===== SEARCH BAR RESTORE ===== */
+@media (max-width:700px){
+
+  .key-row{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    box-sizing:border-box !important;
+  }
+
+  .key-row .searchbar{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    width:100% !important;
+    height:auto !important;
+    gap:10px !important;
+    box-sizing:border-box !important;
+  }
+
+  .key-row .search-input{
+    flex:1 1 auto !important;
+    width:auto !important;
+    min-width:0 !important;
+    height:58px !important;
+  }
+
+  .key-row .search-btn{
+    flex:0 0 auto !important;
+    width:auto !important;
+    min-width:110px !important;
+    height:58px !important;
+  }
+
+}
+
 </style>
 </head>
 
