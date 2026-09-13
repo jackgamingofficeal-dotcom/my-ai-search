@@ -2721,7 +2721,75 @@ body::after{
 
 }
 
+
+/* ===== NEURAL CHAT UI ===== */
+#answer{
+  width:100%;
+  box-sizing:border-box;
+}
+
+.neural-chat-thread{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  width:100%;
+}
+
+.neural-chat-row{
+  display:flex;
+  width:100%;
+}
+
+.neural-chat-row.user{
+  justify-content:flex-end;
+}
+
+.neural-chat-row.ai{
+  justify-content:flex-start;
+}
+
+.neural-chat-bubble{
+  max-width:82%;
+  padding:13px 16px;
+  border-radius:18px;
+  line-height:1.55;
+  font-size:15px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  box-sizing:border-box;
+}
+
+.neural-chat-row.user .neural-chat-bubble{
+  border-radius:18px 18px 5px 18px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.14);
+  text-align:left;
+}
+
+.neural-chat-row.ai .neural-chat-bubble{
+  border-radius:18px 18px 18px 5px;
+  background:rgba(120,90,255,.10);
+  border:1px solid rgba(150,120,255,.20);
+}
+
+.neural-ai-mark{
+  display:inline-block;
+  margin-right:7px;
+  font-weight:700;
+}
+
+@media (max-width:700px){
+  .neural-chat-bubble{
+    max-width:88%;
+    font-size:14px;
+    padding:12px 14px;
+  }
+}
+
 </style>
+
+
+
 </head>
 
 <body>
@@ -3065,20 +3133,61 @@ body::after{
 
 <script>
 
-window.streamAnswer = function(text, speed = 12){
-  answer.textContent = "";
+window.streamAnswer = function(text, userQuestion, speed = 12){
+
+  let thread = answer.querySelector(".neural-chat-thread");
+
+  if(!thread){
+    answer.innerHTML = "";
+    thread = document.createElement("div");
+    thread.className = "neural-chat-thread";
+    answer.appendChild(thread);
+  }
+
+  /* User message */
+  const userRow = document.createElement("div");
+  userRow.className = "neural-chat-row user";
+
+  const userBubble = document.createElement("div");
+  userBubble.className = "neural-chat-bubble";
+  userBubble.textContent = userQuestion;
+
+  userRow.appendChild(userBubble);
+  thread.appendChild(userRow);
+
+  /* AI message */
+  const aiRow = document.createElement("div");
+  aiRow.className = "neural-chat-row ai";
+
+  const aiBubble = document.createElement("div");
+  aiBubble.className = "neural-chat-bubble";
+
+  const mark = document.createElement("span");
+  mark.className = "neural-ai-mark";
+  mark.textContent = "✦";
+
+  aiBubble.appendChild(mark);
+
+  const textNode = document.createTextNode("");
+  aiBubble.appendChild(textNode);
+
+  aiRow.appendChild(aiBubble);
+  thread.appendChild(aiRow);
+
   let i = 0;
 
   const timer = setInterval(() => {
-    answer.textContent += text.slice(i, i + 2);
+
+    textNode.textContent += text.slice(i, i + 2);
     i += 2;
 
     answer.scrollTop = answer.scrollHeight;
 
     if(i >= text.length){
       clearInterval(timer);
-      answer.textContent = text;
+      textNode.textContent = text;
     }
+
   }, speed);
 };
 
@@ -3193,7 +3302,9 @@ async function askAI(){
 
  result.classList.add("show");
 
- answer.textContent = "";
+ if(!answer.querySelector(".neural-chat-thread")){
+  answer.innerHTML = "";
+}
 
  status.textContent =
   "Neural Core is processing your question…";
@@ -3240,7 +3351,7 @@ async function askAI(){
    "No answer was returned.";
 
   saveHistory(q,text);
-  streamAnswer(text);
+  streamAnswer(text, q);
 
   status.textContent =
    "Answer generated • " +
@@ -3249,9 +3360,37 @@ async function askAI(){
 
  }catch(err){
 
-  answer.textContent =
-   "Unable to get an AI response.\n\n" +
-   err.message;
+  let thread = answer.querySelector(".neural-chat-thread");
+
+  if(!thread){
+   answer.innerHTML = "";
+
+   thread = document.createElement("div");
+   thread.className = "neural-chat-thread";
+
+   answer.appendChild(thread);
+  }
+
+  const errorRow = document.createElement("div");
+  errorRow.className = "neural-chat-row ai";
+
+  const errorBubble = document.createElement("div");
+  errorBubble.className = "neural-chat-bubble";
+
+  const mark = document.createElement("span");
+  mark.className = "neural-ai-mark";
+  mark.textContent = "✦";
+
+  errorBubble.appendChild(mark);
+
+  const errorText = document.createTextNode(
+   "Unable to get an AI response.\\n\\n" +
+   err.message
+  );
+
+  errorBubble.appendChild(errorText);
+  errorRow.appendChild(errorBubble);
+  thread.appendChild(errorRow);
 
   status.textContent =
    "Request failed. Check your API key and internet connection.";
@@ -3450,7 +3589,42 @@ function renderHistory(){
   div.onclick = () => {
    question.value = item.question;
    result.classList.add("show");
-   answer.textContent = item.answer;
+
+   answer.innerHTML = "";
+
+   const thread = document.createElement("div");
+   thread.className = "neural-chat-thread";
+
+   const userRow = document.createElement("div");
+   userRow.className = "neural-chat-row user";
+
+   const userBubble = document.createElement("div");
+   userBubble.className = "neural-chat-bubble";
+   userBubble.textContent = item.question;
+
+   userRow.appendChild(userBubble);
+   thread.appendChild(userRow);
+
+   const aiRow = document.createElement("div");
+   aiRow.className = "neural-chat-row ai";
+
+   const aiBubble = document.createElement("div");
+   aiBubble.className = "neural-chat-bubble";
+
+   const mark = document.createElement("span");
+   mark.className = "neural-ai-mark";
+   mark.textContent = "✦";
+
+   aiBubble.appendChild(mark);
+
+   const textNode = document.createTextNode(item.answer);
+   aiBubble.appendChild(textNode);
+
+   aiRow.appendChild(aiBubble);
+   thread.appendChild(aiRow);
+
+   answer.appendChild(thread);
+
    status.textContent = "Loaded from search history.";
   };
 
@@ -3768,3 +3942,71 @@ renderHistory();
 
 </body>
 </html>
+
+<style>
+/* ===== FINAL NEURAL CHAT VISUAL FIX ===== */
+
+#answer{
+  padding:14px !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  font-size:15px !important;
+  line-height:1.55 !important;
+  min-height:0 !important;
+}
+
+.neural-chat-thread{
+  width:100% !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:14px !important;
+}
+
+.neural-chat-row{
+  width:100% !important;
+  display:flex !important;
+}
+
+.neural-chat-row.user{
+  justify-content:flex-end !important;
+}
+
+.neural-chat-row.ai{
+  justify-content:flex-start !important;
+}
+
+.neural-chat-bubble{
+  max-width:82% !important;
+  width:auto !important;
+  padding:12px 15px !important;
+  border-radius:18px !important;
+  font-size:15px !important;
+  line-height:1.55 !important;
+  white-space:pre-wrap !important;
+  overflow-wrap:anywhere !important;
+  box-sizing:border-box !important;
+}
+
+.neural-chat-row.user .neural-chat-bubble{
+  border-radius:18px 18px 5px 18px !important;
+}
+
+.neural-chat-row.ai .neural-chat-bubble{
+  border-radius:18px 18px 18px 5px !important;
+}
+
+@media(max-width:700px){
+
+  #answer{
+    padding:10px 2px !important;
+  }
+
+  .neural-chat-bubble{
+    max-width:88% !important;
+    font-size:14px !important;
+    padding:11px 13px !important;
+  }
+
+}
+</style>
