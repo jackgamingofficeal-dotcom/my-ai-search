@@ -4896,3 +4896,126 @@ renderHistory();
   animation:none !important;
 }
 </style>
+
+<style id="ultra-light-menu-animation">
+/* ===== TOR AI — ULTRA LIGHT MENU MOTION ===== */
+
+.menu-icon{
+  transition:
+    filter .3s ease,
+    opacity .3s ease,
+    transform .3s ease !important;
+}
+
+/* New Chat — very soft pulse */
+.menu-icon-new{
+  animation:lightNewPulse 3.8s ease-in-out infinite !important;
+}
+
+.menu-icon-new::before{
+  animation:lightNewRing 3.8s ease-in-out infinite !important;
+}
+
+.menu-icon-new::after{
+  animation:none !important;
+}
+
+/* Profile — occasional soft glow */
+.menu-icon-user{
+  animation:lightUserPulse 5s ease-in-out infinite !important;
+}
+
+.menu-icon-user i{
+  animation:none !important;
+}
+
+/* History — extremely subtle breathing effect */
+.menu-icon-history{
+  animation:lightHistoryPulse 5.5s ease-in-out infinite !important;
+}
+
+.menu-icon-history i{
+  animation:none !important;
+}
+
+/* Settings — no rotation, only soft glow */
+.menu-icon-settings{
+  animation:lightSettingsPulse 6s ease-in-out infinite !important;
+}
+
+.menu-icon-settings::after{
+  animation:none !important;
+}
+
+/* Hover — small response */
+.top-menu-item:hover .menu-icon{
+  transform:scale(1.05) !important;
+  filter:drop-shadow(0 0 5px rgba(160,140,255,.30));
+}
+
+/* ===== LIGHTWEIGHT KEYFRAMES ===== */
+
+@keyframes lightNewPulse{
+  0%,100%{
+    opacity:.82;
+    filter:brightness(.96);
+  }
+  50%{
+    opacity:1;
+    filter:brightness(1.08);
+  }
+}
+
+@keyframes lightNewRing{
+  0%,100%{
+    transform:scale(.94);
+    opacity:.20;
+  }
+  50%{
+    transform:scale(1.07);
+    opacity:.48;
+  }
+}
+
+@keyframes lightUserPulse{
+  0%,88%,100%{
+    filter:none;
+    opacity:.88;
+  }
+  94%{
+    filter:drop-shadow(0 0 4px rgba(160,140,255,.28));
+    opacity:1;
+  }
+}
+
+@keyframes lightHistoryPulse{
+  0%,100%{
+    opacity:.84;
+  }
+  50%{
+    opacity:1;
+    filter:drop-shadow(0 0 3px rgba(160,140,255,.22));
+  }
+}
+
+@keyframes lightSettingsPulse{
+  0%,100%{
+    opacity:.84;
+  }
+  50%{
+    opacity:1;
+    filter:drop-shadow(0 0 4px rgba(160,140,255,.25));
+  }
+}
+
+/* Respect reduced-motion */
+@media(prefers-reduced-motion:reduce){
+  .menu-icon-new,
+  .menu-icon-new::before,
+  .menu-icon-user,
+  .menu-icon-history,
+  .menu-icon-settings{
+    animation:none !important;
+  }
+}
+</style>
