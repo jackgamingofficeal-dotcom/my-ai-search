@@ -3471,6 +3471,10 @@ async function askAI(){
   return;
  }
 
+ /* Keep the submitted question in chat, not in the input field */
+ const submittedQuestion = q;
+ question.value = "";
+
  setLoading(true);
 
  if(retryBtn){
@@ -3556,6 +3560,11 @@ async function askAI(){
    " mode";
 
  }catch(err){
+
+  /* Restore the question if the request fails */
+  if(question && !question.value){
+   question.value = submittedQuestion;
+  }
 
   let thread = answer.querySelector(".neural-chat-thread");
 
