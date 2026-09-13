@@ -4010,3 +4010,126 @@ renderHistory();
 
 }
 </style>
+
+<style>
+/* ===== CLASSIC PREMIUM NEURAL CHAT ===== */
+
+.neural-chat-thread{
+  width:100% !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:18px !important;
+  padding:4px 2px !important;
+  box-sizing:border-box !important;
+}
+
+/* Message rows */
+.neural-chat-row{
+  width:100% !important;
+  display:flex !important;
+  align-items:flex-end !important;
+  box-sizing:border-box !important;
+}
+
+.neural-chat-row.user{
+  justify-content:flex-end !important;
+}
+
+.neural-chat-row.ai{
+  justify-content:flex-start !important;
+}
+
+/* Common bubble */
+.neural-chat-bubble{
+  position:relative !important;
+  max-width:78% !important;
+  width:auto !important;
+  padding:13px 16px !important;
+  border-radius:16px !important;
+  font-size:15px !important;
+  line-height:1.65 !important;
+  letter-spacing:.01em !important;
+  white-space:pre-wrap !important;
+  overflow-wrap:anywhere !important;
+  box-sizing:border-box !important;
+  box-shadow:0 6px 18px rgba(0,0,0,.12) !important;
+}
+
+/* User */
+.neural-chat-row.user .neural-chat-bubble{
+  background:rgba(255,255,255,.075) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  color:#f2f5ff !important;
+  border-radius:17px 17px 5px 17px !important;
+}
+
+/* AI */
+.neural-chat-row.ai .neural-chat-bubble{
+  background:linear-gradient(
+    135deg,
+    rgba(115,85,255,.12),
+    rgba(75,105,220,.075)
+  ) !important;
+  border:1px solid rgba(145,125,255,.19) !important;
+  color:#dfe7ff !important;
+  border-radius:17px 17px 17px 5px !important;
+}
+
+/* Neural symbol */
+.neural-ai-mark{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:22px !important;
+  height:22px !important;
+  margin-right:8px !important;
+  border-radius:50% !important;
+  background:rgba(145,120,255,.12) !important;
+  border:1px solid rgba(165,145,255,.22) !important;
+  color:#cfc5ff !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  vertical-align:middle !important;
+  box-sizing:border-box !important;
+}
+
+/* Better answer area */
+#answer{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  min-height:0 !important;
+}
+
+/* Mobile */
+@media(max-width:700px){
+
+  .neural-chat-thread{
+    gap:15px !important;
+    padding:3px 0 !important;
+  }
+
+  .neural-chat-bubble{
+    max-width:88% !important;
+    padding:12px 14px !important;
+    font-size:14px !important;
+    line-height:1.6 !important;
+    border-radius:15px !important;
+  }
+
+  .neural-chat-row.user .neural-chat-bubble{
+    border-radius:16px 16px 5px 16px !important;
+  }
+
+  .neural-chat-row.ai .neural-chat-bubble{
+    border-radius:16px 16px 16px 5px !important;
+  }
+
+  .neural-ai-mark{
+    width:20px !important;
+    height:20px !important;
+    margin-right:7px !important;
+    font-size:12px !important;
+  }
+}
+</style>
