@@ -2802,10 +2802,28 @@ body::after{
   <button class="top-menu-btn" id="topMenuBtn" aria-label="Open menu" onclick="document.getElementById('topMenuBox').classList.toggle('show');">⋮</button>
 
   <div class="top-menu-box" id="topMenuBox">
-   <button class="top-menu-item" data-target="profileBtn">👤 <span>Profile</span></button>
-   <button class="top-menu-item" id="historyMenuBtn">🕘 <span>History</span></button>
-   <button class="top-menu-item" data-target="settingsBtn">⚙️ <span>Settings</span></button>
-  </div>
+
+   <button class="top-menu-item" id="newChatMenuBtn">
+      <span class="menu-icon menu-icon-new"><span></span></span>
+      <span>New Chat</span>
+   </button>
+
+   <button class="top-menu-item" data-target="profileBtn">
+      <span class="menu-icon menu-icon-user"></span>
+      <span>Profile</span>
+   </button>
+
+   <button class="top-menu-item" id="historyMenuBtn">
+      <span class="menu-icon menu-icon-history"></span>
+      <span>History</span>
+   </button>
+
+   <button class="top-menu-item" data-target="settingsBtn">
+      <span class="menu-icon menu-icon-settings"></span>
+      <span>Settings</span>
+   </button>
+
+</div>
  </div>
 
  <div class="logo">A My <span>AI Search</span></div>
@@ -3656,6 +3674,64 @@ window.addEventListener(
 
 /* ===== PROFESSIONAL FEATURES ===== */
 
+const newChatMenuBtn = document.getElementById("newChatMenuBtn");
+
+if(newChatMenuBtn){
+ newChatMenuBtn.onclick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  /* Close three-dot menu */
+  const topMenuBox =
+   document.getElementById("topMenuBox");
+
+  if(topMenuBox){
+   topMenuBox.classList.remove("show");
+  }
+
+  /* Reset current conversation context */
+  if(typeof conversationContext !== "undefined"){
+   conversationContext = [];
+  }
+
+  /* Clear current answer UI */
+  if(answer){
+   answer.innerHTML = "";
+  }
+
+  if(result){
+   result.classList.remove("show");
+  }
+
+  /* Reset question box */
+  if(question){
+   question.value = "";
+   question.focus();
+  }
+
+  /* Reset status */
+  if(status){
+   status.textContent =
+    "New chat started.";
+  }
+
+  /* Hide retry button */
+  if(retryBtn){
+   retryBtn.hidden = true;
+  }
+
+  /* Make sure loading state is off */
+  if(neuralLoader){
+   neuralLoader.classList.remove("show");
+  }
+
+  if(askBtn){
+   askBtn.disabled = false;
+   askBtn.textContent = "Search";
+  }
+ };
+}
+
 const historyMenuBtn = document.getElementById("historyMenuBtn");
 
 if(historyMenuBtn){
@@ -4500,6 +4576,158 @@ renderHistory();
   .neural-markdown-code{
     padding:10px 11px;
     font-size:12px;
+  }
+}
+</style>
+
+<style id="premium-menu-icons">
+/* ===== PREMIUM ANIMATED MENU ICONS ===== */
+
+.menu-icon{
+  position:relative;
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#cfc6ff;
+  opacity:.9;
+  transition:transform .25s ease,filter .25s ease,opacity .25s ease;
+}
+
+.menu-icon-new{
+  border:1.5px solid rgba(170,150,255,.65);
+  border-radius:50%;
+  box-shadow:0 0 7px rgba(145,120,255,.18),
+             inset 0 0 6px rgba(145,120,255,.08);
+}
+
+.menu-icon-new::before,
+.menu-icon-new::after{
+  content:"";
+  position:absolute;
+  background:#d9d1ff;
+  border-radius:2px;
+}
+
+.menu-icon-new::before{
+  width:8px;
+  height:1.5px;
+}
+
+.menu-icon-new::after{
+  width:1.5px;
+  height:8px;
+}
+
+.menu-icon-new span{
+  position:absolute;
+  inset:-4px;
+  border:1px solid rgba(150,130,255,.12);
+  border-radius:50%;
+  animation:menuNewPulse 2.5s ease-in-out infinite;
+}
+
+.menu-icon-user::before{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  top:2px;
+  border:1.5px solid #cfc6ff;
+  border-radius:50%;
+}
+
+.menu-icon-user::after{
+  content:"";
+  position:absolute;
+  width:13px;
+  height:7px;
+  bottom:2px;
+  border:1.5px solid #cfc6ff;
+  border-radius:9px 9px 5px 5px;
+}
+
+.menu-icon-history{
+  border:1.5px solid #cfc6ff;
+  border-radius:50%;
+}
+
+.menu-icon-history::before{
+  content:"";
+  position:absolute;
+  width:5px;
+  height:1.5px;
+  background:#cfc6ff;
+  top:9px;
+  left:9px;
+  transform-origin:left center;
+  transform:rotate(-65deg);
+  border-radius:2px;
+}
+
+.menu-icon-history::after{
+  content:"";
+  position:absolute;
+  width:1.5px;
+  height:6px;
+  background:#cfc6ff;
+  top:4px;
+  left:9px;
+  border-radius:2px;
+}
+
+.menu-icon-settings{
+  border:1.5px solid #cfc6ff;
+  border-radius:50%;
+  animation:menuGear 7s linear infinite;
+}
+
+.menu-icon-settings::before{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  border:1.5px solid #cfc6ff;
+  border-radius:50%;
+}
+
+.top-menu-item:hover .menu-icon{
+  transform:scale(1.08);
+  opacity:1;
+  filter:drop-shadow(0 0 5px rgba(160,140,255,.55));
+}
+
+.top-menu-item:hover .menu-icon-new span{
+  animation:menuNewPulse .9s ease-in-out infinite;
+}
+
+@keyframes menuNewPulse{
+  0%,100%{transform:scale(.85);opacity:.25}
+  50%{transform:scale(1.15);opacity:.75}
+}
+
+@keyframes menuGear{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@media(max-width:600px){
+  .menu-icon{
+    width:19px;
+    height:19px;
+    flex-basis:19px;
+  }
+  .top-menu-item{
+    gap:10px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .menu-icon-settings,
+  .menu-icon-new span{
+    animation:none !important;
   }
 }
 </style>
