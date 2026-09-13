@@ -2906,21 +2906,46 @@ body::after{
 
   
 
- <div class="searchbar">
+ <div class="searchbar chatgpt-searchbar">
+
+  <button
+   type="button"
+   class="chatgpt-plus"
+   id="attachBtn"
+   aria-label="Add photo or file"
+  >+</button>
 
   <input
    id="question"
-   class="search-input"
+   class="search-input chatgpt-input"
    autocomplete="off"
    placeholder="Ask anything..."
    aria-label="Ask anything"
   >
 
-  <button class="search-btn" id="askBtn">
-   Search
-  </button>
+  <input
+   type="file"
+   id="fileInput"
+   accept="image/*"
+   hidden
+  >
+
+  <button
+   type="button"
+   class="chatgpt-voice"
+   id="voiceBtn"
+   aria-label="Voice input"
+  >⌕</button>
+
+  <button
+   class="search-btn chatgpt-send"
+   id="askBtn"
+   aria-label="Search"
+  >↑</button>
 
  </div>
+
+ <div class="chatgpt-attachment" id="attachmentPreview"></div>
 
  <div class="modes">
 
@@ -5019,3 +5044,340 @@ renderHistory();
   }
 }
 </style>
+
+
+<style id="chatgpt-style-searchbox">
+
+/* ===== TOR AI — CHATGPT STYLE SEARCH BAR ===== */
+
+.chatgpt-searchbar{
+  position:relative !important;
+  width:100% !important;
+  min-height:68px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  padding:8px 9px 8px 10px !important;
+  border-radius:24px !important;
+  box-sizing:border-box !important;
+
+  background:rgba(255,255,255,.075) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+
+  box-shadow:
+    0 8px 28px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.035) !important;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    background .25s ease !important;
+}
+
+.chatgpt-searchbar:focus-within{
+  border-color:rgba(150,130,255,.38) !important;
+  background:rgba(255,255,255,.085) !important;
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.20),
+    0 0 0 3px rgba(130,110,255,.07) !important;
+}
+
+/* PLUS */
+
+.chatgpt-plus{
+  flex:0 0 43px !important;
+  width:43px !important;
+  height:43px !important;
+  border-radius:50% !important;
+
+  border:1px solid rgba(255,255,255,.13) !important;
+  background:rgba(255,255,255,.07) !important;
+  color:#eeeaff !important;
+
+  font-size:28px !important;
+  font-weight:300 !important;
+  line-height:1 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  cursor:pointer !important;
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    border-color .18s ease !important;
+}
+
+.chatgpt-plus:hover{
+  transform:scale(1.05) !important;
+  background:rgba(255,255,255,.12) !important;
+  border-color:rgba(180,165,255,.30) !important;
+}
+
+.chatgpt-plus:active{
+  transform:scale(.94) !important;
+}
+
+/* INPUT */
+
+.chatgpt-input{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  height:50px !important;
+
+  border:0 !important;
+  outline:0 !important;
+  background:transparent !important;
+
+  color:#f4f5ff !important;
+  font-size:16px !important;
+  line-height:1.5 !important;
+
+  padding:0 4px !important;
+}
+
+.chatgpt-input::placeholder{
+  color:rgba(220,225,245,.52) !important;
+}
+
+/* VOICE */
+
+.chatgpt-voice{
+  flex:0 0 43px !important;
+  width:43px !important;
+  height:43px !important;
+
+  border-radius:50% !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  background:rgba(255,255,255,.045) !important;
+
+  color:#e9e8ff !important;
+  font-size:25px !important;
+  font-weight:400 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  cursor:pointer !important;
+  transition:
+    transform .18s ease,
+    background .18s ease !important;
+}
+
+.chatgpt-voice:hover{
+  transform:scale(1.05) !important;
+  background:rgba(255,255,255,.10) !important;
+}
+
+.chatgpt-voice:active{
+  transform:scale(.94) !important;
+}
+
+/* SEND */
+
+.chatgpt-send{
+  flex:0 0 43px !important;
+  width:43px !important;
+  height:43px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  border-radius:50% !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  font-size:25px !important;
+  line-height:1 !important;
+}
+
+/* ATTACHMENT PREVIEW */
+
+.chatgpt-attachment{
+  display:none;
+  margin-top:9px;
+  padding:8px 11px;
+  border-radius:13px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+  color:#dfe4ff;
+  font-size:12px;
+}
+
+.chatgpt-attachment.show{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.chatgpt-attachment img{
+  width:42px;
+  height:42px;
+  object-fit:cover;
+  border-radius:9px;
+}
+
+/* VOICE ACTIVE */
+
+.chatgpt-voice.listening{
+  background:rgba(145,120,255,.18) !important;
+  border-color:rgba(175,155,255,.40) !important;
+  box-shadow:0 0 14px rgba(140,120,255,.20) !important;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .chatgpt-searchbar{
+    min-height:62px !important;
+    padding:7px 8px !important;
+    border-radius:22px !important;
+    gap:6px !important;
+  }
+
+  .chatgpt-plus,
+  .chatgpt-voice,
+  .chatgpt-send{
+    width:40px !important;
+    height:40px !important;
+    flex-basis:40px !important;
+  }
+
+  .chatgpt-plus{
+    font-size:25px !important;
+  }
+
+  .chatgpt-input{
+    height:46px !important;
+    font-size:15px !important;
+  }
+
+  .chatgpt-voice{
+    font-size:23px !important;
+  }
+
+  .chatgpt-send{
+    font-size:23px !important;
+  }
+}
+
+</style>
+
+
+<script id="chatgpt-searchbox-js">
+
+/* ===== CHATGPT STYLE SEARCH CONTROLS ===== */
+
+(function(){
+
+  const attachBtn = document.getElementById("attachBtn");
+  const fileInput = document.getElementById("fileInput");
+  const preview = document.getElementById("attachmentPreview");
+  const voiceBtn = document.getElementById("voiceBtn");
+
+  if(attachBtn && fileInput){
+
+    attachBtn.onclick = function(){
+      fileInput.click();
+    };
+
+    fileInput.onchange = function(){
+
+      const file = fileInput.files && fileInput.files[0];
+
+      if(!file) return;
+
+      preview.innerHTML = "";
+
+      if(file.type.startsWith("image/")){
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+
+        const name = document.createElement("span");
+        name.textContent = file.name;
+
+        preview.appendChild(img);
+        preview.appendChild(name);
+
+      }else{
+
+        preview.textContent = "📎 " + file.name;
+
+      }
+
+      preview.classList.add("show");
+    };
+  }
+
+  /* Voice typing */
+
+  if(voiceBtn){
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+      voiceBtn.title = "Voice input is not supported in this browser";
+    }else{
+
+      const recognition = new SpeechRecognition();
+
+      recognition.lang = "en-IN";
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onstart = function(){
+        voiceBtn.classList.add("listening");
+        voiceBtn.textContent = "●";
+      };
+
+      recognition.onresult = function(event){
+
+        let text = "";
+
+        for(let i = event.resultIndex;
+            i < event.results.length;
+            i++){
+
+          text += event.results[i][0].transcript;
+        }
+
+        const input =
+          document.getElementById("question");
+
+        if(input){
+          input.value = text;
+          input.dispatchEvent(new Event("input"));
+        }
+      };
+
+      recognition.onend = function(){
+        voiceBtn.classList.remove("listening");
+        voiceBtn.textContent = "⌕";
+      };
+
+      recognition.onerror = function(){
+        voiceBtn.classList.remove("listening");
+        voiceBtn.textContent = "⌕";
+      };
+
+      voiceBtn.onclick = function(){
+
+        try{
+          recognition.start();
+        }catch(e){}
+
+      };
+    }
+  }
+
+})();
+
+</script>
