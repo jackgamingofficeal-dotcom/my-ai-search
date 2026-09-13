@@ -3133,14 +3133,138 @@ body::after{
 
 <script>
 
+/* ===== SAFE MARKDOWN RENDERER ===== */
+
+function renderMarkdown(text){
+
+  const fragment = document.createDocumentFragment();
+  const lines = String(text || "").replace(/\r\n/g, "\n").split("\n");
+
+  let inCode = false;
+  let codeBuffer = [];
+  let codeBox = null;
+
+  function addInline(parent, value){
+
+    const escaped = String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    const html = escaped
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/__([^_]+)__/g, "<strong>$1</strong>")
+      .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, "<em>$1</em>")
+      .replace(/(?<!_)_([^_]+)_(?!_)/g, "<em>$1</em>");
+
+    const wrapper = document.createElement("span");
+    wrapper.innerHTML = html;
+    parent.appendChild(wrapper);
+  }
+
+  for(const line of lines){
+
+    /* Fenced code */
+    if(line.trim().startsWith("```")){
+
+      if(!inCode){
+        inCode = true;
+        codeBuffer = [];
+
+        codeBox = document.createElement("pre");
+        codeBox.className = "neural-markdown-code";
+
+        const code = document.createElement("code");
+        codeBox.appendChild(code);
+        fragment.appendChild(codeBox);
+      }else{
+        inCode = false;
+        codeBox.querySelector("code").textContent =
+          codeBuffer.join("\n");
+        codeBox = null;
+      }
+
+      continue;
+    }
+
+    if(inCode){
+      codeBuffer.push(line);
+      continue;
+    }
+
+    /* Empty line */
+    if(!line.trim()){
+      fragment.appendChild(
+        document.createElement("br")
+      );
+      continue;
+    }
+
+    /* Headings */
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+
+    if(heading){
+      const level = heading[1].length;
+      const el = document.createElement("h" + level);
+      addInline(el, heading[2]);
+      fragment.appendChild(el);
+      continue;
+    }
+
+    /* Bullet list */
+    const bullet = line.match(/^\s*[-*]\s+(.+)$/);
+
+    if(bullet){
+      const el = document.createElement("div");
+      el.className = "neural-markdown-bullet";
+      el.textContent = "• ";
+      addInline(el, bullet[1]);
+      fragment.appendChild(el);
+      continue;
+    }
+
+    /* Numbered list */
+    const numbered = line.match(/^\s*(\d+)[.)]\s+(.+)$/);
+
+    if(numbered){
+      const el = document.createElement("div");
+      el.className = "neural-markdown-number";
+      el.textContent = numbered[1] + ". ";
+      addInline(el, numbered[2]);
+      fragment.appendChild(el);
+      continue;
+    }
+
+    /* Normal paragraph */
+    const paragraph = document.createElement("div");
+    paragraph.className = "neural-markdown-line";
+    addInline(paragraph, line);
+    fragment.appendChild(paragraph);
+  }
+
+  /* Safety: close unfinished code block */
+  if(inCode && codeBox){
+    codeBox.querySelector("code").textContent =
+      codeBuffer.join("\n");
+  }
+
+  return fragment;
+}
+
+
+/* ===== STREAM ANSWER ===== */
+
 window.streamAnswer = function(text, userQuestion, speed = 12){
 
   let thread = answer.querySelector(".neural-chat-thread");
 
   if(!thread){
     answer.innerHTML = "";
+
     thread = document.createElement("div");
     thread.className = "neural-chat-thread";
+
     answer.appendChild(thread);
   }
 
@@ -3168,8 +3292,11 @@ window.streamAnswer = function(text, userQuestion, speed = 12){
 
   aiBubble.appendChild(mark);
 
-  const textNode = document.createTextNode("");
-  aiBubble.appendChild(textNode);
+  const content = document.createElement("div");
+  content.className = "neural-answer-content";
+  content.textContent = "";
+
+  aiBubble.appendChild(content);
 
   aiRow.appendChild(aiBubble);
   thread.appendChild(aiRow);
@@ -3178,20 +3305,23 @@ window.streamAnswer = function(text, userQuestion, speed = 12){
 
   const timer = setInterval(() => {
 
-    textNode.textContent += text.slice(i, i + 2);
+    content.textContent += text.slice(i, i + 2);
     i += 2;
 
     answer.scrollTop = answer.scrollHeight;
 
     if(i >= text.length){
+
       clearInterval(timer);
-      textNode.textContent = text;
+
+      content.innerHTML = "";
+      content.appendChild(renderMarkdown(text));
+
+      answer.scrollTop = answer.scrollHeight;
     }
 
   }, speed);
 };
-
-
 
 
 /* ===== ELEMENTS ===== */
@@ -4260,6 +4390,92 @@ renderHistory();
   .neural-ai-mark::before,
   .neural-ai-mark::after{
     animation:none !important;
+  }
+}
+</style>
+
+<style>
+/* ===== PREMIUM MARKDOWN ANSWERS ===== */
+
+.neural-answer-content{
+  display:block;
+  min-width:0;
+}
+
+.neural-markdown-line{
+  margin:0 0 7px;
+}
+
+.neural-markdown-line:last-child{
+  margin-bottom:0;
+}
+
+.neural-answer-content h1,
+.neural-answer-content h2,
+.neural-answer-content h3,
+.neural-answer-content h4{
+  margin:14px 0 8px;
+  line-height:1.35;
+  color:#f1efff;
+  font-weight:750;
+}
+
+.neural-answer-content h1{font-size:21px}
+.neural-answer-content h2{font-size:19px}
+.neural-answer-content h3{font-size:17px}
+.neural-answer-content h4{font-size:15px}
+
+.neural-answer-content strong{
+  color:#ffffff;
+  font-weight:750;
+}
+
+.neural-answer-content em{
+  color:#e7e1ff;
+}
+
+.neural-answer-content code{
+  padding:2px 6px;
+  border-radius:6px;
+  background:rgba(0,0,0,.24);
+  border:1px solid rgba(170,150,255,.14);
+  font-family:monospace;
+  font-size:.9em;
+}
+
+.neural-markdown-bullet,
+.neural-markdown-number{
+  margin:5px 0;
+  padding-left:3px;
+}
+
+.neural-markdown-code{
+  margin:12px 0;
+  padding:12px 14px;
+  overflow-x:auto;
+  border-radius:11px;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(150,130,255,.16);
+  box-shadow:inset 0 0 18px rgba(80,60,160,.06);
+}
+
+.neural-markdown-code code{
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#dce8ff;
+  font-size:13px;
+  line-height:1.55;
+}
+
+@media(max-width:600px){
+  .neural-answer-content h1{font-size:19px}
+  .neural-answer-content h2{font-size:17px}
+  .neural-answer-content h3{font-size:16px}
+
+  .neural-markdown-code{
+    padding:10px 11px;
+    font-size:12px;
   }
 }
 </style>
