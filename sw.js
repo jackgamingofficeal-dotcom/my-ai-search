@@ -1,4 +1,4 @@
-const CACHE_NAME = "my-ai-search-v1";
+const CACHE_NAME = "my-ai-search-v2";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
