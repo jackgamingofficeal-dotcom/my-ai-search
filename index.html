@@ -4860,3 +4860,39 @@ renderHistory();
   }
 }
 </style>
+
+<style id="remove-menu-animation">
+/* ===== STATIC PREMIUM MENU ICONS ===== */
+
+.menu-icon-new::before,
+.menu-icon-new::after,
+.menu-icon-user i,
+.menu-icon-history i,
+.menu-icon-settings::after{
+  animation:none !important;
+}
+
+.menu-icon-settings{
+  animation:none !important;
+}
+
+.menu-icon-new{
+  transition:filter .2s ease, opacity .2s ease !important;
+}
+
+.menu-icon{
+  transition:filter .2s ease, opacity .2s ease !important;
+}
+
+.top-menu-item:hover .menu-icon{
+  transform:none !important;
+}
+
+.top-menu-item:active .menu-icon{
+  transform:none !important;
+}
+
+.top-menu-item:hover .menu-icon-new::before{
+  animation:none !important;
+}
+</style>
