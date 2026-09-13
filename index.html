@@ -2804,22 +2804,22 @@ body::after{
   <div class="top-menu-box" id="topMenuBox">
 
    <button class="top-menu-item" id="newChatMenuBtn">
-      <span class="menu-icon menu-icon-new"><span></span></span>
+      <span class="menu-icon menu-icon-new"><i></i><b></b></span>
       <span>New Chat</span>
    </button>
 
    <button class="top-menu-item" data-target="profileBtn">
-      <span class="menu-icon menu-icon-user"></span>
+      <span class="menu-icon menu-icon-user"><i></i></span>
       <span>Profile</span>
    </button>
 
    <button class="top-menu-item" id="historyMenuBtn">
-      <span class="menu-icon menu-icon-history"></span>
+      <span class="menu-icon menu-icon-history"><i></i></span>
       <span>History</span>
    </button>
 
    <button class="top-menu-item" data-target="settingsBtn">
-      <span class="menu-icon menu-icon-settings"></span>
+      <span class="menu-icon menu-icon-settings"><i></i></span>
       <span>Settings</span>
    </button>
 
@@ -4580,53 +4580,93 @@ renderHistory();
 }
 </style>
 
-<style id="premium-menu-icons">
-/* ===== PREMIUM ANIMATED MENU ICONS ===== */
+
+
+<style id="premium-neural-menu-v2">
+/* ===== TOR AI — PREMIUM NEURAL MENU V2 ===== */
 
 .menu-icon{
   position:relative;
-  width:20px;
-  height:20px;
-  flex:0 0 20px;
+  width:21px;
+  height:21px;
+  flex:0 0 21px;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  color:#cfc6ff;
+  box-sizing:border-box;
+  color:#dcd5ff;
   opacity:.9;
-  transition:transform .25s ease,filter .25s ease,opacity .25s ease;
+  transition:
+    transform .28s cubic-bezier(.2,.8,.2,1),
+    filter .28s ease,
+    opacity .28s ease;
 }
+
+/* ---------- NEW CHAT / NEURAL PLUS ---------- */
 
 .menu-icon-new{
-  border:1.5px solid rgba(170,150,255,.65);
+  border:1px solid rgba(174,153,255,.42);
   border-radius:50%;
-  box-shadow:0 0 7px rgba(145,120,255,.18),
-             inset 0 0 6px rgba(145,120,255,.08);
-}
-
-.menu-icon-new::before,
-.menu-icon-new::after{
-  content:"";
-  position:absolute;
-  background:#d9d1ff;
-  border-radius:2px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(155,130,255,.13) 0%,
+      rgba(120,100,255,.045) 48%,
+      transparent 72%
+    );
+  box-shadow:
+    0 0 7px rgba(145,120,255,.12),
+    inset 0 0 7px rgba(180,160,255,.07);
 }
 
 .menu-icon-new::before{
-  width:8px;
-  height:1.5px;
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border:1px solid rgba(155,135,255,.16);
+  border-radius:50%;
+  animation:neuralPlusRing 2.8s ease-in-out infinite;
 }
 
 .menu-icon-new::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border:1px solid transparent;
+  border-top-color:rgba(180,160,255,.22);
+  border-radius:50%;
+  animation:neuralPlusOrbit 5.5s linear infinite;
+}
+
+.menu-icon-new i,
+.menu-icon-new b{
+  position:absolute;
+  display:block;
+  background:#e1dbff;
+  border-radius:3px;
+  box-shadow:0 0 6px rgba(175,155,255,.45);
+}
+
+.menu-icon-new i{
+  width:9px;
+  height:1.5px;
+}
+
+.menu-icon-new b{
   width:1.5px;
-  height:8px;
+  height:9px;
 }
 
 .menu-icon-new span{
-  position:absolute;
-  inset:-4px;
-  border:1px solid rgba(150,130,255,.12);
+  display:none;
+}
+
+/* ---------- PROFILE / IDENTITY CORE ---------- */
+
+.menu-icon-user{
+  border:1px solid rgba(170,155,255,.28);
   border-radius:50%;
-  animation:menuNewPulse 2.5s ease-in-out infinite;
+  box-shadow:inset 0 0 8px rgba(150,125,255,.07);
 }
 
 .menu-icon-user::before{
@@ -4634,99 +4674,188 @@ renderHistory();
   position:absolute;
   width:6px;
   height:6px;
-  top:2px;
-  border:1.5px solid #cfc6ff;
+  top:3px;
+  border:1px solid #d8d1ff;
   border-radius:50%;
 }
 
 .menu-icon-user::after{
   content:"";
   position:absolute;
-  width:13px;
-  height:7px;
-  bottom:2px;
-  border:1.5px solid #cfc6ff;
-  border-radius:9px 9px 5px 5px;
+  width:11px;
+  height:6px;
+  bottom:3px;
+  border:1px solid #d8d1ff;
+  border-radius:8px 8px 4px 4px;
 }
 
+.menu-icon-user i{
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  border:1px solid rgba(150,130,255,.11);
+  animation:identityPulse 2.7s ease-in-out infinite;
+}
+
+/* ---------- HISTORY / SIGNAL ---------- */
+
 .menu-icon-history{
-  border:1.5px solid #cfc6ff;
+  border:1px solid rgba(170,155,255,.30);
   border-radius:50%;
 }
 
 .menu-icon-history::before{
   content:"";
   position:absolute;
-  width:5px;
-  height:1.5px;
-  background:#cfc6ff;
-  top:9px;
+  width:1.5px;
+  height:6px;
+  top:4px;
   left:9px;
-  transform-origin:left center;
-  transform:rotate(-65deg);
+  background:#d9d2ff;
   border-radius:2px;
+  transform-origin:bottom;
+  transform:rotate(0deg);
 }
 
 .menu-icon-history::after{
   content:"";
   position:absolute;
-  width:1.5px;
-  height:6px;
-  background:#cfc6ff;
-  top:4px;
+  width:6px;
+  height:1.5px;
+  top:10px;
   left:9px;
+  background:#d9d2ff;
   border-radius:2px;
+  transform-origin:left;
+  transform:rotate(0deg);
 }
 
-.menu-icon-settings{
-  border:1.5px solid #cfc6ff;
+.menu-icon-history i{
+  position:absolute;
+  inset:-3px;
   border-radius:50%;
-  animation:menuGear 7s linear infinite;
+  border:1px dashed rgba(160,140,255,.18);
+  animation:historyOrbit 4.8s linear infinite;
+}
+
+/* ---------- SETTINGS / CONTROL CORE ---------- */
+
+.menu-icon-settings{
+  border:1px solid rgba(170,155,255,.30);
+  border-radius:50%;
 }
 
 .menu-icon-settings::before{
   content:"";
   position:absolute;
-  width:6px;
-  height:6px;
-  border:1.5px solid #cfc6ff;
+  width:7px;
+  height:7px;
+  border:1px solid #d9d2ff;
   border-radius:50%;
 }
+
+.menu-icon-settings::after{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:50%;
+  border:1px dashed rgba(175,155,255,.25);
+  animation:controlOrbit 6s linear infinite;
+}
+
+.menu-icon-settings i{
+  position:absolute;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:#ddd6ff;
+  box-shadow:
+    0 -8px 0 rgba(205,195,255,.8),
+    0 8px 0 rgba(205,195,255,.8),
+    8px 0 0 rgba(205,195,255,.8),
+    -8px 0 0 rgba(205,195,255,.8);
+}
+
+/* ---------- INTERACTION ---------- */
 
 .top-menu-item:hover .menu-icon{
   transform:scale(1.08);
   opacity:1;
-  filter:drop-shadow(0 0 5px rgba(160,140,255,.55));
+  filter:drop-shadow(0 0 6px rgba(160,140,255,.38));
 }
 
-.top-menu-item:hover .menu-icon-new span{
-  animation:menuNewPulse .9s ease-in-out infinite;
+.top-menu-item:active .menu-icon{
+  transform:scale(.94);
 }
 
-@keyframes menuNewPulse{
-  0%,100%{transform:scale(.85);opacity:.25}
-  50%{transform:scale(1.15);opacity:.75}
+.top-menu-item:hover .menu-icon-new{
+  border-color:rgba(190,170,255,.62);
+  box-shadow:
+    0 0 11px rgba(145,120,255,.22),
+    inset 0 0 9px rgba(180,160,255,.10);
 }
 
-@keyframes menuGear{
+.top-menu-item:hover .menu-icon-new::before{
+  animation-duration:1.1s;
+}
+
+/* ---------- LIGHTWEIGHT ANIMATIONS ---------- */
+
+@keyframes neuralPlusRing{
+  0%,100%{
+    transform:scale(.88);
+    opacity:.25;
+  }
+  50%{
+    transform:scale(1.13);
+    opacity:.72;
+  }
+}
+
+@keyframes neuralPlusOrbit{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
 
+@keyframes identityPulse{
+  0%,100%{
+    transform:scale(.9);
+    opacity:.25;
+  }
+  50%{
+    transform:scale(1.12);
+    opacity:.65;
+  }
+}
+
+@keyframes historyOrbit{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@keyframes controlOrbit{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(-360deg)}
+}
+
 @media(max-width:600px){
   .menu-icon{
-    width:19px;
-    height:19px;
-    flex-basis:19px;
+    width:20px;
+    height:20px;
+    flex-basis:20px;
   }
+
   .top-menu-item{
     gap:10px;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  .menu-icon-settings,
-  .menu-icon-new span{
+  .menu-icon-new::before,
+  .menu-icon-new::after,
+  .menu-icon-user i,
+  .menu-icon-history i,
+  .menu-icon-settings::after{
     animation:none !important;
   }
 }
