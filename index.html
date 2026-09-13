@@ -4133,3 +4133,133 @@ renderHistory();
   }
 }
 </style>
+
+<style>
+/* ===== PREMIUM NEURAL SPARK ===== */
+
+.neural-ai-mark{
+  position:relative !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  width:23px !important;
+  height:23px !important;
+  margin-right:8px !important;
+
+  border-radius:50% !important;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(180,165,255,.20),
+      rgba(100,80,220,.08) 55%,
+      transparent 72%
+    ) !important;
+
+  border:1px solid rgba(175,155,255,.25) !important;
+
+  color:#ddd5ff !important;
+  font-size:13px !important;
+  font-weight:800 !important;
+
+  box-shadow:
+    0 0 7px rgba(150,125,255,.22),
+    inset 0 0 7px rgba(180,160,255,.10) !important;
+
+  animation: neuralSparkPulse 2.4s ease-in-out infinite !important;
+}
+
+/* Soft neural halo */
+.neural-ai-mark::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:-3px !important;
+  border-radius:50% !important;
+
+  border:1px solid rgba(150,125,255,.14) !important;
+
+  opacity:.7 !important;
+  animation: neuralSparkHalo 2.4s ease-in-out infinite !important;
+
+  pointer-events:none !important;
+}
+
+/* Tiny rotating energy ring */
+.neural-ai-mark::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-1px !important;
+  border-radius:50% !important;
+
+  border-top:1px solid rgba(205,195,255,.55) !important;
+  border-right:1px solid transparent !important;
+  border-bottom:1px solid transparent !important;
+  border-left:1px solid rgba(140,120,255,.25) !important;
+
+  animation: neuralSparkSpin 4.5s linear infinite !important;
+
+  pointer-events:none !important;
+}
+
+@keyframes neuralSparkPulse{
+  0%,100%{
+    transform:scale(.96);
+    filter:brightness(.92);
+  }
+
+  50%{
+    transform:scale(1.05);
+    filter:brightness(1.12);
+  }
+}
+
+@keyframes neuralSparkHalo{
+  0%,100%{
+    transform:scale(.92);
+    opacity:.35;
+  }
+
+  50%{
+    transform:scale(1.12);
+    opacity:.75;
+  }
+}
+
+@keyframes neuralSparkSpin{
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* Mobile: slightly lighter animation */
+@media(max-width:600px){
+  .neural-ai-mark{
+    width:21px !important;
+    height:21px !important;
+    margin-right:7px !important;
+    font-size:12px !important;
+  }
+
+  .neural-ai-mark::before{
+    animation-duration:2.8s !important;
+  }
+
+  .neural-ai-mark::after{
+    animation-duration:5s !important;
+  }
+}
+
+/* Respect reduced-motion accessibility */
+@media(prefers-reduced-motion:reduce){
+  .neural-ai-mark,
+  .neural-ai-mark::before,
+  .neural-ai-mark::after{
+    animation:none !important;
+  }
+}
+</style>
