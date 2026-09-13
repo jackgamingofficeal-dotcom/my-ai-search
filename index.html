@@ -847,12 +847,12 @@ footer{
 
 .neural-orb::before{
   transform:rotateX(68deg);
-  animation:neuralSpin 1.7s linear infinite;
+  animation:neuralSpin 2.4s linear infinite;
 }
 
 .neural-orb::after{
   transform:rotateY(68deg);
-  animation:neuralSpinReverse 2.1s linear infinite;
+  animation:neuralSpinReverse 2.8s linear infinite;
 }
 
 .neural-core{
@@ -867,7 +867,7 @@ footer{
     0 0 8px rgba(126,234,255,.9),
     0 0 20px rgba(120,100,255,.75),
     0 0 32px rgba(120,100,255,.35);
-  animation:corePulse 1.2s ease-in-out infinite;
+  animation:corePulse 1.6s ease-in-out infinite;
 }
 
 .neural-loading-text{
@@ -883,7 +883,7 @@ footer{
   width:18px;
   overflow:hidden;
   vertical-align:bottom;
-  animation:dotPulse 1.2s steps(4,end) infinite;
+  animation:dotPulse 1.5s steps(4,end) infinite;
 }
 
 @keyframes neuralSpin{
@@ -897,13 +897,13 @@ footer{
 }
 
 @keyframes corePulse{
-  0%,100%{transform:scale(.72);opacity:.7}
-  50%{transform:scale(1.15);opacity:1}
+  0%,100%{transform:scale(.90);opacity:.82}
+  50%{transform:scale(1.06);opacity:1}
 }
 
 @keyframes neuralFloat{
-  0%,100%{transform:translateY(0) rotateX(0deg)}
-  50%{transform:translateY(-3px) rotateX(8deg)}
+  0%,100%{transform:translate3d(0,0,0) rotateX(0deg)}
+  50%{transform:translate3d(0,-2px,0) rotateX(4deg)}
 }
 
 @keyframes dotPulse{
@@ -3384,7 +3384,7 @@ async function askAI(){
   errorBubble.appendChild(mark);
 
   const errorText = document.createTextNode(
-   "Unable to get an AI response.\\n\\n" +
+   "Unable to get an AI response.\n\n" +
    err.message
   );
 
@@ -3393,7 +3393,7 @@ async function askAI(){
   thread.appendChild(errorRow);
 
   status.textContent =
-   "Request failed. Check your API key and internet connection.";
+   "Neural Core could not complete the request.";
 
   if(retryBtn){
    retryBtn.hidden = false;
