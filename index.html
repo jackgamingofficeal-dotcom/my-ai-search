@@ -3409,6 +3409,10 @@ if(retryBtn){
 
 /* ===== AI SEARCH ===== */
 
+/* ===== MULTI-QUESTION CHAT CONTEXT ===== */
+
+let conversationContext = [];
+
 async function askAI(){
 
  const q =
@@ -3441,11 +3445,26 @@ async function askAI(){
 
  try{
 
+  conversationContext.push({
+   role: "user",
+   content: q
+  });
+
+  const conversationText =
+   conversationContext
+    .map(item =>
+     (item.role === "user" ? "User: " : "AI: ") +
+     item.content
+    )
+    .join("\\n");
+
   const prompt =
    "You are the AI assistant inside TOR AI. " +
    "Answer clearly, accurately and helpfully. " +
    "Mode: " + mode + ".\\n" +
-   "User: " + q;
+   "Use the previous conversation context when relevant. " +
+   "Do not mention that you have memory unless asked.\\n\\n" +
+   conversationText;
 
   const res =
    await fetch(
@@ -3479,6 +3498,11 @@ async function askAI(){
   const text =
    data?.answer ||
    "No answer was returned.";
+
+  conversationContext.push({
+   role: "assistant",
+   content: text
+  });
 
   saveHistory(q,text);
   streamAnswer(text, q);
