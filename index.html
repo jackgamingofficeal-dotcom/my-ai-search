@@ -4704,3 +4704,182 @@ renderHistory();
   });
 })();
 </script>
+
+<style id="tor-ai-attachment-fix">
+.chatgpt-attachment{
+  margin-top:6px;
+  font-size:12px;
+  color:#b9c8ff;
+}
+.chatgpt-attachment:empty{
+  display:none;
+}
+.chatgpt-attachment .file-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 9px;
+  border:1px solid rgba(140,160,220,.22);
+  border-radius:10px;
+  background:rgba(30,40,75,.45);
+}
+.chatgpt-attachment .file-remove{
+  border:0;
+  background:transparent;
+  color:#aeb8d8;
+  cursor:pointer;
+  font-size:15px;
+}
+.chatgpt-searchbar .chatgpt-voice.listening{
+  opacity:1 !important;
+  filter:drop-shadow(0 0 7px rgba(126,234,255,.7));
+}
+</style>
+
+<script id="tor-ai-attachment-voice-fix">
+(function(){
+
+  const attachBtn = document.getElementById("attachBtn");
+  const fileInput = document.getElementById("fileInput");
+  const preview = document.getElementById("attachmentPreview");
+  const voiceBtn = document.getElementById("voiceBtn");
+  const question = document.getElementById("question");
+
+  /* PHOTO / FILE */
+  if(attachBtn && fileInput){
+
+    attachBtn.addEventListener("click", function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", function(){
+
+      const file = fileInput.files && fileInput.files[0];
+
+      if(!file) return;
+
+      if(preview){
+
+        preview.innerHTML =
+          '<span class="file-chip">' +
+          '📎 ' +
+          '<span>' + file.name.replace(/[<>&"]/g,"") + '</span>' +
+          '<button type="button" class="file-remove" aria-label="Remove file">×</button>' +
+          '</span>';
+
+        const removeBtn =
+          preview.querySelector(".file-remove");
+
+        if(removeBtn){
+          removeBtn.onclick = function(){
+            fileInput.value = "";
+            preview.innerHTML = "";
+          };
+        }
+      }
+
+    });
+  }
+
+  /* VOICE INPUT */
+  if(voiceBtn && question){
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+
+      voiceBtn.addEventListener("click", function(){
+        if(preview){
+          preview.textContent =
+            "Voice input isn't supported in this browser.";
+        }
+      });
+
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    let listening = false;
+
+    voiceBtn.addEventListener("click", function(e){
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      if(listening){
+        recognition.stop();
+        return;
+      }
+
+      try{
+        recognition.start();
+      }catch(err){}
+    });
+
+    recognition.onstart = function(){
+      listening = true;
+      voiceBtn.classList.add("listening");
+
+      if(preview){
+        preview.textContent = "Listening…";
+      }
+    };
+
+    recognition.onresult = function(event){
+
+      let text = "";
+
+      for(
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ){
+        text += event.results[i][0].transcript;
+      }
+
+      if(text.trim()){
+        question.value = text.trim();
+      }
+    };
+
+    recognition.onerror = function(event){
+
+      if(preview){
+
+        if(event.error === "not-allowed"){
+          preview.textContent =
+            "Microphone permission was denied.";
+        }else{
+          preview.textContent =
+            "Voice input error: " + event.error;
+        }
+      }
+    };
+
+    recognition.onend = function(){
+
+      listening = false;
+      voiceBtn.classList.remove("listening");
+
+      if(preview){
+        setTimeout(function(){
+          if(preview.textContent === "Listening…"){
+            preview.textContent = "";
+          }
+        },1200);
+      }
+    };
+
+  }
+
+})();
+</script>
