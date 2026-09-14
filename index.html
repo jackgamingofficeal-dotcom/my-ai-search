@@ -3551,6 +3551,12 @@ async function askAI(){
    content: text
   });
 
+  /* Keep only the most recent 20 conversation messages */
+  if(conversationContext.length > 20){
+   conversationContext =
+    conversationContext.slice(-20);
+  }
+
   saveHistory(q,text);
   streamAnswer(text, q);
 
@@ -3560,6 +3566,15 @@ async function askAI(){
    " mode";
 
  }catch(err){
+
+  /* Remove the failed user message so Retry does not duplicate it */
+  if(
+   conversationContext.length &&
+   conversationContext[conversationContext.length - 1].role === "user" &&
+   conversationContext[conversationContext.length - 1].content === submittedQuestion
+  ){
+   conversationContext.pop();
+  }
 
   /* Restore the question if the request fails */
   if(question && !question.value){
@@ -3761,7 +3776,7 @@ if(newChatMenuBtn){
 
   if(askBtn){
    askBtn.disabled = false;
-   askBtn.textContent = "Search";
+   askBtn.textContent = "↑";
   }
  };
 }
@@ -4073,12 +4088,7 @@ renderHistory();
  /* Connect existing search to chat UI */
 
  if(askBtn && question){
-  question.addEventListener("keydown",(e)=>{
-   if(e.key==="Enter" && !e.shiftKey){
-    e.preventDefault();
-    askBtn.click();
-   }
-  });
+
  }
 
  updateUserUI();
@@ -4207,89 +4217,188 @@ renderHistory();
 </body>
 </html>
 
-<style>
-/* ===== FINAL NEURAL CHAT VISUAL FIX ===== */
+<style id="tor-ai-final-ui">
 
-#answer{
-  padding:14px !important;
+/* ===== TOR AI — FINAL UI CONSOLIDATION ===== */
+
+/* ---------- SEARCH BAR ---------- */
+
+.chatgpt-searchbar{
+  width:100% !important;
+  height:54px !important;
+  min-height:54px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:5px !important;
+  padding:5px 7px !important;
+  box-sizing:border-box !important;
+  border-radius:18px !important;
+  background:rgba(22,27,48,.88) !important;
+  border:1px solid rgba(180,190,220,.16) !important;
+  box-shadow:
+    0 3px 12px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.025) !important;
+  backdrop-filter:blur(12px) !important;
+}
+
+.chatgpt-searchbar .chatgpt-plus{
+  width:39px !important;
+  height:39px !important;
+  min-width:39px !important;
+  max-width:39px !important;
+  flex:0 0 39px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border-radius:50% !important;
+  background:rgba(255,255,255,.045) !important;
+  border:1px solid rgba(210,215,235,.16) !important;
+  color:#e7eaf5 !important;
+  font-size:24px !important;
+  font-weight:300 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.chatgpt-searchbar .chatgpt-input{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  width:auto !important;
+  height:40px !important;
+  padding:0 5px !important;
+  margin:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  outline:0 !important;
+  color:#f0f2f8 !important;
+  font-size:15px !important;
+  font-weight:400 !important;
+}
+
+.chatgpt-searchbar .chatgpt-input::placeholder{
+  color:rgba(210,216,235,.52) !important;
+}
+
+.chatgpt-searchbar .chatgpt-voice{
+  width:38px !important;
+  height:40px !important;
+  min-width:38px !important;
+  flex:0 0 38px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  opacity:.88 !important;
+}
+
+.chatgpt-searchbar #askBtn.chatgpt-send{
+  width:39px !important;
+  height:39px !important;
+  min-width:39px !important;
+  max-width:39px !important;
+  min-height:39px !important;
+  max-height:39px !important;
+  flex:0 0 39px !important;
+  flex-grow:0 !important;
+  flex-shrink:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  border-radius:50% !important;
+  background:#f0f2f7 !important;
+  background-image:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  color:#161a28 !important;
+  font-size:21px !important;
+  font-weight:600 !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.chatgpt-searchbar:focus-within{
+  border-color:rgba(175,185,220,.27) !important;
+  box-shadow:
+    0 3px 14px rgba(0,0,0,.20),
+    0 0 0 2px rgba(150,160,205,.035) !important;
+}
+
+.chatgpt-searchbar .chatgpt-plus:hover{
+  background:rgba(255,255,255,.075) !important;
+}
+
+.chatgpt-searchbar #askBtn.chatgpt-send:hover{
+  background:#fff !important;
+  transform:scale(1.035) !important;
+}
+
+
+/* ---------- RESPONSE CONTAINER ---------- */
+
+.result{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin-top:8px !important;
+  padding:10px !important;
+  overflow:visible !important;
+  border-radius:16px !important;
+}
+
+.result-head{
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.result-title{
+  margin:0 !important;
+}
+
+.result-line{
+  margin:6px 0 7px !important;
+}
+
+.result-content{
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.result-label{
+  display:none !important;
+}
+
+.result #answer{
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:4px 2px !important;
   background:transparent !important;
   border:0 !important;
   box-shadow:none !important;
-  font-size:15px !important;
-  line-height:1.55 !important;
-  min-height:0 !important;
+  overflow:visible !important;
 }
+
+
+/* ---------- CHAT ---------- */
 
 .neural-chat-thread{
   width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
   display:flex !important;
   flex-direction:column !important;
   gap:14px !important;
+  box-sizing:border-box !important;
 }
 
 .neural-chat-row{
   width:100% !important;
-  display:flex !important;
-}
-
-.neural-chat-row.user{
-  justify-content:flex-end !important;
-}
-
-.neural-chat-row.ai{
-  justify-content:flex-start !important;
-}
-
-.neural-chat-bubble{
-  max-width:82% !important;
-  width:auto !important;
-  padding:12px 15px !important;
-  border-radius:18px !important;
-  font-size:15px !important;
-  line-height:1.55 !important;
-  white-space:pre-wrap !important;
-  overflow-wrap:anywhere !important;
-  box-sizing:border-box !important;
-}
-
-.neural-chat-row.user .neural-chat-bubble{
-  border-radius:18px 18px 5px 18px !important;
-}
-
-.neural-chat-row.ai .neural-chat-bubble{
-  border-radius:18px 18px 18px 5px !important;
-}
-
-@media(max-width:700px){
-
-  #answer{
-    padding:10px 2px !important;
-  }
-
-  .neural-chat-bubble{
-    max-width:88% !important;
-    font-size:14px !important;
-    padding:11px 13px !important;
-  }
-
-}
-</style>
-
-<style>
-/* ===== CLASSIC PREMIUM NEURAL CHAT ===== */
-
-.neural-chat-thread{
-  width:100% !important;
-  display:flex !important;
-  flex-direction:column !important;
-  gap:18px !important;
-  padding:4px 2px !important;
-  box-sizing:border-box !important;
-}
-
-/* Message rows */
-.neural-chat-row{
-  width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
   display:flex !important;
   align-items:flex-end !important;
   box-sizing:border-box !important;
@@ -4303,23 +4412,22 @@ renderHistory();
   justify-content:flex-start !important;
 }
 
-/* Common bubble */
 .neural-chat-bubble{
   position:relative !important;
-  max-width:78% !important;
   width:auto !important;
+  max-width:78% !important;
+  margin:0 !important;
   padding:13px 16px !important;
   border-radius:16px !important;
+  box-sizing:border-box !important;
   font-size:15px !important;
-  line-height:1.65 !important;
+  line-height:1.6 !important;
   letter-spacing:.01em !important;
   white-space:pre-wrap !important;
   overflow-wrap:anywhere !important;
-  box-sizing:border-box !important;
   box-shadow:0 6px 18px rgba(0,0,0,.12) !important;
 }
 
-/* User */
 .neural-chat-row.user .neural-chat-bubble{
   background:rgba(255,255,255,.075) !important;
   border:1px solid rgba(255,255,255,.14) !important;
@@ -4327,7 +4435,6 @@ renderHistory();
   border-radius:17px 17px 5px 17px !important;
 }
 
-/* AI */
 .neural-chat-row.ai .neural-chat-bubble{
   background:linear-gradient(
     135deg,
@@ -4339,8 +4446,11 @@ renderHistory();
   border-radius:17px 17px 17px 5px !important;
 }
 
-/* Neural symbol */
+
+/* ---------- AI SYMBOL ---------- */
+
 .neural-ai-mark{
+  position:relative !important;
   display:inline-flex !important;
   align-items:center !important;
   justify-content:center !important;
@@ -4353,1589 +4463,11 @@ renderHistory();
   color:#cfc5ff !important;
   font-size:13px !important;
   font-weight:700 !important;
-  vertical-align:middle !important;
   box-sizing:border-box !important;
 }
 
-/* Better answer area */
-#answer{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  min-height:0 !important;
-}
 
-/* Mobile */
-@media(max-width:700px){
-
-  .neural-chat-thread{
-    gap:15px !important;
-    padding:3px 0 !important;
-  }
-
-  .neural-chat-bubble{
-    max-width:88% !important;
-    padding:12px 14px !important;
-    font-size:14px !important;
-    line-height:1.6 !important;
-    border-radius:15px !important;
-  }
-
-  .neural-chat-row.user .neural-chat-bubble{
-    border-radius:16px 16px 5px 16px !important;
-  }
-
-  .neural-chat-row.ai .neural-chat-bubble{
-    border-radius:16px 16px 16px 5px !important;
-  }
-
-  .neural-ai-mark{
-    width:20px !important;
-    height:20px !important;
-    margin-right:7px !important;
-    font-size:12px !important;
-  }
-}
-</style>
-
-<style>
-/* ===== PREMIUM NEURAL SPARK ===== */
-
-.neural-ai-mark{
-  position:relative !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  width:23px !important;
-  height:23px !important;
-  margin-right:8px !important;
-
-  border-radius:50% !important;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(180,165,255,.20),
-      rgba(100,80,220,.08) 55%,
-      transparent 72%
-    ) !important;
-
-  border:1px solid rgba(175,155,255,.25) !important;
-
-  color:#ddd5ff !important;
-  font-size:13px !important;
-  font-weight:800 !important;
-
-  box-shadow:
-    0 0 7px rgba(150,125,255,.22),
-    inset 0 0 7px rgba(180,160,255,.10) !important;
-
-  animation: neuralSparkPulse 2.4s ease-in-out infinite !important;
-}
-
-/* Soft neural halo */
-.neural-ai-mark::before{
-  content:"" !important;
-  position:absolute !important;
-  inset:-3px !important;
-  border-radius:50% !important;
-
-  border:1px solid rgba(150,125,255,.14) !important;
-
-  opacity:.7 !important;
-  animation: neuralSparkHalo 2.4s ease-in-out infinite !important;
-
-  pointer-events:none !important;
-}
-
-/* Tiny rotating energy ring */
-.neural-ai-mark::after{
-  content:"" !important;
-  position:absolute !important;
-  inset:-1px !important;
-  border-radius:50% !important;
-
-  border-top:1px solid rgba(205,195,255,.55) !important;
-  border-right:1px solid transparent !important;
-  border-bottom:1px solid transparent !important;
-  border-left:1px solid rgba(140,120,255,.25) !important;
-
-  animation: neuralSparkSpin 4.5s linear infinite !important;
-
-  pointer-events:none !important;
-}
-
-@keyframes neuralSparkPulse{
-  0%,100%{
-    transform:scale(.96);
-    filter:brightness(.92);
-  }
-
-  50%{
-    transform:scale(1.05);
-    filter:brightness(1.12);
-  }
-}
-
-@keyframes neuralSparkHalo{
-  0%,100%{
-    transform:scale(.92);
-    opacity:.35;
-  }
-
-  50%{
-    transform:scale(1.12);
-    opacity:.75;
-  }
-}
-
-@keyframes neuralSparkSpin{
-  from{
-    transform:rotate(0deg);
-  }
-
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-/* Mobile: slightly lighter animation */
-@media(max-width:600px){
-  .neural-ai-mark{
-    width:21px !important;
-    height:21px !important;
-    margin-right:7px !important;
-    font-size:12px !important;
-  }
-
-  .neural-ai-mark::before{
-    animation-duration:2.8s !important;
-  }
-
-  .neural-ai-mark::after{
-    animation-duration:5s !important;
-  }
-}
-
-/* Respect reduced-motion accessibility */
-@media(prefers-reduced-motion:reduce){
-  .neural-ai-mark,
-  .neural-ai-mark::before,
-  .neural-ai-mark::after{
-    animation:none !important;
-  }
-}
-</style>
-
-<style>
-/* ===== PREMIUM MARKDOWN ANSWERS ===== */
-
-.neural-answer-content{
-  display:block;
-  min-width:0;
-}
-
-.neural-markdown-line{
-  margin:0 0 7px;
-}
-
-.neural-markdown-line:last-child{
-  margin-bottom:0;
-}
-
-.neural-answer-content h1,
-.neural-answer-content h2,
-.neural-answer-content h3,
-.neural-answer-content h4{
-  margin:14px 0 8px;
-  line-height:1.35;
-  color:#f1efff;
-  font-weight:750;
-}
-
-.neural-answer-content h1{font-size:21px}
-.neural-answer-content h2{font-size:19px}
-.neural-answer-content h3{font-size:17px}
-.neural-answer-content h4{font-size:15px}
-
-.neural-answer-content strong{
-  color:#ffffff;
-  font-weight:750;
-}
-
-.neural-answer-content em{
-  color:#e7e1ff;
-}
-
-.neural-answer-content code{
-  padding:2px 6px;
-  border-radius:6px;
-  background:rgba(0,0,0,.24);
-  border:1px solid rgba(170,150,255,.14);
-  font-family:monospace;
-  font-size:.9em;
-}
-
-.neural-markdown-bullet,
-.neural-markdown-number{
-  margin:5px 0;
-  padding-left:3px;
-}
-
-.neural-markdown-code{
-  margin:12px 0;
-  padding:12px 14px;
-  overflow-x:auto;
-  border-radius:11px;
-  background:rgba(0,0,0,.28);
-  border:1px solid rgba(150,130,255,.16);
-  box-shadow:inset 0 0 18px rgba(80,60,160,.06);
-}
-
-.neural-markdown-code code{
-  padding:0;
-  border:0;
-  background:transparent;
-  color:#dce8ff;
-  font-size:13px;
-  line-height:1.55;
-}
-
-@media(max-width:600px){
-  .neural-answer-content h1{font-size:19px}
-  .neural-answer-content h2{font-size:17px}
-  .neural-answer-content h3{font-size:16px}
-
-  .neural-markdown-code{
-    padding:10px 11px;
-    font-size:12px;
-  }
-}
-</style>
-
-
-
-<style id="premium-neural-menu-v2">
-/* ===== TOR AI — PREMIUM NEURAL MENU V2 ===== */
-
-.menu-icon{
-  position:relative;
-  width:21px;
-  height:21px;
-  flex:0 0 21px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  box-sizing:border-box;
-  color:#dcd5ff;
-  opacity:.9;
-  transition:
-    transform .28s cubic-bezier(.2,.8,.2,1),
-    filter .28s ease,
-    opacity .28s ease;
-}
-
-/* ---------- NEW CHAT / NEURAL PLUS ---------- */
-
-.menu-icon-new{
-  border:1px solid rgba(174,153,255,.42);
-  border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(155,130,255,.13) 0%,
-      rgba(120,100,255,.045) 48%,
-      transparent 72%
-    );
-  box-shadow:
-    0 0 7px rgba(145,120,255,.12),
-    inset 0 0 7px rgba(180,160,255,.07);
-}
-
-.menu-icon-new::before{
-  content:"";
-  position:absolute;
-  inset:-3px;
-  border:1px solid rgba(155,135,255,.16);
-  border-radius:50%;
-  animation:neuralPlusRing 2.8s ease-in-out infinite;
-}
-
-.menu-icon-new::after{
-  content:"";
-  position:absolute;
-  inset:-6px;
-  border:1px solid transparent;
-  border-top-color:rgba(180,160,255,.22);
-  border-radius:50%;
-  animation:neuralPlusOrbit 5.5s linear infinite;
-}
-
-.menu-icon-new i,
-.menu-icon-new b{
-  position:absolute;
-  display:block;
-  background:#e1dbff;
-  border-radius:3px;
-  box-shadow:0 0 6px rgba(175,155,255,.45);
-}
-
-.menu-icon-new i{
-  width:9px;
-  height:1.5px;
-}
-
-.menu-icon-new b{
-  width:1.5px;
-  height:9px;
-}
-
-.menu-icon-new span{
-  display:none;
-}
-
-/* ---------- PROFILE / IDENTITY CORE ---------- */
-
-.menu-icon-user{
-  border:1px solid rgba(170,155,255,.28);
-  border-radius:50%;
-  box-shadow:inset 0 0 8px rgba(150,125,255,.07);
-}
-
-.menu-icon-user::before{
-  content:"";
-  position:absolute;
-  width:6px;
-  height:6px;
-  top:3px;
-  border:1px solid #d8d1ff;
-  border-radius:50%;
-}
-
-.menu-icon-user::after{
-  content:"";
-  position:absolute;
-  width:11px;
-  height:6px;
-  bottom:3px;
-  border:1px solid #d8d1ff;
-  border-radius:8px 8px 4px 4px;
-}
-
-.menu-icon-user i{
-  position:absolute;
-  inset:-3px;
-  border-radius:50%;
-  border:1px solid rgba(150,130,255,.11);
-  animation:identityPulse 2.7s ease-in-out infinite;
-}
-
-/* ---------- HISTORY / SIGNAL ---------- */
-
-.menu-icon-history{
-  border:1px solid rgba(170,155,255,.30);
-  border-radius:50%;
-}
-
-.menu-icon-history::before{
-  content:"";
-  position:absolute;
-  width:1.5px;
-  height:6px;
-  top:4px;
-  left:9px;
-  background:#d9d2ff;
-  border-radius:2px;
-  transform-origin:bottom;
-  transform:rotate(0deg);
-}
-
-.menu-icon-history::after{
-  content:"";
-  position:absolute;
-  width:6px;
-  height:1.5px;
-  top:10px;
-  left:9px;
-  background:#d9d2ff;
-  border-radius:2px;
-  transform-origin:left;
-  transform:rotate(0deg);
-}
-
-.menu-icon-history i{
-  position:absolute;
-  inset:-3px;
-  border-radius:50%;
-  border:1px dashed rgba(160,140,255,.18);
-  animation:historyOrbit 4.8s linear infinite;
-}
-
-/* ---------- SETTINGS / CONTROL CORE ---------- */
-
-.menu-icon-settings{
-  border:1px solid rgba(170,155,255,.30);
-  border-radius:50%;
-}
-
-.menu-icon-settings::before{
-  content:"";
-  position:absolute;
-  width:7px;
-  height:7px;
-  border:1px solid #d9d2ff;
-  border-radius:50%;
-}
-
-.menu-icon-settings::after{
-  content:"";
-  position:absolute;
-  inset:2px;
-  border-radius:50%;
-  border:1px dashed rgba(175,155,255,.25);
-  animation:controlOrbit 6s linear infinite;
-}
-
-.menu-icon-settings i{
-  position:absolute;
-  width:3px;
-  height:3px;
-  border-radius:50%;
-  background:#ddd6ff;
-  box-shadow:
-    0 -8px 0 rgba(205,195,255,.8),
-    0 8px 0 rgba(205,195,255,.8),
-    8px 0 0 rgba(205,195,255,.8),
-    -8px 0 0 rgba(205,195,255,.8);
-}
-
-/* ---------- INTERACTION ---------- */
-
-.top-menu-item:hover .menu-icon{
-  transform:scale(1.08);
-  opacity:1;
-  filter:drop-shadow(0 0 6px rgba(160,140,255,.38));
-}
-
-.top-menu-item:active .menu-icon{
-  transform:scale(.94);
-}
-
-.top-menu-item:hover .menu-icon-new{
-  border-color:rgba(190,170,255,.62);
-  box-shadow:
-    0 0 11px rgba(145,120,255,.22),
-    inset 0 0 9px rgba(180,160,255,.10);
-}
-
-.top-menu-item:hover .menu-icon-new::before{
-  animation-duration:1.1s;
-}
-
-/* ---------- LIGHTWEIGHT ANIMATIONS ---------- */
-
-@keyframes neuralPlusRing{
-  0%,100%{
-    transform:scale(.88);
-    opacity:.25;
-  }
-  50%{
-    transform:scale(1.13);
-    opacity:.72;
-  }
-}
-
-@keyframes neuralPlusOrbit{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-@keyframes identityPulse{
-  0%,100%{
-    transform:scale(.9);
-    opacity:.25;
-  }
-  50%{
-    transform:scale(1.12);
-    opacity:.65;
-  }
-}
-
-@keyframes historyOrbit{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-@keyframes controlOrbit{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(-360deg)}
-}
-
-@media(max-width:600px){
-  .menu-icon{
-    width:20px;
-    height:20px;
-    flex-basis:20px;
-  }
-
-  .top-menu-item{
-    gap:10px;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-  .menu-icon-new::before,
-  .menu-icon-new::after,
-  .menu-icon-user i,
-  .menu-icon-history i,
-  .menu-icon-settings::after{
-    animation:none !important;
-  }
-}
-</style>
-
-<style id="remove-menu-animation">
-/* ===== STATIC PREMIUM MENU ICONS ===== */
-
-.menu-icon-new::before,
-.menu-icon-new::after,
-.menu-icon-user i,
-.menu-icon-history i,
-.menu-icon-settings::after{
-  animation:none !important;
-}
-
-.menu-icon-settings{
-  animation:none !important;
-}
-
-.menu-icon-new{
-  transition:filter .2s ease, opacity .2s ease !important;
-}
-
-.menu-icon{
-  transition:filter .2s ease, opacity .2s ease !important;
-}
-
-.top-menu-item:hover .menu-icon{
-  transform:none !important;
-}
-
-.top-menu-item:active .menu-icon{
-  transform:none !important;
-}
-
-.top-menu-item:hover .menu-icon-new::before{
-  animation:none !important;
-}
-</style>
-
-<style id="ultra-light-menu-animation">
-/* ===== TOR AI — ULTRA LIGHT MENU MOTION ===== */
-
-.menu-icon{
-  transition:
-    filter .3s ease,
-    opacity .3s ease,
-    transform .3s ease !important;
-}
-
-/* New Chat — very soft pulse */
-.menu-icon-new{
-  animation:lightNewPulse 3.8s ease-in-out infinite !important;
-}
-
-.menu-icon-new::before{
-  animation:lightNewRing 3.8s ease-in-out infinite !important;
-}
-
-.menu-icon-new::after{
-  animation:none !important;
-}
-
-/* Profile — occasional soft glow */
-.menu-icon-user{
-  animation:lightUserPulse 5s ease-in-out infinite !important;
-}
-
-.menu-icon-user i{
-  animation:none !important;
-}
-
-/* History — extremely subtle breathing effect */
-.menu-icon-history{
-  animation:lightHistoryPulse 5.5s ease-in-out infinite !important;
-}
-
-.menu-icon-history i{
-  animation:none !important;
-}
-
-/* Settings — no rotation, only soft glow */
-.menu-icon-settings{
-  animation:lightSettingsPulse 6s ease-in-out infinite !important;
-}
-
-.menu-icon-settings::after{
-  animation:none !important;
-}
-
-/* Hover — small response */
-.top-menu-item:hover .menu-icon{
-  transform:scale(1.05) !important;
-  filter:drop-shadow(0 0 5px rgba(160,140,255,.30));
-}
-
-/* ===== LIGHTWEIGHT KEYFRAMES ===== */
-
-@keyframes lightNewPulse{
-  0%,100%{
-    opacity:.82;
-    filter:brightness(.96);
-  }
-  50%{
-    opacity:1;
-    filter:brightness(1.08);
-  }
-}
-
-@keyframes lightNewRing{
-  0%,100%{
-    transform:scale(.94);
-    opacity:.20;
-  }
-  50%{
-    transform:scale(1.07);
-    opacity:.48;
-  }
-}
-
-@keyframes lightUserPulse{
-  0%,88%,100%{
-    filter:none;
-    opacity:.88;
-  }
-  94%{
-    filter:drop-shadow(0 0 4px rgba(160,140,255,.28));
-    opacity:1;
-  }
-}
-
-@keyframes lightHistoryPulse{
-  0%,100%{
-    opacity:.84;
-  }
-  50%{
-    opacity:1;
-    filter:drop-shadow(0 0 3px rgba(160,140,255,.22));
-  }
-}
-
-@keyframes lightSettingsPulse{
-  0%,100%{
-    opacity:.84;
-  }
-  50%{
-    opacity:1;
-    filter:drop-shadow(0 0 4px rgba(160,140,255,.25));
-  }
-}
-
-/* Respect reduced-motion */
-@media(prefers-reduced-motion:reduce){
-  .menu-icon-new,
-  .menu-icon-new::before,
-  .menu-icon-user,
-  .menu-icon-history,
-  .menu-icon-settings{
-    animation:none !important;
-  }
-}
-</style>
-
-
-<style id="chatgpt-style-searchbox">
-
-/* ===== TOR AI — CHATGPT STYLE SEARCH BAR ===== */
-
-.chatgpt-searchbar{
-  position:relative !important;
-  width:100% !important;
-  min-height:68px !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:8px !important;
-  padding:8px 9px 8px 10px !important;
-  border-radius:24px !important;
-  box-sizing:border-box !important;
-
-  background:rgba(255,255,255,.075) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
-
-  box-shadow:
-    0 8px 28px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.035) !important;
-
-  transition:
-    border-color .25s ease,
-    box-shadow .25s ease,
-    background .25s ease !important;
-}
-
-.chatgpt-searchbar:focus-within{
-  border-color:rgba(150,130,255,.38) !important;
-  background:rgba(255,255,255,.085) !important;
-  box-shadow:
-    0 8px 30px rgba(0,0,0,.20),
-    0 0 0 3px rgba(130,110,255,.07) !important;
-}
-
-/* PLUS */
-
-.chatgpt-plus{
-  flex:0 0 43px !important;
-  width:43px !important;
-  height:43px !important;
-  border-radius:50% !important;
-
-  border:1px solid rgba(255,255,255,.13) !important;
-  background:rgba(255,255,255,.07) !important;
-  color:#eeeaff !important;
-
-  font-size:28px !important;
-  font-weight:300 !important;
-  line-height:1 !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  cursor:pointer !important;
-  transition:
-    transform .18s ease,
-    background .18s ease,
-    border-color .18s ease !important;
-}
-
-.chatgpt-plus:hover{
-  transform:scale(1.05) !important;
-  background:rgba(255,255,255,.12) !important;
-  border-color:rgba(180,165,255,.30) !important;
-}
-
-.chatgpt-plus:active{
-  transform:scale(.94) !important;
-}
-
-/* INPUT */
-
-.chatgpt-input{
-  flex:1 1 auto !important;
-  min-width:0 !important;
-  height:50px !important;
-
-  border:0 !important;
-  outline:0 !important;
-  background:transparent !important;
-
-  color:#f4f5ff !important;
-  font-size:16px !important;
-  line-height:1.5 !important;
-
-  padding:0 4px !important;
-}
-
-.chatgpt-input::placeholder{
-  color:rgba(220,225,245,.52) !important;
-}
-
-/* VOICE */
-
-.chatgpt-voice{
-  flex:0 0 43px !important;
-  width:43px !important;
-  height:43px !important;
-
-  border-radius:50% !important;
-  border:1px solid rgba(255,255,255,.10) !important;
-  background:rgba(255,255,255,.045) !important;
-
-  color:#e9e8ff !important;
-  font-size:25px !important;
-  font-weight:400 !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  cursor:pointer !important;
-  transition:
-    transform .18s ease,
-    background .18s ease !important;
-}
-
-.chatgpt-voice:hover{
-  transform:scale(1.05) !important;
-  background:rgba(255,255,255,.10) !important;
-}
-
-.chatgpt-voice:active{
-  transform:scale(.94) !important;
-}
-
-/* SEND */
-
-.chatgpt-send{
-  flex:0 0 43px !important;
-  width:43px !important;
-  height:43px !important;
-
-  padding:0 !important;
-  margin:0 !important;
-
-  border-radius:50% !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  font-size:25px !important;
-  line-height:1 !important;
-}
-
-/* ATTACHMENT PREVIEW */
-
-.chatgpt-attachment{
-  display:none;
-  margin-top:9px;
-  padding:8px 11px;
-  border-radius:13px;
-  background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.10);
-  color:#dfe4ff;
-  font-size:12px;
-}
-
-.chatgpt-attachment.show{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.chatgpt-attachment img{
-  width:42px;
-  height:42px;
-  object-fit:cover;
-  border-radius:9px;
-}
-
-/* VOICE ACTIVE */
-
-.chatgpt-voice.listening{
-  background:rgba(145,120,255,.18) !important;
-  border-color:rgba(175,155,255,.40) !important;
-  box-shadow:0 0 14px rgba(140,120,255,.20) !important;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-  .chatgpt-searchbar{
-    min-height:62px !important;
-    padding:7px 8px !important;
-    border-radius:22px !important;
-    gap:6px !important;
-  }
-
-  .chatgpt-plus,
-  .chatgpt-voice,
-  .chatgpt-send{
-    width:40px !important;
-    height:40px !important;
-    flex-basis:40px !important;
-  }
-
-  .chatgpt-plus{
-    font-size:25px !important;
-  }
-
-  .chatgpt-input{
-    height:46px !important;
-    font-size:15px !important;
-  }
-
-  .chatgpt-voice{
-    font-size:23px !important;
-  }
-
-  .chatgpt-send{
-    font-size:23px !important;
-  }
-}
-
-</style>
-
-
-<script id="chatgpt-searchbox-js">
-
-/* ===== CHATGPT STYLE SEARCH CONTROLS ===== */
-
-(function(){
-
-  const attachBtn = document.getElementById("attachBtn");
-  const fileInput = document.getElementById("fileInput");
-  const preview = document.getElementById("attachmentPreview");
-  const voiceBtn = document.getElementById("voiceBtn");
-
-  if(attachBtn && fileInput){
-
-    attachBtn.onclick = function(){
-      fileInput.click();
-    };
-
-    fileInput.onchange = function(){
-
-      const file = fileInput.files && fileInput.files[0];
-
-      if(!file) return;
-
-      preview.innerHTML = "";
-
-      if(file.type.startsWith("image/")){
-
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-
-        const name = document.createElement("span");
-        name.textContent = file.name;
-
-        preview.appendChild(img);
-        preview.appendChild(name);
-
-      }else{
-
-        preview.textContent = "📎 " + file.name;
-
-      }
-
-      preview.classList.add("show");
-    };
-  }
-
-  /* Voice typing */
-
-  if(voiceBtn){
-
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-    if(!SpeechRecognition){
-      voiceBtn.title = "Voice input is not supported in this browser";
-    }else{
-
-      const recognition = new SpeechRecognition();
-
-      recognition.lang = "en-IN";
-      recognition.continuous = false;
-      recognition.interimResults = true;
-
-      recognition.onstart = function(){
-        voiceBtn.classList.add("listening");
-        voiceBtn.textContent = "●";
-      };
-
-      recognition.onresult = function(event){
-
-        let text = "";
-
-        for(let i = event.resultIndex;
-            i < event.results.length;
-            i++){
-
-          text += event.results[i][0].transcript;
-        }
-
-        const input =
-          document.getElementById("question");
-
-        if(input){
-          input.value = text;
-          input.dispatchEvent(new Event("input"));
-        }
-      };
-
-      recognition.onend = function(){
-        voiceBtn.classList.remove("listening");
-        voiceBtn.textContent = "⌕";
-      };
-
-      recognition.onerror = function(){
-        voiceBtn.classList.remove("listening");
-        voiceBtn.textContent = "⌕";
-      };
-
-      voiceBtn.onclick = function(){
-
-        try{
-          recognition.start();
-        }catch(e){}
-
-      };
-    }
-  }
-
-})();
-
-</script>
-
-<style id="compact-classic-searchbox">
-
-/* ===== TOR AI — CLASSIC COMPACT SEARCH ===== */
-
-.chatgpt-searchbar{
-  min-height:54px !important;
-  height:54px !important;
-  padding:6px 7px 6px 8px !important;
-  gap:6px !important;
-  border-radius:19px !important;
-  background:rgba(255,255,255,.065) !important;
-  border:1px solid rgba(255,255,255,.13) !important;
-  box-shadow:
-    0 5px 18px rgba(0,0,0,.14),
-    inset 0 1px 0 rgba(255,255,255,.035) !important;
-}
-
-.chatgpt-input{
-  height:40px !important;
-  padding:0 3px !important;
-  font-size:15px !important;
-}
-
-.chatgpt-plus,
-.chatgpt-voice,
-.chatgpt-send{
-  width:38px !important;
-  height:38px !important;
-  flex-basis:38px !important;
-}
-
-.chatgpt-plus{
-  font-size:23px !important;
-  border-radius:50% !important;
-}
-
-.chatgpt-voice{
-  font-size:21px !important;
-  border:0 !important;
-  background:transparent !important;
-}
-
-.chatgpt-send{
-  font-size:21px !important;
-}
-
-.chatgpt-searchbar:focus-within{
-  border-color:rgba(150,130,255,.30) !important;
-  box-shadow:
-    0 5px 20px rgba(0,0,0,.16),
-    0 0 0 2px rgba(130,110,255,.055) !important;
-}
-
-@media(max-width:600px){
-
-  .chatgpt-searchbar{
-    min-height:52px !important;
-    height:52px !important;
-    padding:6px !important;
-    border-radius:18px !important;
-  }
-
-  .chatgpt-input{
-    height:38px !important;
-    font-size:14px !important;
-  }
-
-  .chatgpt-plus,
-  .chatgpt-voice,
-  .chatgpt-send{
-    width:36px !important;
-    height:36px !important;
-    flex-basis:36px !important;
-  }
-
-  .chatgpt-plus{
-    font-size:22px !important;
-  }
-
-  .chatgpt-voice,
-  .chatgpt-send{
-    font-size:20px !important;
-  }
-}
-
-</style>
-
-<style id="final-classic-searchbox">
-
-/* ===== TOR AI — FINAL CLASSIC PREMIUM SEARCH BAR ===== */
-
-.chatgpt-searchbar{
-  width:100% !important;
-  height:56px !important;
-  min-height:56px !important;
-
-  display:flex !important;
-  align-items:center !important;
-
-  gap:7px !important;
-  padding:6px 7px 6px 8px !important;
-
-  box-sizing:border-box !important;
-  border-radius:18px !important;
-
-  background:rgba(16,22,48,.72) !important;
-  border:1px solid rgba(150,165,220,.20) !important;
-
-  box-shadow:
-    0 4px 16px rgba(0,0,0,.16),
-    inset 0 1px 0 rgba(255,255,255,.035) !important;
-}
-
-/* PLUS */
-
-.chatgpt-plus{
-  position:relative !important;
-
-  width:40px !important;
-  height:40px !important;
-  min-width:40px !important;
-  flex:0 0 40px !important;
-
-  padding:0 !important;
-  margin:0 !important;
-
-  border-radius:50% !important;
-
-  background:rgba(255,255,255,.055) !important;
-  border:1px solid rgba(190,200,235,.17) !important;
-
-  color:#e9ecfa !important;
-  font-size:25px !important;
-  font-weight:300 !important;
-  line-height:40px !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  box-shadow:none !important;
-}
-
-/* INPUT */
-
-.chatgpt-input{
-  flex:1 1 auto !important;
-  min-width:0 !important;
-
-  height:40px !important;
-  padding:0 4px !important;
-
-  background:transparent !important;
-  border:0 !important;
-  outline:0 !important;
-
-  color:#f1f4ff !important;
-  font-size:15px !important;
-  font-weight:400 !important;
-  line-height:40px !important;
-}
-
-.chatgpt-input::placeholder{
-  color:rgba(205,214,240,.55) !important;
-}
-
-/* MICROPHONE */
-
-.chatgpt-voice{
-  position:relative !important;
-
-  width:38px !important;
-  height:40px !important;
-  min-width:38px !important;
-  flex:0 0 38px !important;
-
-  padding:0 !important;
-  margin:0 !important;
-
-  border:0 !important;
-  border-radius:50% !important;
-
-  background:transparent !important;
-  color:transparent !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-}
-
-/* mic body */
-
-.chatgpt-voice::before{
-  content:"" !important;
-
-  width:9px !important;
-  height:16px !important;
-
-  border:2px solid #dfe5fa !important;
-  border-radius:7px !important;
-
-  box-sizing:border-box !important;
-
-  position:absolute !important;
-  top:10px !important;
-  left:50% !important;
-
-  transform:translateX(-50%) !important;
-}
-
-/* mic stem + base */
-
-.chatgpt-voice::after{
-  content:"" !important;
-
-  width:17px !important;
-  height:13px !important;
-
-  border-left:2px solid #dfe5fa !important;
-  border-right:2px solid #dfe5fa !important;
-  border-bottom:2px solid #dfe5fa !important;
-
-  border-radius:0 0 10px 10px !important;
-
-  position:absolute !important;
-  left:50% !important;
-  top:13px !important;
-
-  transform:translateX(-50%) !important;
-  box-sizing:border-box !important;
-}
-
-/* SEND */
-
-.chatgpt-send{
-  width:40px !important;
-  height:40px !important;
-  min-width:40px !important;
-  flex:0 0 40px !important;
-
-  padding:0 !important;
-  margin:0 !important;
-
-  border-radius:50% !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  background:#eef1fa !important;
-  color:#11162a !important;
-
-  border:0 !important;
-
-  font-size:23px !important;
-  font-weight:600 !important;
-  line-height:1 !important;
-
-  box-shadow:none !important;
-}
-
-/* subtle interaction */
-
-.chatgpt-plus,
-.chatgpt-voice,
-.chatgpt-send{
-  transition:
-    transform .16s ease,
-    background .16s ease,
-    border-color .16s ease,
-    opacity .16s ease !important;
-}
-
-.chatgpt-plus:hover{
-  background:rgba(255,255,255,.09) !important;
-  border-color:rgba(190,200,235,.28) !important;
-}
-
-.chatgpt-voice:hover{
-  background:rgba(255,255,255,.045) !important;
-}
-
-.chatgpt-send:hover{
-  transform:scale(1.04) !important;
-  background:#ffffff !important;
-}
-
-.chatgpt-plus:active,
-.chatgpt-voice:active,
-.chatgpt-send:active{
-  transform:scale(.94) !important;
-}
-
-/* focus */
-
-.chatgpt-searchbar:focus-within{
-  border-color:rgba(150,165,230,.32) !important;
-
-  box-shadow:
-    0 4px 18px rgba(0,0,0,.18),
-    0 0 0 2px rgba(130,145,220,.045) !important;
-}
-
-/* mobile */
-
-@media(max-width:600px){
-
-  .chatgpt-searchbar{
-    height:53px !important;
-    min-height:53px !important;
-
-    padding:5px 6px 5px 7px !important;
-    gap:5px !important;
-
-    border-radius:17px !important;
-  }
-
-  .chatgpt-plus{
-    width:38px !important;
-    height:38px !important;
-    min-width:38px !important;
-    flex-basis:38px !important;
-
-    font-size:23px !important;
-  }
-
-  .chatgpt-input{
-    height:38px !important;
-    line-height:38px !important;
-    font-size:14px !important;
-  }
-
-  .chatgpt-voice{
-    width:36px !important;
-    height:38px !important;
-    min-width:36px !important;
-    flex-basis:36px !important;
-  }
-
-  .chatgpt-send{
-    width:38px !important;
-    height:38px !important;
-    min-width:38px !important;
-    flex-basis:38px !important;
-
-    font-size:21px !important;
-  }
-}
-
-</style>
-
-<style id="final-send-button-fix">
-
-/* ===== FINAL COMPACT SEND BUTTON ===== */
-
-.chatgpt-searchbar #askBtn.chatgpt-send{
-  width:40px !important;
-  min-width:40px !important;
-  max-width:40px !important;
-  height:40px !important;
-  min-height:40px !important;
-  max-height:40px !important;
-
-  flex:0 0 40px !important;
-  flex-grow:0 !important;
-  flex-shrink:0 !important;
-
-  padding:0 !important;
-  margin:0 !important;
-
-  border-radius:50% !important;
-
-  background:#eef1fa !important;
-  background-image:none !important;
-
-  color:#151a2d !important;
-
-  border:0 !important;
-  box-shadow:none !important;
-
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  font-size:21px !important;
-  font-weight:600 !important;
-  line-height:1 !important;
-}
-
-.chatgpt-searchbar #askBtn.chatgpt-send:hover{
-  width:40px !important;
-  max-width:40px !important;
-  border-radius:50% !important;
-  transform:scale(1.04) !important;
-}
-
-@media(max-width:600px){
-
-  .chatgpt-searchbar #askBtn.chatgpt-send{
-    width:38px !important;
-    min-width:38px !important;
-    max-width:38px !important;
-    height:38px !important;
-    min-height:38px !important;
-    max-height:38px !important;
-
-    flex:0 0 38px !important;
-
-    border-radius:50% !important;
-    font-size:20px !important;
-  }
-}
-
-</style>
-
-<style id="classic-professional-final">
-
-/* ===== TOR AI — CLASSIC PROFESSIONAL FINAL ===== */
-
-.chatgpt-searchbar{
-  height:54px !important;
-  min-height:54px !important;
-  padding:5px 7px !important;
-  gap:5px !important;
-
-  border-radius:18px !important;
-
-  background:rgba(22,27,48,.88) !important;
-  border:1px solid rgba(180,190,220,.16) !important;
-
-  box-shadow:
-    0 3px 12px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.025) !important;
-
-  backdrop-filter:blur(12px) !important;
-}
-
-/* + */
-
-.chatgpt-searchbar .chatgpt-plus{
-  width:39px !important;
-  height:39px !important;
-  min-width:39px !important;
-  max-width:39px !important;
-  flex:0 0 39px !important;
-
-  padding:0 !important;
-  border-radius:50% !important;
-
-  background:rgba(255,255,255,.045) !important;
-  border:1px solid rgba(210,215,235,.16) !important;
-
-  color:#e7eaf5 !important;
-  font-size:24px !important;
-  font-weight:300 !important;
-
-  box-shadow:none !important;
-}
-
-/* INPUT */
-
-.chatgpt-searchbar .chatgpt-input{
-  height:40px !important;
-  min-width:0 !important;
-  padding:0 5px !important;
-
-  background:transparent !important;
-  color:#f0f2f8 !important;
-
-  font-size:15px !important;
-  font-weight:400 !important;
-}
-
-.chatgpt-searchbar .chatgpt-input::placeholder{
-  color:rgba(210,216,235,.52) !important;
-}
-
-/* MICROPHONE */
-
-.chatgpt-searchbar .chatgpt-voice{
-  width:38px !important;
-  height:40px !important;
-  min-width:38px !important;
-  flex:0 0 38px !important;
-
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-
-  opacity:.88 !important;
-}
-
-/* SEND */
-
-.chatgpt-searchbar #askBtn.chatgpt-send{
-  width:39px !important;
-  height:39px !important;
-  min-width:39px !important;
-  max-width:39px !important;
-  flex:0 0 39px !important;
-
-  padding:0 !important;
-  border-radius:50% !important;
-
-  background:#f0f2f7 !important;
-  background-image:none !important;
-
-  border:0 !important;
-  box-shadow:none !important;
-
-  color:#161a28 !important;
-
-  font-size:21px !important;
-  font-weight:600 !important;
-}
-
-/* subtle hover only */
-
-.chatgpt-searchbar .chatgpt-plus:hover{
-  background:rgba(255,255,255,.075) !important;
-  border-color:rgba(210,215,235,.24) !important;
-  transform:none !important;
-}
-
-.chatgpt-searchbar .chatgpt-voice:hover{
-  background:rgba(255,255,255,.035) !important;
-  transform:none !important;
-}
-
-.chatgpt-searchbar #askBtn.chatgpt-send:hover{
-  background:#ffffff !important;
-  transform:scale(1.035) !important;
-}
-
-/* focus */
-
-.chatgpt-searchbar:focus-within{
-  border-color:rgba(175,185,220,.27) !important;
-
-  box-shadow:
-    0 3px 14px rgba(0,0,0,.20),
-    0 0 0 2px rgba(150,160,205,.035) !important;
-}
-
-/* mobile */
+/* ---------- MOBILE ---------- */
 
 @media(max-width:600px){
 
@@ -5973,66 +4505,11 @@ renderHistory();
     height:37px !important;
     min-width:37px !important;
     max-width:37px !important;
+    min-height:37px !important;
+    max-height:37px !important;
     flex-basis:37px !important;
     font-size:20px !important;
   }
-}
-
-</style>
-
-<style id="compact-response-final">
-
-/* ===== COMPACT AI RESPONSE ===== */
-
-.result{
-  margin-top:8px !important;
-  padding:10px !important;
-  border-radius:16px !important;
-}
-
-.result-head{
-  margin-bottom:0 !important;
-}
-
-.result-line{
-  margin:7px 0 8px !important;
-}
-
-.result-content{
-  margin:0 !important;
-  padding:0 !important;
-}
-
-.result-label{
-  display:none !important;
-}
-
-/* Remove the extra inner answer panel */
-.result #answer{
-  min-height:0 !important;
-  padding:4px 2px !important;
-  margin:0 !important;
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-}
-
-/* Keep chat compact */
-.neural-chat-thread{
-  gap:12px !important;
-  padding:0 !important;
-}
-
-.neural-chat-row{
-  margin:0 !important;
-  padding:0 !important;
-}
-
-.neural-chat-bubble{
-  margin:0 !important;
-}
-
-@media(max-width:600px){
 
   .result{
     margin-top:7px !important;
@@ -6040,72 +4517,35 @@ renderHistory();
     border-radius:15px !important;
   }
 
-  .result-line{
-    margin:6px 0 7px !important;
-  }
-
   .result #answer{
     padding:3px 0 !important;
   }
 
   .neural-chat-thread{
-    gap:11px !important;
+    gap:12px !important;
   }
 
-}
-
-</style>
-
-<style id="final-chat-spacing-fix">
-
-/* ===== FINAL CHAT SPACING FIX ===== */
-
-.result{
-  height:auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  overflow:visible !important;
-}
-
-.result #answer{
-  height:auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  padding:8px 2px !important;
-  margin:0 !important;
-  overflow:visible !important;
-}
-
-.neural-chat-thread{
-  margin:0 !important;
-  padding:0 !important;
-  gap:15px !important;
-}
-
-.neural-chat-row{
-  margin:0 !important;
-  padding:0 !important;
-}
-
-.neural-chat-bubble{
-  margin:0 !important;
-}
-
-@media(max-width:700px){
-
-  .result{
-    margin-top:14px !important;
-    padding:12px !important;
+  .neural-chat-bubble{
+    max-width:88% !important;
+    padding:11px 13px !important;
+    font-size:14px !important;
+    line-height:1.6 !important;
   }
 
-  .result #answer{
-    padding:6px 0 !important;
+  .neural-chat-row.user .neural-chat-bubble{
+    border-radius:16px 16px 5px 16px !important;
   }
 
-  .neural-chat-thread{
-    gap:14px !important;
+  .neural-chat-row.ai .neural-chat-bubble{
+    border-radius:16px 16px 16px 5px !important;
   }
 
+  .neural-ai-mark{
+    width:20px !important;
+    height:20px !important;
+    margin-right:7px !important;
+    font-size:12px !important;
+  }
 }
 
 </style>
