@@ -36,9 +36,20 @@ export default {
     try {
       const body = await request.json();
       const question = String(body.question || "").trim();
+      const image = typeof body.image === "string" ? body.image : "";
 
-      if (!question) {
-        return json({ error: "Question is required." }, 400);
+      if (!question && !image) {
+        return json({ error: "Question or image is required." }, 400);
+      }
+
+      if (image) {
+        if (!image.startsWith("data:image/")) {
+          return json({ error: "Invalid image format." }, 400);
+        }
+
+        if (image.length > 8_000_000) {
+          return json({ error: "Image is too large. Please choose a smaller image." }, 400);
+        }
       }
 
       if (!env.OPENAI_API_KEY) {
@@ -53,7 +64,21 @@ export default {
         },
         body: JSON.stringify({
           model: "gpt-5.6-luna",
-          input: question
+          input: image
+            ? [{
+                role: "user",
+                content: [
+                  {
+                    type: "input_text",
+                    text: question || "Please analyze the attached image and explain what you can see."
+                  },
+                  {
+                    type: "input_image",
+                    image_url: image
+                  }
+                ]
+              }]
+            : question
         })
       });
 
