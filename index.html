@@ -6055,3 +6055,57 @@ renderHistory();
 }
 
 </style>
+
+<style id="final-chat-spacing-fix">
+
+/* ===== FINAL CHAT SPACING FIX ===== */
+
+.result{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+}
+
+.result #answer{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  padding:8px 2px !important;
+  margin:0 !important;
+  overflow:visible !important;
+}
+
+.neural-chat-thread{
+  margin:0 !important;
+  padding:0 !important;
+  gap:15px !important;
+}
+
+.neural-chat-row{
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.neural-chat-bubble{
+  margin:0 !important;
+}
+
+@media(max-width:700px){
+
+  .result{
+    margin-top:14px !important;
+    padding:12px !important;
+  }
+
+  .result #answer{
+    padding:6px 0 !important;
+  }
+
+  .neural-chat-thread{
+    gap:14px !important;
+  }
+
+}
+
+</style>
