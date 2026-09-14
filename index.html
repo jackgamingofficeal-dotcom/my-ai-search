@@ -3461,7 +3461,15 @@ async function askAI(){
  const q =
   question.value.trim();
 
- if(!q){
+ const fileInputForAI =
+  document.getElementById("fileInput");
+
+ const attachedFile =
+  fileInputForAI &&
+  fileInputForAI.files &&
+  fileInputForAI.files[0];
+
+ if(!q && !attachedFile){
 
   status.textContent =
    "Please type a question first.";
@@ -3472,7 +3480,9 @@ async function askAI(){
  }
 
  /* Keep the submitted question in chat, not in the input field */
- const submittedQuestion = q;
+ const submittedQuestion =
+  q || "Analyze the attached image.";
+
  question.value = "";
 
  setLoading(true);
@@ -3513,6 +3523,40 @@ async function askAI(){
    "Do not mention that you have memory unless asked.\\n\\n" +
    conversationText;
 
+  let imageData = "";
+
+  if(attachedFile){
+
+   if(!attachedFile.type.startsWith("image/")){
+    throw new Error("Please attach an image file.");
+   }
+
+   if(attachedFile.size > 6 * 1024 * 1024){
+    throw new Error(
+     "Image is too large. Please choose an image under 6 MB."
+    );
+   }
+
+   imageData =
+    await new Promise(function(resolve,reject){
+
+     const reader =
+      new FileReader();
+
+     reader.onload = function(){
+      resolve(String(reader.result || ""));
+     };
+
+     reader.onerror = function(){
+      reject(
+       new Error("Could not read the attached image.")
+      );
+     };
+
+     reader.readAsDataURL(attachedFile);
+    });
+  }
+
   const res =
    await fetch(
     "https://my-ai-search.jackgamingofficeal.workers.dev/api/openai",
@@ -3525,7 +3569,8 @@ async function askAI(){
      },
 
      body:JSON.stringify({
-      question:prompt
+      question:prompt,
+      image:imageData
      })
     }
    );
