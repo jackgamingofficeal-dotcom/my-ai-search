@@ -4691,7 +4691,10 @@ renderHistory();
   items.forEach(function(item){
     if(item.querySelector(".tor-menu-icon")) return;
 
-    const label = item.querySelector("span");
+    const label = Array.from(item.querySelectorAll(":scope > span"))
+      .find(function(span){
+        return !span.classList.contains("menu-icon");
+      });
     if(!label) return;
 
     const name = label.textContent.trim();
