@@ -4549,3 +4549,86 @@ renderHistory();
 }
 
 </style>
+
+<style id="tor-ai-chatgpt-mic">
+.chatgpt-searchbar .chatgpt-voice{
+  position:relative !important;
+  color:transparent !important;
+  font-size:0 !important;
+  width:38px !important;
+  height:40px !important;
+}
+
+.chatgpt-searchbar .chatgpt-voice::before{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:8px !important;
+  width:10px !important;
+  height:17px !important;
+  transform:translateX(-50%) !important;
+  border:1.8px solid #e7eaf5 !important;
+  border-radius:7px !important;
+  background:transparent !important;
+  box-sizing:border-box !important;
+}
+
+.chatgpt-searchbar .chatgpt-voice::after{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:12px !important;
+  width:20px !important;
+  height:18px !important;
+  transform:translateX(-50%) !important;
+  border:1.8px solid #e7eaf5 !important;
+  border-top:0 !important;
+  border-radius:0 0 12px 12px !important;
+  box-sizing:border-box !important;
+}
+
+@media(max-width:600px){
+  .chatgpt-searchbar .chatgpt-voice{
+    width:35px !important;
+  }
+}
+</style>
+
+<script>
+(function(){
+  const mic = document.getElementById("voiceBtn");
+  if(!mic) return;
+
+  mic.textContent = "";
+
+  mic.insertAdjacentHTML(
+    "beforeend",
+    '<span class="tor-mic-stem" aria-hidden="true"></span>'
+  );
+})();
+</script>
+
+<style id="tor-ai-chatgpt-mic-stem">
+.chatgpt-searchbar .tor-mic-stem{
+  position:absolute !important;
+  left:50% !important;
+  top:28px !important;
+  width:2px !important;
+  height:7px !important;
+  transform:translateX(-50%) !important;
+  background:#e7eaf5 !important;
+  border-radius:2px !important;
+}
+
+.chatgpt-searchbar .tor-mic-stem::after{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  bottom:-3px !important;
+  width:10px !important;
+  height:2px !important;
+  transform:translateX(-50%) !important;
+  background:#e7eaf5 !important;
+  border-radius:2px !important;
+}
+</style>
