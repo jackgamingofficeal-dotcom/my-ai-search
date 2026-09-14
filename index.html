@@ -4632,3 +4632,72 @@ renderHistory();
   border-radius:2px !important;
 }
 </style>
+
+<style id="tor-ai-menu-icons">
+.top-menu-item{
+  display:flex !important;
+  align-items:center !important;
+  gap:11px !important;
+}
+
+.tor-menu-icon{
+  width:18px !important;
+  height:18px !important;
+  flex:0 0 18px !important;
+  stroke:currentColor !important;
+  fill:none !important;
+  stroke-width:1.8 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+  opacity:.9 !important;
+}
+
+.top-menu-item:hover .tor-menu-icon{
+  opacity:1 !important;
+  filter:drop-shadow(0 0 5px rgba(126,234,255,.35));
+}
+</style>
+
+<script id="tor-ai-menu-icons-script">
+(function(){
+  const items = document.querySelectorAll(".top-menu-item");
+  if(!items.length) return;
+
+  const icons = {
+    "New Chat": `
+      <svg class="tor-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 20h9"/>
+        <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>
+        <path d="M14.5 5.5l3 3"/>
+      </svg>`,
+    "Profile": `
+      <svg class="tor-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="8" r="3.2"/>
+        <path d="M5.5 20c.7-3.5 3-5.3 6.5-5.3s5.8 1.8 6.5 5.3"/>
+      </svg>`,
+    "History": `
+      <svg class="tor-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <path d="M3 5v5h5"/>
+        <path d="M12 7v5l3 2"/>
+      </svg>`,
+    "Settings": `
+      <svg class="tor-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V5h2.6v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1V14h-.1a1.7 1.7 0 0 0-1.6 1Z"/>
+      </svg>`
+  };
+
+  items.forEach(function(item){
+    if(item.querySelector(".tor-menu-icon")) return;
+
+    const label = item.querySelector("span");
+    if(!label) return;
+
+    const name = label.textContent.trim();
+    if(icons[name]){
+      label.insertAdjacentHTML("beforebegin", icons[name]);
+    }
+  });
+})();
+</script>
