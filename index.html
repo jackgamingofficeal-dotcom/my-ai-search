@@ -5979,3 +5979,79 @@ renderHistory();
 }
 
 </style>
+
+<style id="compact-response-final">
+
+/* ===== COMPACT AI RESPONSE ===== */
+
+.result{
+  margin-top:8px !important;
+  padding:10px !important;
+  border-radius:16px !important;
+}
+
+.result-head{
+  margin-bottom:0 !important;
+}
+
+.result-line{
+  margin:7px 0 8px !important;
+}
+
+.result-content{
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.result-label{
+  display:none !important;
+}
+
+/* Remove the extra inner answer panel */
+.result #answer{
+  min-height:0 !important;
+  padding:4px 2px !important;
+  margin:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+/* Keep chat compact */
+.neural-chat-thread{
+  gap:12px !important;
+  padding:0 !important;
+}
+
+.neural-chat-row{
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.neural-chat-bubble{
+  margin:0 !important;
+}
+
+@media(max-width:600px){
+
+  .result{
+    margin-top:7px !important;
+    padding:8px !important;
+    border-radius:15px !important;
+  }
+
+  .result-line{
+    margin:6px 0 7px !important;
+  }
+
+  .result #answer{
+    padding:3px 0 !important;
+  }
+
+  .neural-chat-thread{
+    gap:11px !important;
+  }
+
+}
+
+</style>
