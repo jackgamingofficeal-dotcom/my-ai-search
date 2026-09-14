@@ -4883,3 +4883,70 @@ renderHistory();
 
 })();
 </script>
+
+<style id="neural-spark-animation-fix">
+.neural-ai-mark{
+  position:relative !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:23px !important;
+  height:23px !important;
+  border-radius:50% !important;
+  background:radial-gradient(circle,rgba(126,234,255,.24),rgba(126,234,255,.04) 65%,transparent 70%) !important;
+  border:1px solid rgba(126,234,255,.32) !important;
+  box-shadow:0 0 10px rgba(126,234,255,.22) !important;
+  animation:neuralSparkPulse 2.4s ease-in-out infinite !important;
+}
+
+.neural-ai-mark::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:-3px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(126,234,255,.18) !important;
+  box-shadow:0 0 10px rgba(126,234,255,.18) !important;
+  animation:neuralSparkHalo 2.4s ease-in-out infinite !important;
+}
+
+.neural-ai-mark::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-4px !important;
+  border-radius:50% !important;
+  border:1px solid transparent !important;
+  border-top-color:rgba(126,234,255,.55) !important;
+  border-right-color:rgba(126,234,255,.18) !important;
+  animation:neuralSparkSpin 4.5s linear infinite !important;
+}
+
+@keyframes neuralSparkPulse{
+  0%,100%{transform:scale(.96);filter:brightness(.9)}
+  50%{transform:scale(1.05);filter:brightness(1.18)}
+}
+
+@keyframes neuralSparkHalo{
+  0%,100%{transform:scale(.92);opacity:.45}
+  50%{transform:scale(1.12);opacity:1}
+}
+
+@keyframes neuralSparkSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@media(max-width:600px){
+  .neural-ai-mark{
+    width:21px !important;
+    height:21px !important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .neural-ai-mark,
+  .neural-ai-mark::before,
+  .neural-ai-mark::after{
+    animation:none !important;
+  }
+}
+</style>
