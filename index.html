@@ -3094,75 +3094,49 @@ body::after{
 
 <!-- ===== PREMIUM ===== -->
 
-<section class="premium-section">
+<section class="premium-section neural-pro-section">
 
- <div class="premium-badge">
-  ✦ PREMIUM
- </div>
+  <div class="neural-pro-badge">
+    <span class="neural-pro-dot"></span>
+    NEURAL CORE PRO
+  </div>
 
- <h2>
-  Unlock <span>Premium AI</span>
- </h2>
+  <h2>
+    More Intelligence.
+    <span>One Neural Core.</span>
+  </h2>
 
- <p class="premium-sub">
-  Get more powerful AI features with the future Premium plan.
- </p>
+  <p class="premium-sub">
+    A smarter AI workspace built for fast answers,
+    intelligent conversations and next-generation features.
+  </p>
 
- <div class="plans">
+  <div class="neural-pro-grid">
 
-  <div class="plan">
+    <article class="neural-pro-card">
+      <div class="neural-pro-icon">⚡</div>
+      <div class="neural-pro-title">FAST AI</div>
+      <p>Quick and clear AI responses for everyday questions.</p>
+    </article>
 
-   <div class="plan-name">
-    FREE
-   </div>
+    <article class="neural-pro-card">
+      <div class="neural-pro-icon">🧠</div>
+      <div class="neural-pro-title">SMART CHAT</div>
+      <p>Natural conversations with relevant context.</p>
+    </article>
 
-   <div class="price">
-    ₹0 <small>/ forever</small>
-   </div>
-
-   <ul>
-    <li>✓ Basic AI Search</li>
-    <li>✓ Basic modes</li>
-    <li>✓ Mobile & Web</li>
-    <li>✓ Neural Core UI</li>
-   </ul>
-
-   <button class="plan-btn">
-    Current Plan
-   </button>
+    <article class="neural-pro-card">
+      <div class="neural-pro-icon">◈</div>
+      <div class="neural-pro-title">VISION AI</div>
+      <p>Advanced image understanding is coming soon.</p>
+    </article>
 
   </div>
 
-  <div class="plan premium-plan">
-
-   <div class="popular">
-    POPULAR
-   </div>
-
-   <div class="plan-name">
-    PREMIUM
-   </div>
-
-   <div class="price">
-    Coming Soon
-   </div>
-
-   <ul>
-    <li>✓ Higher usage limits</li>
-    <li>✓ Advanced AI features</li>
-    <li>✓ Premium modes</li>
-    <li>✓ Priority features</li>
-   </ul>
-
-   <button
-    class="plan-btn premium-btn"
-    onclick="premiumComingSoon()">
-    ✦ Coming Soon
-   </button>
-
+  <div class="neural-pro-status">
+    <span></span>
+    ADVANCED FEATURES • COMING SOON
   </div>
-
- </div>
 
 </section>
 
@@ -4995,3 +4969,224 @@ renderHistory();
   }
 }
 </style>
+
+<style id="tor-neural-pro-premium">
+
+.neural-pro-section{
+  position:relative;
+  width:min(920px,94%);
+  margin:32px auto 20px;
+  padding:30px 20px 22px;
+  box-sizing:border-box;
+  overflow:hidden;
+  border:1px solid rgba(130,160,255,.18);
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(80,130,255,.13),transparent 35%),
+    radial-gradient(circle at 90% 100%,rgba(150,80,255,.10),transparent 38%),
+    rgba(12,17,34,.86);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.045);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.neural-pro-section::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:8%;
+  right:8%;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(130,210,255,.7),
+    transparent
+  );
+  opacity:.65;
+}
+
+.neural-pro-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border:1px solid rgba(130,190,255,.18);
+  border-radius:999px;
+  background:rgba(80,120,220,.08);
+  color:#b9c8ff;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+}
+
+.neural-pro-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#79e8ff;
+  box-shadow:0 0 8px rgba(121,232,255,.8);
+  animation:neuralProPulse 2.4s ease-in-out infinite;
+}
+
+.neural-pro-section h2{
+  margin:18px 0 8px;
+  font-size:clamp(25px,4vw,38px);
+  line-height:1.12;
+  letter-spacing:-.8px;
+  color:#f3f6ff;
+}
+
+.neural-pro-section h2 span{
+  display:block;
+  background:linear-gradient(
+    90deg,
+    #9edcff,
+    #b9a6ff,
+    #8feaff
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.neural-pro-section .premium-sub{
+  max-width:650px;
+  margin:0 auto 22px;
+  color:#8995b5;
+  font-size:13px;
+  line-height:1.65;
+}
+
+.neural-pro-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.neural-pro-card{
+  position:relative;
+  min-height:145px;
+  padding:18px;
+  box-sizing:border-box;
+  border:1px solid rgba(145,165,220,.13);
+  border-radius:18px;
+  background:linear-gradient(
+    145deg,
+    rgba(34,43,75,.58),
+    rgba(17,22,42,.68)
+  );
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease;
+}
+
+.neural-pro-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(135,205,255,.28);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.20),
+    0 0 20px rgba(100,170,255,.06);
+}
+
+.neural-pro-icon{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:13px;
+  border-radius:13px;
+  background:rgba(100,150,255,.10);
+  border:1px solid rgba(130,180,255,.13);
+  font-size:20px;
+}
+
+.neural-pro-title{
+  margin-bottom:7px;
+  color:#e8edff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.2px;
+}
+
+.neural-pro-card p{
+  margin:0;
+  color:#7f8ba9;
+  font-size:12px;
+  line-height:1.55;
+}
+
+.neural-pro-status{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:18px;
+  color:#71809f;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.4px;
+}
+
+.neural-pro-status span{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#8f9cff;
+  box-shadow:0 0 7px rgba(143,156,255,.65);
+}
+
+@keyframes neuralProPulse{
+  0%,100%{
+    opacity:.55;
+    transform:scale(.85);
+  }
+  50%{
+    opacity:1;
+    transform:scale(1.15);
+  }
+}
+
+@media(max-width:700px){
+
+  .neural-pro-section{
+    width:calc(100% - 22px);
+    padding:24px 14px 18px;
+    border-radius:22px;
+  }
+
+  .neural-pro-section h2{
+    font-size:27px;
+  }
+
+  .neural-pro-grid{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+
+  .neural-pro-card{
+    min-height:auto;
+    padding:16px;
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  .neural-pro-dot{
+    animation:none;
+  }
+
+  .neural-pro-card{
+    transition:none;
+  }
+
+}
+
+</style>
+
