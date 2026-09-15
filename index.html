@@ -3096,58 +3096,89 @@ body::after{
 
 <section class="premium-section neural-pro-section">
 
-  <div class="neural-pro-orbit orbit-one"></div>
-  <div class="neural-pro-orbit orbit-two"></div>
+  <div class="ncp3d-bg-glow ncp3d-glow-a"></div>
+  <div class="ncp3d-bg-glow ncp3d-glow-b"></div>
 
-  <div class="neural-pro-badge">
-    <span class="neural-pro-dot"></span>
-    NEURAL CORE PRO
+  <div class="ncp3d-header">
+
+    <div class="neural-pro-badge">
+      <span class="neural-pro-dot"></span>
+      NEURAL CORE PRO
+    </div>
+
+    <h2>
+      More Intelligence.
+      <span>One Neural Core.</span>
+    </h2>
+
+    <p class="ncp3d-description">
+      A smarter AI workspace built for fast answers,
+      intelligent conversations and next-generation features.
+    </p>
+
   </div>
 
-  <h2>
-    More Intelligence.
-    <span>One Neural Core.</span>
-  </h2>
+  <div class="ncp3d-core-stage">
 
-  <p class="premium-sub">
-    A smarter AI workspace built for fast answers,
-    intelligent conversations and next-generation features.
-  </p>
+    <div class="ncp3d-ring ncp3d-ring-1"></div>
+    <div class="ncp3d-ring ncp3d-ring-2"></div>
+    <div class="ncp3d-ring ncp3d-ring-3"></div>
 
-  <div class="neural-pro-grid">
+    <div class="ncp3d-core-shadow"></div>
 
-    <article class="neural-pro-card">
-      <div class="neural-pro-card-glow"></div>
-      <div class="neural-pro-icon">⚡</div>
-      <div class="neural-pro-title">FAST AI</div>
+    <div class="ncp3d-core">
+      <div class="ncp3d-core-inner">
+        <div class="ncp3d-core-symbol">✦</div>
+        <div class="ncp3d-core-label">TOR AI</div>
+        <div class="ncp3d-core-status">
+          <span></span> NEURAL ENGINE
+        </div>
+      </div>
+    </div>
+
+    <span class="ncp3d-node node-1"></span>
+    <span class="ncp3d-node node-2"></span>
+    <span class="ncp3d-node node-3"></span>
+    <span class="ncp3d-node node-4"></span>
+
+  </div>
+
+  <div class="ncp3d-feature-grid">
+
+    <article class="ncp3d-feature-card">
+      <div class="ncp3d-card-number">01</div>
+      <div class="ncp3d-feature-icon">⚡</div>
+      <div class="ncp3d-feature-title">FAST AI</div>
       <p>Quick and clear AI responses for everyday questions.</p>
-      <div class="neural-pro-line"></div>
-      <span class="neural-pro-card-status">CORE ENGINE</span>
+      <div class="ncp3d-card-line"></div>
+      <span>CORE ENGINE</span>
     </article>
 
-    <article class="neural-pro-card featured">
-      <div class="neural-pro-card-glow"></div>
-      <div class="neural-pro-icon">🧠</div>
-      <div class="neural-pro-title">SMART CHAT</div>
+    <article class="ncp3d-feature-card ncp3d-feature-main">
+      <div class="ncp3d-card-number">02</div>
+      <div class="ncp3d-feature-icon">🧠</div>
+      <div class="ncp3d-feature-title">SMART CHAT</div>
       <p>Natural conversations with relevant context.</p>
-      <div class="neural-pro-line"></div>
-      <span class="neural-pro-card-status">INTELLIGENCE</span>
+      <div class="ncp3d-card-line"></div>
+      <span>INTELLIGENCE</span>
     </article>
 
-    <article class="neural-pro-card">
-      <div class="neural-pro-card-glow"></div>
-      <div class="neural-pro-icon neural-icon-vision">◈</div>
-      <div class="neural-pro-title">VISION AI</div>
+    <article class="ncp3d-feature-card">
+      <div class="ncp3d-card-number">03</div>
+      <div class="ncp3d-feature-icon ncp3d-vision-icon">◈</div>
+      <div class="ncp3d-feature-title">VISION AI</div>
       <p>Advanced image understanding is coming soon.</p>
-      <div class="neural-pro-line"></div>
-      <span class="neural-pro-card-status">COMING SOON</span>
+      <div class="ncp3d-card-line"></div>
+      <span>COMING SOON</span>
     </article>
 
   </div>
 
-  <div class="neural-pro-status">
-    <span></span>
-    ADVANCED FEATURES • COMING SOON
+  <div class="ncp3d-bottom-status">
+    <span class="ncp3d-live-dot"></span>
+    ADVANCED FEATURES
+    <b>•</b>
+    COMING SOON
   </div>
 
   <div class="neural-pro-brand">
@@ -5206,3 +5237,475 @@ renderHistory();
 
 </style>
 
+
+<style id="ncp3d-final-premium">
+
+.neural-pro-section{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  max-width:1120px;
+  margin:70px auto 55px;
+  padding:64px 24px 48px;
+  border-radius:32px;
+  border:1px solid rgba(255,55,55,.22);
+  background:
+    radial-gradient(circle at 50% 20%,rgba(255,35,35,.10),transparent 32%),
+    radial-gradient(circle at 15% 80%,rgba(255,20,20,.055),transparent 28%),
+    linear-gradient(145deg,#101010,#070707 55%,#0d0d0d);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 -1px 0 rgba(255,35,35,.10);
+}
+
+.neural-pro-section:before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:31px;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,
+      transparent 15%,
+      rgba(255,255,255,.045) 30%,
+      transparent 45%);
+}
+
+.ncp3d-bg-glow{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(55px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.ncp3d-glow-a{
+  width:330px;
+  height:330px;
+  left:50%;
+  top:260px;
+  transform:translateX(-50%);
+  background:rgba(255,25,25,.12);
+}
+
+.ncp3d-glow-b{
+  width:220px;
+  height:220px;
+  right:-100px;
+  bottom:20px;
+  background:rgba(255,25,25,.07);
+}
+
+.ncp3d-header{
+  position:relative;
+  z-index:3;
+  text-align:center;
+}
+
+.neural-pro-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:9px 16px;
+  border-radius:999px;
+  border:1px solid rgba(255,65,65,.30);
+  background:rgba(255,35,35,.055);
+  color:#ffb1b1;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2.2px;
+  box-shadow:
+    0 0 25px rgba(255,30,30,.10),
+    inset 0 0 15px rgba(255,30,30,.05);
+}
+
+.neural-pro-dot{
+  width:7px;
+  height:7px;
+  margin-right:8px;
+  border-radius:50%;
+  background:#ff3f3f;
+  box-shadow:0 0 14px #ff3333;
+}
+
+.neural-pro-section h2{
+  margin:20px 0 0;
+  font-size:clamp(31px,5vw,57px);
+  line-height:1.03;
+  letter-spacing:2px;
+  font-weight:950;
+  color:#f4f4f4;
+  text-shadow:0 12px 35px rgba(0,0,0,.65);
+}
+
+.neural-pro-section h2 span{
+  display:block;
+  margin-top:5px;
+  color:#ff4545;
+  text-shadow:
+    0 0 20px rgba(255,40,40,.60),
+    0 0 50px rgba(255,20,20,.20);
+}
+
+.ncp3d-description{
+  max-width:650px;
+  margin:18px auto 0;
+  color:rgba(225,225,225,.62);
+  font-size:13px;
+  line-height:1.7;
+}
+
+.ncp3d-core-stage{
+  position:relative;
+  width:310px;
+  height:310px;
+  margin:35px auto 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:900px;
+}
+
+.ncp3d-core-shadow{
+  position:absolute;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:rgba(255,20,20,.16);
+  filter:blur(45px);
+}
+
+.ncp3d-core{
+  position:relative;
+  width:145px;
+  height:145px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 35% 28%,#ff8b8b 0,#ff3838 12%,#8d1010 38%,#230404 67%,#050505 100%);
+  box-shadow:
+    0 0 25px rgba(255,40,40,.55),
+    0 0 70px rgba(255,25,25,.25),
+    inset -15px -18px 35px rgba(0,0,0,.72),
+    inset 8px 8px 18px rgba(255,255,255,.20);
+  transform:translateZ(35px);
+}
+
+.ncp3d-core:before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border-radius:50%;
+  border:1px solid rgba(255,180,180,.30);
+  box-shadow:inset 0 0 20px rgba(255,50,50,.35);
+}
+
+.ncp3d-core-inner{
+  position:relative;
+  z-index:2;
+  text-align:center;
+}
+
+.ncp3d-core-symbol{
+  color:#fff;
+  font-size:31px;
+  text-shadow:0 0 22px rgba(255,255,255,.85);
+}
+
+.ncp3d-core-label{
+  margin-top:2px;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.ncp3d-core-status{
+  margin-top:7px;
+  color:rgba(255,190,190,.75);
+  font-size:6px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.ncp3d-core-status span{
+  display:inline-block;
+  width:5px;
+  height:5px;
+  margin-right:4px;
+  border-radius:50%;
+  background:#ff4545;
+  box-shadow:0 0 8px #ff3333;
+}
+
+.ncp3d-ring{
+  position:absolute;
+  border:1px solid rgba(255,65,65,.24);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.ncp3d-ring-1{
+  width:235px;
+  height:82px;
+  transform:rotate(-24deg);
+}
+
+.ncp3d-ring-2{
+  width:260px;
+  height:95px;
+  transform:rotate(27deg);
+  border-color:rgba(255,255,255,.10);
+}
+
+.ncp3d-ring-3{
+  width:285px;
+  height:105px;
+  transform:rotate(88deg);
+  border-color:rgba(255,60,60,.12);
+}
+
+.ncp3d-node{
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ff4545;
+  box-shadow:0 0 14px #ff3333;
+}
+
+.node-1{top:43px;left:70px}
+.node-2{top:86px;right:42px}
+.node-3{bottom:52px;left:65px}
+.node-4{bottom:72px;right:75px}
+
+.ncp3d-feature-grid{
+  position:relative;
+  z-index:4;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  max-width:970px;
+  margin:10px auto 28px;
+  perspective:1200px;
+}
+
+.ncp3d-feature-card{
+  position:relative;
+  min-height:230px;
+  padding:25px 22px;
+  overflow:hidden;
+  border-radius:23px;
+  border:1px solid rgba(255,255,255,.09);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.50),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -15px 30px rgba(0,0,0,.16);
+  transform:perspective(900px) rotateX(2deg);
+  transition:.3s ease;
+}
+
+.ncp3d-feature-card:hover{
+  transform:perspective(900px) rotateX(0) translateY(-8px) translateZ(15px);
+  border-color:rgba(255,65,65,.35);
+  box-shadow:
+    0 32px 70px rgba(0,0,0,.60),
+    0 0 30px rgba(255,35,35,.10);
+}
+
+.ncp3d-feature-main{
+  border-color:rgba(255,55,55,.27);
+  background:
+    radial-gradient(circle at 50% 0,rgba(255,40,40,.12),transparent 48%),
+    linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
+}
+
+.ncp3d-card-number{
+  position:absolute;
+  top:18px;
+  right:20px;
+  color:rgba(255,100,100,.38);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.ncp3d-feature-icon{
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:20px;
+  border-radius:17px;
+  border:1px solid rgba(255,70,70,.24);
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,30,30,.035));
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.13),
+    0 0 22px rgba(255,35,35,.08);
+  font-size:27px;
+}
+
+.ncp3d-vision-icon{
+  color:#ff6868;
+  font-size:33px;
+  text-shadow:0 0 18px rgba(255,50,50,.75);
+}
+
+.ncp3d-feature-title{
+  color:#fff;
+  font-size:14px;
+  font-weight:950;
+  letter-spacing:2px;
+}
+
+.ncp3d-feature-card p{
+  min-height:48px;
+  margin:10px 0 17px;
+  color:rgba(220,220,220,.62);
+  font-size:12px;
+  line-height:1.65;
+}
+
+.ncp3d-card-line{
+  width:100%;
+  height:1px;
+  margin-bottom:13px;
+  background:linear-gradient(90deg,rgba(255,60,60,.40),transparent);
+}
+
+.ncp3d-feature-card > span{
+  color:rgba(255,125,125,.72);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+
+.ncp3d-bottom-status{
+  position:relative;
+  width:max-content;
+  max-width:90%;
+  margin:0 auto;
+  padding:10px 17px;
+  border-radius:999px;
+  border:1px solid rgba(255,65,65,.20);
+  background:rgba(255,35,35,.045);
+  color:rgba(255,175,175,.72);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+.ncp3d-bottom-status b{
+  margin:0 5px;
+  color:rgba(255,70,70,.70);
+}
+
+.ncp3d-live-dot{
+  display:inline-block;
+  width:6px;
+  height:6px;
+  margin-right:7px;
+  border-radius:50%;
+  background:#ff4141;
+  box-shadow:0 0 11px #ff3333;
+}
+
+.neural-pro-brand{
+  position:relative;
+  margin-top:20px;
+  text-align:center;
+  color:rgba(180,180,180,.40);
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+
+.neural-pro-brand span{
+  margin:0 5px;
+  color:rgba(255,70,70,.65);
+}
+
+@media(max-width:760px){
+
+  .neural-pro-section{
+    margin:45px 11px 35px;
+    padding:48px 14px 34px;
+    border-radius:25px;
+  }
+
+  .neural-pro-section h2{
+    font-size:31px;
+    letter-spacing:1.5px;
+  }
+
+  .ncp3d-description{
+    font-size:12px;
+    padding:0 8px;
+  }
+
+  .ncp3d-core-stage{
+    width:270px;
+    height:270px;
+    margin-top:28px;
+  }
+
+  .ncp3d-core{
+    width:125px;
+    height:125px;
+  }
+
+  .ncp3d-ring-1{
+    width:205px;
+    height:72px;
+  }
+
+  .ncp3d-ring-2{
+    width:225px;
+    height:82px;
+  }
+
+  .ncp3d-ring-3{
+    width:245px;
+    height:90px;
+  }
+
+  .ncp3d-feature-grid{
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-top:4px;
+  }
+
+  .ncp3d-feature-card{
+    min-height:0;
+    padding:23px 20px;
+  }
+
+  .ncp3d-feature-card p{
+    min-height:0;
+  }
+
+  .ncp3d-bottom-status{
+    font-size:8px;
+    letter-spacing:1px;
+    text-align:center;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  .ncp3d-feature-card{
+    transition:none;
+  }
+
+  .ncp3d-feature-card:hover{
+    transform:none;
+  }
+
+}
+
+</style>
