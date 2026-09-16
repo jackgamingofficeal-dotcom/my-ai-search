@@ -2794,6 +2794,14 @@ body::after{
 
 <body>
 
+<script>
+window.addEventListener("error", function(e) {
+  console.error("TOR AI ERROR:", e.message, "Line:", e.lineno);
+  alert("TOR AI JavaScript Error:\n" + e.message + "\nLine: " + e.lineno);
+});
+</script>
+
+
 <div class="wrap">
 
 <header>
