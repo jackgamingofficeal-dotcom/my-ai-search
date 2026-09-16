@@ -2808,7 +2808,7 @@ body::after{
       <span>New Chat</span>
    </button>
 
-      <button class="top-menu-item" id="profileBtn" data-target="profilePanel" onclick="hidePanels(); document.getElementById('profilePanel').classList.add('show');">
+      <button class="top-menu-item" id="profileBtn" data-target="profilePanel">
       <span class="menu-icon menu-icon-user"><i></i></span>
       <span>Profile</span>
    </button>
@@ -4097,31 +4097,45 @@ renderHistory();
 
  menu.querySelectorAll(".top-menu-item").forEach(function(item){
 
-   item.addEventListener("click", function(e){
-     e.preventDefault();
-     e.stopPropagation();
+  item.addEventListener("click", function(e){
+    e.preventDefault();
+    e.stopPropagation();
 
-     const targetId = item.getAttribute("data-target");
-     const target = document.getElementById(targetId);
+    menu.classList.remove("show");
 
-     menu.classList.remove("show");
+    const targetId = item.getAttribute("data-target");
 
-     if(target){
-       target.scrollIntoView({
-         behavior:"smooth",
-         block:"center"
-       });
+    if(targetId === "profilePanel"){
+      hidePanels();
+      profilePanel.classList.add("show");
 
-       if(targetId === "profilePanel"){
-         hidePanels();
-         profilePanel.classList.add("show");
-       } else if(targetId === "settingsBtn"){
-         settingsBtn.click();
-       }
-     }
-   });
+      setTimeout(() => {
+        profilePanel.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+      },100);
 
- });
+      return;
+    }
+
+    if(targetId === "settingsBtn"){
+      hidePanels();
+      settingsPanel.classList.add("show");
+
+      setTimeout(() => {
+        settingsPanel.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+      },100);
+
+      return;
+    }
+
+  });
+
+});
 
  document.addEventListener("click", function(e){
    if(!menu.contains(e.target) && e.target !== btn){
