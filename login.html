@@ -572,6 +572,61 @@ body{
 
 </main>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const inputs = form.querySelectorAll(".tor-input");
+  const button = document.querySelector(".tor-login-btn");
+
+  if (!form || inputs.length < 2 || !button) return;
+
+  const API = "https://my-ai-search.jackgamingofficeal.workers.dev";
+
+  button.addEventListener("click", async () => {
+    const email = inputs[0].value.trim();
+    const password = inputs[1].value;
+
+    if (!email || !password) {
+      alert("Please enter your email and password.");
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "LOGGING IN...";
+
+    try {
+      const response = await fetch(API + "/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || "Login failed.");
+      }
+
+      alert("Login successful!");
+      window.location.href = "index.html";
+
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Something went wrong.");
+      button.disabled = false;
+      button.innerHTML = "LOGIN&nbsp; →";
+    }
+  });
+});
+</script>
+
 </body>
 </html>
 
