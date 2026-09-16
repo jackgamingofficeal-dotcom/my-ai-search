@@ -4252,17 +4252,26 @@ renderHistory();
       });
 
       if (!response.ok) {
-        updateUserUI(null);
+        window.location.replace("register.html");
         return;
       }
 
       const data = await response.json();
-      updateUserUI(data.user || data);
+      const user = data.user || data;
+
+      if (!user || !user.email) {
+        window.location.replace("register.html");
+        return;
+      }
+
+      updateUserUI(user);
+
     } catch (error) {
       console.error("Session check failed:", error);
-      updateUserUI(null);
+      window.location.replace("register.html");
     }
   }
+
 
   loginBtn.addEventListener("click", () => {
     showLogin();
