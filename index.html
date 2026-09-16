@@ -1975,6 +1975,7 @@ body::after{
 }
 
 .top-menu-box.show{
+   z-index:99999;
  animation:menuGlowIn .28s ease-out;
 }
 
@@ -2807,7 +2808,7 @@ window.addEventListener("error", function(e) {
 <header>
 
  <div class="top-menu">
-   <button class="top-menu-btn" id="topMenuBtn" aria-label="Open menu" onclick="alert('MENU BUTTON WORKING'); document.getElementById('topMenuBox').classList.toggle('show');">⋮</button>
+   <button class="top-menu-btn" id="topMenuBtn" aria-label="Open menu" onclick="document.getElementById('topMenuBox').classList.toggle('show');">⋮</button>
 
   <div class="top-menu-box" id="topMenuBox">
 
