@@ -4112,9 +4112,12 @@ renderHistory();
          block:"center"
        });
 
-       setTimeout(function(){
-         target.click();
-       },250);
+       if(targetId === "profilePanel"){
+         hidePanels();
+         profilePanel.classList.add("show");
+       } else if(targetId === "settingsBtn"){
+         settingsBtn.click();
+       }
      }
    });
 
