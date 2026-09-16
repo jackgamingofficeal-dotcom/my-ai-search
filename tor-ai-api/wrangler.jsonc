@@ -1,5 +1,12 @@
 {
   "name": "tor-ai-api",
   "main": "src/index.js",
-  "compatibility_date": "2026-09-11"
+  "compatibility_date": "2026-09-11",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tor-ai-auth",
+      "database_id": "6d92736e-b722-4712-ab81-f49b7dfadacd"
+    }
+  ]
 }

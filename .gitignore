@@ -9,3 +9,25 @@ index-smooth.html
 python1
 
 backend/node_modules/
+
+auth/.env
+auth/users.db
+auth/node_modules/
+auth/
+
+# Local authentication files
+auth/
+
+# Local Worker backups
+tor-ai-api-before-auth/
+tor-ai-api/src/index-backup-before-deploy.js
+tor-ai-api/src/index-before-d1-auth-*.js
+tor-ai-api/src/index-before-image-ai.js
+tor-ai-api/src/index-before-live-auth.js
+
+# Local UI backups
+index.html.backup-chat
+index.html.before-neural-chat
+login-before-*.html
+register-before-*.html
+old-ui.html
