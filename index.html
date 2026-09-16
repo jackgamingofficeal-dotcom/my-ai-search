@@ -4132,28 +4132,180 @@ renderHistory();
 
 
 <script>
-/* ===== LOGIN + CHAT SYSTEM ===== */
-(function(){
+/* ===== TOR AI REAL AUTH SESSION ===== */
+(() => {
+  const API = "https://my-ai-search.jackgamingofficeal.workers.dev";
 
- const authOverlay=document.getElementById("authOverlay");
- const loginBtn=document.getElementById("loginBtn");
- const authClose=document.getElementById("authClose");
- const loginTab=document.getElementById("loginTab");
- const signupTab=document.getElementById("signupTab");
- const authName=document.getElementById("authName");
- const authEmail=document.getElementById("authEmail");
- const authPassword=document.getElementById("authPassword");
- const authSubmit=document.getElementById("authSubmit");
- const authTitle=document.getElementById("authTitle");
+  const authOverlay = document.getElementById("authOverlay");
+  const loginBtn = document.getElementById("loginBtn");
+  const authClose = document.getElementById("authClose");
+  const loginTab = document.getElementById("loginTab");
+  const signupTab = document.getElementById("signupTab");
+  const authName = document.getElementById("authName");
+  const authEmail = document.getElementById("authEmail");
+  const authPassword = document.getElementById("authPassword");
+  const authSubmit = document.getElementById("authSubmit");
+  const authTitle = document.getElementById("authTitle");
+  const profileName = document.getElementById("profileName");
+  const profilePanel = document.getElementById("profilePanel");
 
- /* Connect existing search to chat UI */
+  if (!authOverlay || !loginBtn || !authSubmit) return;
 
- if(askBtn && question){
+  function showLogin() {
+    authOverlay.classList.add("show");
+    authOverlay.style.display = "flex";
+  }
 
- }
+  function hideLogin() {
+    authOverlay.classList.remove("show");
+    authOverlay.style.display = "none";
+  }
 
- updateUserUI();
+  function updateUserUI(user) {
+    if (!profileName) return;
 
+    if (user) {
+      profileName.textContent = user.name || user.email || "User";
+
+      const plan = profilePanel?.querySelector(".profile-plan");
+      if (plan) {
+        plan.textContent = "FREE PLAN • Cloud Account";
+      }
+
+      loginBtn.textContent = "👤 " + (user.name || "Account");
+
+      let logoutBtn = document.getElementById("realLogoutBtn");
+
+      if (!logoutBtn && profilePanel) {
+        logoutBtn = document.createElement("button");
+        logoutBtn.id = "realLogoutBtn";
+        logoutBtn.type = "button";
+        logoutBtn.textContent = "🚪 LOGOUT";
+        logoutBtn.style.cssText =
+          "margin-top:14px;width:100%;padding:10px;border:1px solid rgba(255,45,45,.45);border-radius:10px;background:rgba(255,30,30,.08);color:#fff;font-weight:700;cursor:pointer;";
+
+        profilePanel.appendChild(logoutBtn);
+
+        logoutBtn.addEventListener("click", async () => {
+          try {
+            await fetch(API + "/auth/logout", {
+              method: "POST",
+              credentials: "include"
+            });
+          } catch (_) {}
+
+          updateUserUI(null);
+          alert("Logged out successfully.");
+          location.reload();
+        });
+      }
+
+    } else {
+      profileName.textContent = "Not logged in";
+
+      const plan = profilePanel?.querySelector(".profile-plan");
+      if (plan) {
+        plan.textContent = "FREE PLAN • Not signed in";
+      }
+
+      loginBtn.textContent = "👤 Login";
+
+      const logoutBtn = document.getElementById("realLogoutBtn");
+      if (logoutBtn) logoutBtn.remove();
+    }
+  }
+
+  async function checkSession() {
+    try {
+      const response = await fetch(API + "/auth/profile", {
+        method: "GET",
+        credentials: "include"
+      });
+
+      if (!response.ok) {
+        updateUserUI(null);
+        return;
+      }
+
+      const data = await response.json();
+      updateUserUI(data.user || data);
+    } catch (error) {
+      console.error("Session check failed:", error);
+      updateUserUI(null);
+    }
+  }
+
+  loginBtn.addEventListener("click", () => {
+    showLogin();
+  });
+
+  authClose?.addEventListener("click", () => {
+    hideLogin();
+  });
+
+  loginTab?.addEventListener("click", () => {
+    if (authTitle) authTitle.textContent = "Welcome Back 👋";
+    authSubmit.innerHTML = "<span>Login</span> <b>→</b>";
+
+    if (authName) authName.value = "";
+    const nameWrap = document.getElementById("nameWrap");
+    const nameLabel = document.getElementById("nameLabel");
+
+    if (nameWrap) nameWrap.style.display = "none";
+    if (nameLabel) nameLabel.style.display = "none";
+  });
+
+  signupTab?.addEventListener("click", () => {
+    location.href = "register.html";
+  });
+
+  authSubmit.addEventListener("click", async () => {
+    const email = authEmail?.value.trim() || "";
+    const password = authPassword?.value || "";
+
+    if (!email || !password) {
+      alert("Please enter your email and password.");
+      return;
+    }
+
+    authSubmit.disabled = true;
+    authSubmit.innerHTML = "<span>Logging in...</span>";
+
+    try {
+      const response = await fetch(API + "/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || data.message || "Login failed.");
+      }
+
+      updateUserUI(data.user || data);
+      hideLogin();
+
+      alert("Login successful!");
+      location.reload();
+
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Login failed.");
+    } finally {
+      authSubmit.disabled = false;
+      authSubmit.innerHTML = "<span>Login</span> <b>→</b>";
+    }
+  });
+
+  checkSession();
 })();
 </script>
 
