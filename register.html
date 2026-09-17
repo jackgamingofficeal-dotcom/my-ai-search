@@ -112,54 +112,198 @@ body{
   transform-style:preserve-3d;
 }
 
+
+/* =========================================
+   TOR AI — NEW 3 RING ANIMATION
+   Mobile Friendly
+   ========================================= */
+
+.tor-register-core{
+  position:relative;
+  width:150px;
+  height:150px;
+  margin:3px auto 13px;
+  display:grid;
+  place-items:center;
+  overflow:visible;
+}
+
+
+/* =========================================
+   TOR AI — PREMIUM CLASSIC NEURAL ORBITS
+   ========================================= */
+
+.tor-register-core{
+  position:relative;
+  width:150px;
+  height:150px;
+  margin:3px auto 13px;
+  display:grid;
+  place-items:center;
+  overflow:visible;
+}
+
+/* Common ring */
 .reg-ring{
   position:absolute;
   left:50%;
   top:50%;
+  display:block;
   border-radius:50%;
-  transform-style:preserve-3d;
   pointer-events:none;
+  box-sizing:border-box;
+  transform-origin:center center;
+  will-change:transform;
 }
+
+/* =========================================
+   OUTER RING
+   ========================================= */
 
 .reg-ring.a{
-  width:125px;
-  height:125px;
-  margin:-62.5px 0 0 -62.5px;
-  border:2px solid rgba(255,45,45,.7);
-  animation:regA 4.5s linear infinite;
+  width:142px;
+  height:142px;
+  margin:0;
+
+  border:1.5px solid rgba(255,45,45,.72);
+
+  transform:translate(-50%,-50%) rotate(0deg);
+
+  animation:
+    classicRingA 8s linear infinite;
+
+  box-shadow:
+    0 0 4px rgba(255,35,35,.25);
 }
+
+
+/* =========================================
+   HORIZONTAL RING
+   ========================================= */
 
 .reg-ring.b{
-  width:135px;
-  height:135px;
-  margin:-67.5px 0 0 -67.5px;
-  border:1px solid rgba(255,90,90,.5);
-  animation:regB 6s linear infinite reverse;
+  width:146px;
+  height:72px;
+  margin:0;
+
+  border:1px solid rgba(255,105,105,.58);
+
+  transform:translate(-50%,-50%) rotate(0deg);
+
+  animation:
+    classicRingB 6.5s linear infinite reverse;
+
+  box-shadow:
+    0 0 5px rgba(255,60,60,.20);
 }
+
+
+/* =========================================
+   VERTICAL RING
+   ========================================= */
 
 .reg-ring.c{
-  width:145px;
-  height:88px;
-  margin:-44px 0 0 -72.5px;
-  border:1px solid rgba(255,35,35,.42);
-  animation:regC 7s linear infinite;
+  width:72px;
+  height:146px;
+  margin:0;
+
+  border:1px solid rgba(255,70,70,.58);
+
+  transform:translate(-50%,-50%) rotate(0deg);
+
+  animation:
+    classicRingC 7.5s linear infinite;
+
+  box-shadow:
+    0 0 5px rgba(255,50,50,.18);
 }
 
-@keyframes regA{
-  from{transform:rotateX(65deg) rotateZ(0)}
-  to{transform:rotateX(65deg) rotateZ(360deg)}
+
+/* =========================================
+   SMOOTH CLASSIC ROTATION
+   ========================================= */
+
+@keyframes classicRingA{
+
+  0%{
+    transform:
+      translate(-50%,-50%)
+      rotate(0deg);
+  }
+
+  100%{
+    transform:
+      translate(-50%,-50%)
+      rotate(360deg);
+  }
+
 }
 
-@keyframes regB{
-  from{transform:rotateY(65deg) rotateZ(0)}
-  to{transform:rotateY(65deg) rotateZ(360deg)}
+
+@keyframes classicRingB{
+
+  0%{
+    transform:
+      translate(-50%,-50%)
+      rotate(0deg);
+  }
+
+  100%{
+    transform:
+      translate(-50%,-50%)
+      rotate(360deg);
+  }
+
 }
 
-@keyframes regC{
-  from{transform:rotateX(70deg) rotateY(20deg) rotateZ(0)}
-  to{transform:rotateX(70deg) rotateY(20deg) rotateZ(360deg)}
+
+@keyframes classicRingC{
+
+  0%{
+    transform:
+      translate(-50%,-50%)
+      rotate(0deg);
+  }
+
+  100%{
+    transform:
+      translate(-50%,-50%)
+      rotate(360deg);
+  }
+
 }
 
+
+/* =========================================
+   MOBILE TUNING
+   ========================================= */
+
+@media (max-width:600px){
+
+  .tor-register-core{
+    width:150px;
+    height:150px;
+  }
+
+  .reg-ring.a{
+    width:142px;
+    height:142px;
+    border-width:1.5px;
+  }
+
+  .reg-ring.b{
+    width:148px;
+    height:72px;
+    border-width:1px;
+  }
+
+  .reg-ring.c{
+    width:72px;
+    height:148px;
+    border-width:1px;
+  }
+
+}
 .reg-core{
   position:relative;
   width:76px;
@@ -383,13 +527,6 @@ body{
   }
 }
 
-@media(prefers-reduced-motion:reduce){
-  .reg-ring,
-  .reg-core,
-  .reg-energy{
-    animation:none!important;
-  }
-}
 </style>
 </head>
 
@@ -555,6 +692,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+
+
 
 </body>
 </html>
