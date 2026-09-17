@@ -7461,3 +7461,160 @@ renderHistory();
 }
 
 </style>
+
+
+<style id="tor-premium-heading-upgrade">
+
+/* ===== TOR AI — PREMIUM CLASSIC HEADING ===== */
+
+.tor-final-head{
+  position:relative;
+  text-align:center;
+  z-index:5;
+  padding:8px 12px 0;
+}
+
+/* premium badge */
+.tor-final-badge{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 17px;
+  border:1px solid rgba(255,70,70,.38);
+  border-radius:999px;
+  color:#ff8b8b;
+  background:
+    linear-gradient(135deg,
+      rgba(255,40,40,.10),
+      rgba(255,255,255,.025)
+    );
+  box-shadow:
+    0 0 0 1px rgba(255,0,0,.035),
+    0 0 22px rgba(255,20,20,.12),
+    inset 0 1px rgba(255,255,255,.08);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2.8px;
+  text-shadow:0 0 12px rgba(255,70,70,.28);
+  backdrop-filter:blur(12px);
+}
+
+/* glowing status dot */
+.tor-final-badge i{
+  width:7px;
+  height:7px;
+  flex:0 0 7px;
+  border-radius:50%;
+  background:#ff3030;
+  box-shadow:
+    0 0 5px #ff3030,
+    0 0 14px rgba(255,30,30,.9);
+  animation:torBadgePulse 2s ease-in-out infinite;
+}
+
+@keyframes torBadgePulse{
+  0%,100%{
+    transform:scale(.85);
+    opacity:.72;
+  }
+  50%{
+    transform:scale(1.15);
+    opacity:1;
+  }
+}
+
+/* main headline */
+.tor-final-head h2{
+  position:relative;
+  margin:22px 0 10px;
+  color:#f7f7f7;
+  font-size:clamp(30px,7vw,48px);
+  line-height:1.02;
+  letter-spacing:-2px;
+  font-weight:900;
+  text-shadow:
+    0 2px 16px rgba(0,0,0,.55),
+    0 0 30px rgba(255,255,255,.035);
+}
+
+/* elegant red second line */
+.tor-final-head h2 strong{
+  display:block;
+  margin-top:5px;
+  color:#ff4141;
+  font-weight:950;
+  letter-spacing:-2.2px;
+  text-shadow:
+    0 0 12px rgba(255,35,35,.28),
+    0 0 32px rgba(255,20,20,.16);
+}
+
+/* tiny premium divider */
+.tor-final-head h2::after{
+  content:"";
+  display:block;
+  width:54px;
+  height:2px;
+  margin:16px auto 0;
+  border-radius:20px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #ff3434,
+    transparent
+  );
+  box-shadow:0 0 12px rgba(255,30,30,.42);
+}
+
+/* subtitle */
+.tor-final-head p{
+  position:relative;
+  max-width:610px;
+  margin:15px auto 0;
+  padding:0 10px;
+  color:rgba(220,220,220,.62);
+  font-size:11px;
+  line-height:1.75;
+  letter-spacing:.15px;
+}
+
+/* mobile premium tuning */
+@media(max-width:650px){
+
+  .tor-final-head{
+    padding:5px 8px 0;
+  }
+
+  .tor-final-badge{
+    padding:8px 14px;
+    font-size:9px;
+    letter-spacing:2.3px;
+  }
+
+  .tor-final-head h2{
+    margin-top:19px;
+    font-size:29px;
+    line-height:1.04;
+    letter-spacing:-1.5px;
+  }
+
+  .tor-final-head h2 strong{
+    margin-top:5px;
+    letter-spacing:-1.7px;
+  }
+
+  .tor-final-head h2::after{
+    width:48px;
+    margin-top:14px;
+  }
+
+  .tor-final-head p{
+    margin-top:13px;
+    font-size:9.5px;
+    line-height:1.7;
+    padding:0 14px;
+  }
+}
+
+</style>
