@@ -4465,6 +4465,250 @@ renderHistory();
 })();
 </script>
 
+
+<style id="tor-premium-3d-ring-upgrade">
+
+/* ===== TOR AI PREMIUM 3D ORBIT UPGRADE ===== */
+
+.tor-final-stage{
+  transform-style:preserve-3d;
+  perspective:1200px;
+}
+
+/* All orbital rings */
+.tor-final-stage > .tor-final-orbit{
+  border:0 !important;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 205deg,
+      rgba(255,25,25,.15) 230deg,
+      rgba(255,65,65,.75) 270deg,
+      #fff 292deg,
+      rgba(255,40,40,.85) 310deg,
+      rgba(255,0,0,.20) 335deg,
+      transparent 360deg
+    );
+
+  -webkit-mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 2px),
+      #000 calc(100% - 1px)
+    );
+
+  mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 2px),
+      #000 calc(100% - 1px)
+    );
+
+  box-shadow:
+    0 0 8px rgba(255,25,25,.55),
+    0 0 22px rgba(255,0,0,.22);
+
+  will-change:transform;
+  backface-visibility:visible;
+}
+
+/* Main horizontal orbit */
+.tor-final-stage > .orbit-a{
+  animation:
+    torPremiumOrbitA 5.5s linear infinite,
+    torOrbitPulseA 2.8s ease-in-out infinite;
+}
+
+/* Vertical orbit */
+.tor-final-stage > .orbit-b{
+  animation:
+    torPremiumOrbitB 7s linear infinite reverse,
+    torOrbitPulseB 3.4s ease-in-out infinite;
+}
+
+/* Diagonal orbit */
+.tor-final-stage > .orbit-c{
+  animation:
+    torPremiumOrbitC 8.5s linear infinite,
+    torOrbitPulseC 3s ease-in-out infinite;
+}
+
+/* ===== REAL 3D MOVEMENT ===== */
+
+@keyframes torPremiumOrbitA{
+  0%{
+    transform:
+      rotateX(68deg)
+      rotateZ(0deg)
+      scale(1);
+  }
+
+  25%{
+    transform:
+      rotateX(68deg)
+      rotateZ(90deg)
+      scale(1.025);
+  }
+
+  50%{
+    transform:
+      rotateX(68deg)
+      rotateZ(180deg)
+      scale(1);
+  }
+
+  75%{
+    transform:
+      rotateX(68deg)
+      rotateZ(270deg)
+      scale(.975);
+  }
+
+  100%{
+    transform:
+      rotateX(68deg)
+      rotateZ(360deg)
+      scale(1);
+  }
+}
+
+@keyframes torPremiumOrbitB{
+  0%{
+    transform:
+      rotateY(67deg)
+      rotateZ(0deg)
+      scale(.98);
+  }
+
+  50%{
+    transform:
+      rotateY(67deg)
+      rotateZ(180deg)
+      scale(1.025);
+  }
+
+  100%{
+    transform:
+      rotateY(67deg)
+      rotateZ(360deg)
+      scale(.98);
+  }
+}
+
+@keyframes torPremiumOrbitC{
+  0%{
+    transform:
+      rotateX(72deg)
+      rotateY(18deg)
+      rotateZ(0deg)
+      scale(1);
+  }
+
+  50%{
+    transform:
+      rotateX(72deg)
+      rotateY(18deg)
+      rotateZ(180deg)
+      scale(1.035);
+  }
+
+  100%{
+    transform:
+      rotateX(72deg)
+      rotateY(18deg)
+      rotateZ(360deg)
+      scale(1);
+  }
+}
+
+/* ===== SUBTLE ENERGY PULSES ===== */
+
+@keyframes torOrbitPulseA{
+  0%,100%{
+    filter:
+      drop-shadow(0 0 5px rgba(255,20,20,.35))
+      brightness(.85);
+  }
+
+  50%{
+    filter:
+      drop-shadow(0 0 15px rgba(255,30,30,.85))
+      brightness(1.15);
+  }
+}
+
+@keyframes torOrbitPulseB{
+  0%,100%{
+    filter:
+      drop-shadow(0 0 5px rgba(255,30,30,.35))
+      brightness(.85);
+  }
+
+  50%{
+    filter:
+      drop-shadow(0 0 18px rgba(255,40,40,.9))
+      brightness(1.18);
+  }
+}
+
+@keyframes torOrbitPulseC{
+  0%,100%{
+    filter:
+      drop-shadow(0 0 4px rgba(255,20,20,.3))
+      brightness(.8);
+  }
+
+  50%{
+    filter:
+      drop-shadow(0 0 14px rgba(255,45,45,.8))
+      brightness(1.12);
+  }
+}
+
+/* ===== PREMIUM REACTOR DEPTH ===== */
+
+.tor-final-stage > .tor-final-reactor{
+  transform-style:preserve-3d;
+  z-index:5;
+}
+
+.tor-final-stage > .tor-final-reactor::before{
+  content:"";
+  position:absolute;
+  width:185px;
+  height:185px;
+  border-radius:50%;
+  border:1px solid rgba(255,40,40,.16);
+  box-shadow:
+    0 0 25px rgba(255,20,20,.18),
+    inset 0 0 25px rgba(255,20,20,.12);
+  animation:torCoreHalo 3.5s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes torCoreHalo{
+  0%,100%{
+    transform:scale(.94);
+    opacity:.45;
+  }
+
+  50%{
+    transform:scale(1.08);
+    opacity:1;
+  }
+}
+
+/* Keep reduced-motion accessibility */
+@media(prefers-reduced-motion:reduce){
+  .tor-final-stage > .tor-final-orbit,
+  .tor-final-stage > .tor-final-reactor::before{
+    animation:none !important;
+  }
+}
+
+</style>
+
 </body>
 </html>
 
