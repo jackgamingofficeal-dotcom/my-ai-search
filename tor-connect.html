@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOR AI — Connect</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#020203;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+.tor-page{
+  position:relative;
+  min-height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(150,0,0,.18),transparent 30%),
+    radial-gradient(circle at 15% 70%,rgba(255,0,0,.08),transparent 28%),
+    #020203;
+}
+
+/* NETWORK */
+.network{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.65;
+}
+
+.network span{
+  position:absolute;
+  width:5px;
+  height:5px;
+  background:#ff1616;
+  border-radius:50%;
+  box-shadow:0 0 15px #ff0000;
+  animation:pulse 2.5s infinite alternate;
+}
+
+.n1{left:8%;top:25%}
+.n2{left:18%;top:65%}
+.n3{left:30%;top:15%}
+.n4{right:20%;top:25%}
+.n5{right:8%;top:65%}
+.n6{right:30%;top:75%}
+.n7{left:45%;top:12%}
+.n8{left:55%;top:88%}
+
+@keyframes pulse{
+  from{opacity:.25;transform:scale(.7)}
+  to{opacity:1;transform:scale(1.5)}
+}
+
+/* HEADER */
+header{
+  position:relative;
+  z-index:10;
+  height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  border-bottom:1px solid rgba(255,0,0,.18);
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(15px);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border:2px solid #ff1717;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#ff2222;
+  font-size:22px;
+  box-shadow:0 0 20px rgba(255,0,0,.35);
+}
+
+.logo-text{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.logo-text b{
+  color:#ff2020;
+}
+
+.header-status{
+  color:#888;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+.header-status i{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ff2222;
+  box-shadow:0 0 10px red;
+  margin-right:7px;
+}
+
+/* MAIN */
+main{
+  position:relative;
+  z-index:5;
+  min-height:calc(100vh - 78px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:60px 20px;
+}
+
+.content{
+  width:min(1100px,100%);
+  text-align:center;
+}
+
+/* GLOBE */
+.globe{
+  position:absolute;
+  left:-120px;
+  top:50%;
+  transform:translateY(-50%);
+  width:420px;
+  height:420px;
+  border:1px solid rgba(255,0,0,.25);
+  border-radius:50%;
+  box-shadow:
+    0 0 40px rgba(255,0,0,.12),
+    inset 0 0 50px rgba(255,0,0,.08);
+  opacity:.65;
+}
+
+.globe:before,
+.globe:after{
+  content:"";
+  position:absolute;
+  inset:10%;
+  border:1px solid rgba(255,30,30,.25);
+  border-radius:50%;
+}
+
+.globe:after{
+  inset:0 22%;
+}
+
+/* ORBITS */
+.orbit{
+  position:absolute;
+  left:50%;
+  top:50%;
+  border:1px solid rgba(255,30,30,.32);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+
+.orbit.one{
+  width:460px;
+  height:150px;
+  animation:orbit1 8s linear infinite;
+}
+
+.orbit.two{
+  width:500px;
+  height:190px;
+  transform:translate(-50%,-50%) rotate(60deg);
+  animation:orbit2 10s linear infinite;
+}
+
+.orbit.three{
+  width:540px;
+  height:220px;
+  transform:translate(-50%,-50%) rotate(-55deg);
+  animation:orbit3 12s linear infinite;
+}
+
+@keyframes orbit1{
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+@keyframes orbit2{
+  to{transform:translate(-50%,-50%) rotate(420deg)}
+}
+
+@keyframes orbit3{
+  to{transform:translate(-50%,-50%) rotate(-415deg)}
+}
+
+/* HERO */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 17px;
+  border:1px solid rgba(255,30,30,.35);
+  border-radius:30px;
+  background:rgba(255,0,0,.06);
+  color:#ff4545;
+  font-size:11px;
+  letter-spacing:3px;
+  font-weight:bold;
+  margin-bottom:25px;
+}
+
+.badge i{
+  width:7px;
+  height:7px;
+  background:#ff2020;
+  border-radius:50%;
+  box-shadow:0 0 12px red;
+}
+
+h1{
+  font-size:clamp(38px,6vw,76px);
+  line-height:1.05;
+  letter-spacing:3px;
+  font-weight:900;
+  text-shadow:0 0 30px rgba(255,0,0,.12);
+}
+
+h1 span{
+  color:#ff2222;
+}
+
+.subtitle{
+  max-width:680px;
+  margin:22px auto 35px;
+  color:#a9a9a9;
+  font-size:16px;
+  line-height:1.7;
+}
+
+/* CONNECT BUTTON */
+.connect-btn{
+  position:relative;
+  min-width:280px;
+  padding:19px 38px;
+  border:1px solid #ff2525;
+  border-radius:12px;
+  background:linear-gradient(180deg,#270707,#090202);
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:3px;
+  cursor:pointer;
+  box-shadow:
+    0 0 25px rgba(255,0,0,.2),
+    inset 0 0 20px rgba(255,0,0,.08);
+  transition:.25s ease;
+}
+
+.connect-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 0 40px rgba(255,0,0,.45),
+    inset 0 0 25px rgba(255,0,0,.15);
+}
+
+.connect-btn:active{
+  transform:scale(.97);
+}
+
+.connect-btn .arrow{
+  margin-left:15px;
+  color:#ff2828;
+}
+
+/* STATUS */
+.status{
+  margin:28px auto 0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:9px;
+  color:#777;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+.status-dot{
+  width:8px;
+  height:8px;
+  background:#777;
+  border-radius:50%;
+}
+
+.status.connected{
+  color:#ff3a3a;
+}
+
+.status.connected .status-dot{
+  background:#ff2222;
+  box-shadow:0 0 15px red;
+}
+
+/* FEATURES */
+.features{
+  margin:55px auto 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  max-width:850px;
+}
+
+.feature{
+  padding:20px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.025);
+  border-radius:12px;
+  backdrop-filter:blur(8px);
+}
+
+.feature strong{
+  display:block;
+  color:#fff;
+  font-size:13px;
+  letter-spacing:1px;
+  margin-bottom:8px;
+}
+
+.feature small{
+  color:#777;
+  line-height:1.5;
+}
+
+/* FOOTER */
+footer{
+  position:absolute;
+  bottom:20px;
+  left:0;
+  width:100%;
+  text-align:center;
+  color:#555;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+/* TABLET */
+@media(max-width:800px){
+  .globe{
+    width:300px;
+    height:300px;
+    left:-150px;
+    opacity:.35;
+  }
+
+  .features{
+    grid-template-columns:1fr;
+    max-width:500px;
+  }
+
+  .orbit.one{
+    width:360px;
+  }
+
+  .orbit.two{
+    width:390px;
+  }
+
+  .orbit.three{
+    width:420px;
+  }
+}
+
+/* PHONE */
+@media(max-width:600px){
+
+  header{
+    height:65px;
+    padding:0 18px;
+  }
+
+  .logo-icon{
+    width:34px;
+    height:34px;
+    font-size:17px;
+  }
+
+  .logo-text{
+    font-size:19px;
+    letter-spacing:2px;
+  }
+
+  .header-status{
+    display:none;
+  }
+
+  main{
+    min-height:calc(100vh - 65px);
+    padding:45px 18px 70px;
+  }
+
+  .globe{
+    width:250px;
+    height:250px;
+    left:50%;
+    top:17%;
+    transform:translateX(-50%);
+    opacity:.16;
+  }
+
+  .orbit.one{
+    width:300px;
+    height:105px;
+  }
+
+  .orbit.two{
+    width:330px;
+    height:125px;
+  }
+
+  .orbit.three{
+    width:350px;
+    height:145px;
+  }
+
+  .badge{
+    font-size:9px;
+    letter-spacing:2px;
+    padding:8px 12px;
+  }
+
+  h1{
+    font-size:42px;
+    letter-spacing:1px;
+  }
+
+  .subtitle{
+    font-size:14px;
+    margin:18px auto 28px;
+    line-height:1.6;
+  }
+
+  .connect-btn{
+    width:100%;
+    min-width:0;
+    max-width:340px;
+    padding:18px 15px;
+    font-size:14px;
+    letter-spacing:2px;
+  }
+
+  .features{
+    margin-top:40px;
+    gap:10px;
+  }
+
+  .feature{
+    padding:16px;
+  }
+
+  footer{
+    font-size:9px;
+    bottom:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="tor-page">
+
+  <div class="network">
+    <span class="n1"></span>
+    <span class="n2"></span>
+    <span class="n3"></span>
+    <span class="n4"></span>
+    <span class="n5"></span>
+    <span class="n6"></span>
+    <span class="n7"></span>
+    <span class="n8"></span>
+  </div>
+
+  <div class="globe"></div>
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🧅</div>
+      <div class="logo-text">TOR <b>AI</b></div>
+    </div>
+
+    <div class="header-status">
+      <i></i> SECURE ACCESS
+    </div>
+  </header>
+
+  <main>
+
+    <div class="content">
+
+      <div class="badge">
+        <i></i>
+        NEXT GENERATION AI SEARCH
+      </div>
+
+      <h1>
+        CONNECT TO <span>TOR NETWORK</span>
+      </h1>
+
+      <p class="subtitle">
+        Connect to the Tor network before entering TOR AI.
+        Then create an account or sign in to continue to the AI search engine.
+      </p>
+
+      <div class="orbit one"></div>
+      <div class="orbit two"></div>
+      <div class="orbit three"></div>
+
+      <button class="connect-btn" id="connectBtn">
+        🧅 CONNECT
+        <span class="arrow">→</span>
+      </button>
+
+      <div class="status" id="status">
+        <span class="status-dot"></span>
+        TOR NETWORK NOT CONNECTED
+      </div>
+
+      <div class="features">
+
+        <div class="feature">
+          <strong>PRIVACY FIRST</strong>
+          <small>
+            Privacy-focused access interface.
+          </small>
+        </div>
+
+        <div class="feature">
+          <strong>SECURE SESSION</strong>
+          <small>
+            Continue with your secure account session.
+          </small>
+        </div>
+
+        <div class="feature">
+          <strong>TOR AI SEARCH</strong>
+          <small>
+            Access the AI search experience after login.
+          </small>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    TOR AI • Privacy • Intelligence • Secure Access
+  </footer>
+
+</div>
+
+<script>
+const connectBtn = document.getElementById("connectBtn");
+const status = document.getElementById("status");
+
+connectBtn.addEventListener("click", function(){
+
+  /*
+   * IMPORTANT:
+   * This button currently controls the website UI only.
+   * A webpage cannot switch the whole Android device to Tor
+   * like a VPN. The real Android Tor/VPN component will be
+   * connected here later.
+   */
+
+  connectBtn.disabled = true;
+  connectBtn.innerHTML = "CONNECTING...";
+
+  status.innerHTML =
+    '<span class="status-dot"></span> CONNECTING TO TOR...';
+
+  setTimeout(function(){
+
+    status.classList.add("connected");
+
+    status.innerHTML =
+      '<span class="status-dot"></span> TOR CONNECTION READY';
+
+    connectBtn.innerHTML = "CONTINUE TO LOGIN →";
+
+    connectBtn.disabled = false;
+
+    connectBtn.onclick = function(){
+      window.location.href = "login.html";
+    };
+
+  },1800);
+
+});
+</script>
+
+</body>
+</html>
