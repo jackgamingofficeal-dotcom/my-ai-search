@@ -4709,6 +4709,236 @@ renderHistory();
 
 </style>
 
+
+<style id="tor-all-rings-final-fix">
+
+/* ===== ALL 3 RINGS — FINAL VISIBLE MOTION ===== */
+
+.tor-final-stage > .tor-final-orbit{
+  background:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  -webkit-mask:none !important;
+  mask:none !important;
+  overflow:visible !important;
+  transform-style:preserve-3d !important;
+}
+
+/* Ring graphics */
+.tor-final-stage > .tor-final-orbit::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  box-sizing:border-box;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 45deg,
+      rgba(255,20,20,.15) 65deg,
+      #ff3030 85deg,
+      #ffffff 98deg,
+      #ff3030 112deg,
+      rgba(255,20,20,.15) 135deg,
+      transparent 165deg,
+      transparent 260deg,
+      rgba(255,30,30,.35) 280deg,
+      transparent 310deg,
+      transparent 360deg
+    );
+
+  -webkit-mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 2px),
+      #000 calc(100% - 1px)
+    );
+
+  mask:
+    radial-gradient(
+      farthest-side,
+      transparent calc(100% - 2px),
+      #000 calc(100% - 1px)
+    );
+
+  box-shadow:
+    0 0 10px rgba(255,25,25,.7),
+    0 0 28px rgba(255,0,0,.25);
+
+  transform-origin:center;
+  will-change:transform;
+}
+
+/* Extra energy particle/highlight */
+.tor-final-stage > .tor-final-orbit::after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  left:50%;
+  top:-3px;
+  margin-left:-3.5px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:
+    0 0 8px #fff,
+    0 0 18px #ff3030,
+    0 0 32px rgba(255,0,0,.9);
+  transform-origin:50% calc(50% + 3px);
+}
+
+/* ===== RING 1 ===== */
+
+.tor-final-stage > .orbit-a{
+  transform:
+    rotateX(68deg)
+    rotateY(0deg)
+    rotateZ(0deg) !important;
+}
+
+.tor-final-stage > .orbit-a::before{
+  animation:torRingSpinA 3.8s linear infinite !important;
+}
+
+.tor-final-stage > .orbit-a::after{
+  animation:torDotSpinA 3.8s linear infinite !important;
+}
+
+@keyframes torRingSpinA{
+  from{transform:rotateZ(0deg)}
+  to{transform:rotateZ(360deg)}
+}
+
+@keyframes torDotSpinA{
+  from{transform:rotateZ(0deg)}
+  to{transform:rotateZ(360deg)}
+}
+
+/* ===== RING 2 ===== */
+
+.tor-final-stage > .orbit-b{
+  transform:
+    rotateY(67deg)
+    rotateX(0deg)
+    rotateZ(12deg) !important;
+}
+
+.tor-final-stage > .orbit-b::before{
+  animation:torRingSpinB 5.2s linear infinite reverse !important;
+}
+
+.tor-final-stage > .orbit-b::after{
+  animation:torDotSpinB 5.2s linear infinite reverse !important;
+}
+
+@keyframes torRingSpinB{
+  from{
+    transform:
+      rotateZ(0deg)
+      scaleX(1);
+  }
+  50%{
+    transform:
+      rotateZ(180deg)
+      scaleX(.94);
+  }
+  to{
+    transform:
+      rotateZ(360deg)
+      scaleX(1);
+  }
+}
+
+@keyframes torDotSpinB{
+  from{
+    transform:rotateZ(0deg);
+  }
+  to{
+    transform:rotateZ(360deg);
+  }
+}
+
+/* ===== RING 3 ===== */
+
+.tor-final-stage > .orbit-c{
+  transform:
+    rotateX(72deg)
+    rotateY(18deg)
+    rotateZ(35deg) !important;
+}
+
+.tor-final-stage > .orbit-c::before{
+  animation:torRingSpinC 6.7s linear infinite !important;
+}
+
+.tor-final-stage > .orbit-c::after{
+  animation:torDotSpinC 6.7s linear infinite !important;
+}
+
+@keyframes torRingSpinC{
+  0%{
+    transform:
+      rotateZ(0deg)
+      scale(1);
+  }
+  25%{
+    transform:
+      rotateZ(90deg)
+      scale(1.04);
+  }
+  50%{
+    transform:
+      rotateZ(180deg)
+      scale(.97);
+  }
+  75%{
+    transform:
+      rotateZ(270deg)
+      scale(1.04);
+  }
+  100%{
+    transform:
+      rotateZ(360deg)
+      scale(1);
+  }
+}
+
+@keyframes torDotSpinC{
+  from{transform:rotateZ(0deg)}
+  to{transform:rotateZ(360deg)}
+}
+
+/* ===== CORE DEPTH ===== */
+
+.tor-final-stage > .tor-final-reactor{
+  transform-style:preserve-3d !important;
+  z-index:10;
+}
+
+/* Make motion clearly visible on mobile */
+@media(max-width:650px){
+  .tor-final-stage > .orbit-a::before,
+  .tor-final-stage > .orbit-b::before,
+  .tor-final-stage > .orbit-c::before{
+    -webkit-mask:
+      radial-gradient(
+        farthest-side,
+        transparent calc(100% - 2px),
+        #000 calc(100% - 1px)
+      );
+    mask:
+      radial-gradient(
+        farthest-side,
+        transparent calc(100% - 2px),
+        #000 calc(100% - 1px)
+      );
+  }
+}
+
+</style>
+
 </body>
 </html>
 
